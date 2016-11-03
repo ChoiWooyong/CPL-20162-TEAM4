@@ -1,4 +1,4 @@
-package Common;
+package common;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -16,11 +16,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 public class GeocodeFetcher {
-	//http://dev.virtualearth.net/REST/v1/Routes?	wp.0=wayPoint1&wp.1=wayPoint2&key=BingMapsKey
-	
-	// Bing Map service REST-URL
-	public static final String BING_ROUTE_URL="http://dev.virtualearth.net/REST/v1/Routes?";
-	public static final String KEY = "AmHs8uhFO0ODZi-ng9hzHXCbCAR-ehsfpWyenSZqvNuT8cp7VeCeEVsy7Hf-F-4U";
+	// http://dev.virtualearth.net/REST/v1/Routes?wp.0=DEPATURE&wp.1=DESTINATION&key=BINGMAPSKEY
 	
 	private Point departure;
 	private Point destination;
@@ -32,7 +28,7 @@ public class GeocodeFetcher {
 	
 	public URL genURL() throws MalformedURLException {
 		String strURL = String.format("%soutput=xml&wp.0=%s&" + "wp.1=%s&" + "key=%s", 
-				BING_ROUTE_URL, departure.toString(), destination.toString(), KEY);
+				Environment.BING_ROUTE_URL, departure.toString(), destination.toString(), Environment.KEY);
 		return new URL(strURL);
 	}
 	
@@ -49,8 +45,8 @@ public class GeocodeFetcher {
         	is.getCharacterStream().read();
         	
         	Document doc = parseXML(is);
-            System.out.println("dd");
 
+        	// Tree 구성
             doc.getDocumentElement().normalize();
 
             // 잡다한거 많이 -> Route -> RouteLeg -> ItineraryItem
@@ -73,7 +69,13 @@ public class GeocodeFetcher {
         return null;
 	}
 	
-	private Document parseXML(InputSource stream) throws Exception{
+	/**
+	 * XML string -> Document object
+	 * @param stream
+	 * @return
+	 * @throws Exception
+	 */
+	private Document parseXML(InputSource stream) {
 
 	    DocumentBuilderFactory objDocumentBuilderFactory = null;
 	    DocumentBuilder objDocumentBuilder = null;
@@ -86,7 +88,7 @@ public class GeocodeFetcher {
 	        doc = objDocumentBuilder.parse(stream);
 
 	    } catch(Exception ex){
-	        throw ex;
+	        ex.printStackTrace();
 	    }       
 
 	    return doc;

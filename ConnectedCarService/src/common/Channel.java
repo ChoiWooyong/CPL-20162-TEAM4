@@ -1,4 +1,4 @@
-package Common;
+package common;
 
 /**
  * CCH/SCH를 가지는 Enum 타입이다

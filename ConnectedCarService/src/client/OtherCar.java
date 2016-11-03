@@ -1,22 +1,25 @@
-package Client;
+package client;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import Common.Car;
-import Common.Environment;
-import Common.Point;
+import common.Car;
+import common.Environment;
+import common.Point;
 
 public class OtherCar extends Car {
 	
+	/**
+	 * 서버와의 소켓
+	 */
 	private Socket sock;
 	
 	public OtherCar(String name, String num, Point departure, Point destination) {
 		super(name, num, departure, destination);
 	}
-	
-	public void startConnectedCar() {
+
+	public void startConnectedCar_Client() {
 		try {
 			sock = new Socket("127.0.0.1", Environment.PORT_NUM);
 			ObjectOutputStream out = new ObjectOutputStream(sock.getOutputStream());

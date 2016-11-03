@@ -1,10 +1,8 @@
-package Common;
-
-import java.util.function.LongToIntFunction;
+package common;
 
 public class Point {
-	public double latitude;
-	public double longitude;
+	private double latitude;
+	private double longitude;
 	
 	public Point (double la, double lg) {
 		latitude = la;
