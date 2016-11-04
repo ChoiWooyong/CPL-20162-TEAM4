@@ -19,9 +19,9 @@ public class OtherCar extends Car {
 		super(name, num, departure, destination);
 	}
 
-	public void startConnectedCar_Client() {
+	public void startConnectedCar_Client(String serv_ip) {
 		try {
-			sock = new Socket("127.0.0.1", Environment.PORT_NUM);
+			sock = new Socket(serv_ip, Environment.PORT_NUM);
 			ObjectOutputStream out = new ObjectOutputStream(sock.getOutputStream());
 			out.writeObject(null);  // legs로 바꾸자
 		} catch (IOException e) {

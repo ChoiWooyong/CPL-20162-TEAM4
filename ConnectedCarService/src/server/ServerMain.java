@@ -9,14 +9,14 @@ import common.Point;
 public class ServerMain {
 	public static void main(String[] args)
 	{
-		System.out.println("Starting to connected car service for server.");
 
 		Scanner in = new Scanner(System.in);
-		System.out.print("Input the name of car : ");
+		System.out.print("NAME : ");
 		String name = in.nextLine();
-		System.out.print("Input the number of car : ");
+		System.out.print("NUM : ");
 		String num = in.nextLine();
-		
+
+		System.out.println("Starting to Connected Car Service for server.");
 		MyCar myCar = new MyCar(name, num, new Point(0, 0), new Point(0, 0));
 		
 		try {

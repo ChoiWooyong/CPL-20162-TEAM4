@@ -13,19 +13,21 @@ import common.Point;
 public class ClientMain {
 
 	public static void main(String[] args) throws Exception {
-		System.out.println("Starting to connected car service for client.");
 		
 		System.out.println("My IP Address : " + InetAddress.getLocalHost().getHostAddress());
 		
 		Scanner in = new Scanner(System.in);
-		System.out.print("Input the name of car : ");
+		System.out.print("NAME : ");
 		String name = in.nextLine();
-		System.out.print("Input the number of car : ");
+		System.out.print("NUMBER : ");
 		String num = in.nextLine();
+		System.out.print("SERVER IP : ");
+		String serv_ip = in.nextLine();
 		
 		OtherCar car = new OtherCar(name, num, new Point(0, 0), new Point(0, 0));
-		System.out.println("Start Connected Car Provider");
-		car.startConnectedCar_Client();
+		
+		System.out.println("Starting Connected Car Service for client...");
+		car.startConnectedCar_Client(serv_ip);
 	}
 	
 	

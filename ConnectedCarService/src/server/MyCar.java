@@ -35,12 +35,14 @@ public class MyCar extends Car implements Runnable {
 	}
 
 	public void startConnectedCar_Server() throws InterruptedException {
+		// 주변의 차량을 계속 탐색하기 위한 무한 루프 쓰레드
 		new Thread(this).start();
 		
 		// Car num만큼 찾을 때까지 기다림
-		System.out.println("Waiting for detecting car.");
+		System.out.println("Waiting for detecting car...");
 		while (socks.size() < Environment.CAR_NUM) ;
-		
+
+		System.out.println("Starting to communication with other cars...");
 		selList = new ArrayList<Socket>();
 		while (true) {
 			CCHPeriod();
@@ -71,8 +73,9 @@ public class MyCar extends Car implements Runnable {
 		for (Socket sock : socks) {
 			try {
 				out = new ObjectOutputStream(sock.getOutputStream());
-				Packet pk = new Packet("CCH", getRoute().get(0));
+				Packet pk = new Packet("CCH", "CCH 줄꺼");
 				out.writeObject(pk);
+				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -85,7 +88,7 @@ public class MyCar extends Car implements Runnable {
 			try {
 				in = new ObjectInputStream(sock.getInputStream());
 				Packet pk = (Packet) in.readObject();
-				int yn = (int) (pk.getMessage());
+				Object msg = (Object) (pk.getMessage());  // CCH 읽은 거
 
 				if (!selList.contains(socks)) {
 					selList.add(sock);
@@ -100,11 +103,23 @@ public class MyCar extends Car implements Runnable {
 
 	public void SCHPeriod() throws InterruptedException {
 		Socket sock = socks.get(selectionAlg());
-		ObjectOutputStream out;
+		
 		try {
-			out = new ObjectOutputStream(sock.getOutputStream());
-			out.writeObject("전체 패스 정보");
+			ObjectOutputStream out = new ObjectOutputStream(sock.getOutputStream());
+			Packet pk = new Packet("SCH", "SCH 구간 주는거!");
+			out.writeObject(pk);
+			
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			ObjectInputStream in = new ObjectInputStream(sock.getInputStream());
+			Packet pk = (Packet) in.readObject();
+			Object msg = (Object) (pk.getMessage());  // SCH 읽은 거
+			
+		} catch (IOException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
