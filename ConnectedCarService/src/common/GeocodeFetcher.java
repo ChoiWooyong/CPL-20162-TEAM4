@@ -1,5 +1,6 @@
 package common;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -32,17 +34,32 @@ public class GeocodeFetcher {
 		return new URL(strURL);
 	}
 	
-	public ArrayList<Point> getGeocode() throws Exception {
-		HttpURLConnection urlConnect = (HttpURLConnection) genURL().openConnection();		
+	public ArrayList<Point> getGeocode() {
+		HttpURLConnection urlConnect = null;
+		int rspCode = -1;
 		
-		int rspCode = urlConnect.getResponseCode();
+		try {
+			urlConnect = (HttpURLConnection) genURL().openConnection();
+			rspCode = urlConnect.getResponseCode();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
         if (rspCode == 200) {
-        	InputStream ist = urlConnect.getInputStream();
-        	Reader reader = new InputStreamReader(ist, "UTF-8");
-  	      	InputSource is = new InputSource(reader);
-        	is.setEncoding("UTF-8");
-        	is.getCharacterStream().read();
+        	InputStream ist;
+  	      	InputSource is = null;
+  	      	
+			try {
+				ist = urlConnect.getInputStream();
+	        	Reader reader = new InputStreamReader(ist, "UTF-8");
+	  	      	is = new InputSource(reader);
+	        	is.setEncoding("UTF-8");
+	        	is.getCharacterStream().read();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         	
         	Document doc = parseXML(is);
 

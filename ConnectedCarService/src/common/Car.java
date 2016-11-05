@@ -1,5 +1,9 @@
 package common;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 import java.util.ArrayList;
 
 public class Car {
@@ -7,31 +11,51 @@ public class Car {
 	/**
 	 * 차의 이름
 	 */
-	private String name;
-	
+	protected String name;
+
 	/**
 	 * 차 번호
 	 */
-	private String num;
+	protected String num;
+
+	/**
+	 * Bing Map REST Service 사용을 위한 객체
+	 */
+	protected GeocodeFetcher geoFetcher;
 	
 	/**
 	 * 경로 정보
 	 */
-	private ArrayList<Point> route;
+	protected ArrayList<Point> route;
+
+	/**
+	 * CCH, SCH에 시간 할당
+	 */
+	protected Thread timer;
 	
-	public Car(String name, String num, Point departure, Point destination) {
+
+	protected Car(String name, String num, Point departure, Point destination) {
 		this.name = name;
 		this.num = num;
-		
-		try {
-			route = new GeocodeFetcher(departure, destination).getGeocode();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		geoFetcher = new GeocodeFetcher(departure, destination);
+		route = geoFetcher.getGeocode();
+		timer = new Thread(new SwitchTimer());
 	}
 	
 	
+	
+	// WAVE communication
+	protected void CCHPeriod() throws InterruptedException { }
+	protected void SCHPeriod() throws InterruptedException { }
+	
+	
+	// Read & Write Packet
+	protected void readPacket(Socket sock, Point p) throws IOException, ClassNotFoundException { }
+	protected void readPacket(Socket sock, ArrayList<Point> plist) throws IOException, ClassNotFoundException { }
+	protected void writePacket(Socket sock, Point p) throws IOException { }
+	protected void writePacket(Socket sock, ArrayList<Point> plist) throws IOException { }
+
 
 	// Getter & Setter
 	public String getName() {

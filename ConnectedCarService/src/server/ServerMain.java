@@ -7,7 +7,7 @@ import common.Environment;
 import common.Point;
 
 public class ServerMain {
-	public static void main(String[] args)
+	public static void main(String[] args) throws InterruptedException
 	{
 
 		Scanner in = new Scanner(System.in);
@@ -19,11 +19,6 @@ public class ServerMain {
 		System.out.println("Starting to Connected Car Service for server.");
 		MyCar myCar = new MyCar(name, num, new Point(0, 0), new Point(0, 0));
 		
-		try {
-			myCar.startConnectedCar_Server();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		myCar.startConnectedCar_Server();
 	}
 }

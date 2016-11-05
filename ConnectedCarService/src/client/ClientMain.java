@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.Scanner;
 
 import common.Environment;
@@ -12,7 +13,7 @@ import common.Point;
 
 public class ClientMain {
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws InterruptedException, IOException{
 		
 		System.out.println("My IP Address : " + InetAddress.getLocalHost().getHostAddress());
 		
