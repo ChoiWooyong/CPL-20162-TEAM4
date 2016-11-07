@@ -36,8 +36,8 @@ public class OtherCar extends Car {
 	protected void CCHPeriod() throws InterruptedException {
 		timer.start();
 
-		// 읽고
-		// 쓴다
+		// 할 사람? 읽고 판단
+		// 본인 첫번쨰 leg 씀
 
 		timer.join();
 	}
@@ -46,8 +46,8 @@ public class OtherCar extends Car {
 	protected void SCHPeriod() throws InterruptedException {
 		timer.start();
 
-		// 읽고
-		// 쓴다
+		// 풀 path 내놔 읽음
+		// 풀 path 씀
 
 		timer.join();
 	}

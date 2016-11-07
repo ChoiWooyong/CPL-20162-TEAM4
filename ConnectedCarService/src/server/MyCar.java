@@ -34,10 +34,14 @@ public class MyCar extends Car implements Runnable {
 	 * CCH, SCH에 시간 할당
 	 */
 	private Thread timer;
+	
+	private ArrayList<ArrayList<Point>> fullPathList;
+	
 
 	public MyCar(String name, String num, Point departure, Point destination) {
 		super(name, num, departure, destination);
 		selList = new ArrayList<Socket>();
+		fullPathList = new ArrayList<ArrayList<Point>>();
 	}
 
 	public void startConnectedCar_Server() throws InterruptedException {
@@ -77,15 +81,15 @@ public class MyCar extends Car implements Runnable {
 
 		// Broadcasting my first leg
 		for (Socket sock : socks) {
-			// 읽고
-			// 쓴다
+			// 할 사람? 씀
 		}
 
 		// Getting response from other cars
 		for (Socket sock : socks) {
-			// 읽고
-			// 쓴다
+			// 차량들 첫번쨰 leg 읽음
 		}
+		
+		// 같은지 아닌지 체크
 
 		timer.join();
 	}
@@ -94,14 +98,14 @@ public class MyCar extends Car implements Runnable {
 	protected void SCHPeriod() throws InterruptedException {
 		timer.start();
 
-		Socket sock = socks.get(selectionAlg());
+		Socket sock = selList.get(selectionAlg());
 
-		// 읽고
-		// 쓴다
+		// 풀 path 내놔 씀
+		// 풀 path 읽음
 
 		timer.join();
 	}
-	
+		
 	public int selectionAlg() {
 		return 0;
 	}
