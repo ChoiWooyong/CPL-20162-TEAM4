@@ -27,11 +27,6 @@ public class Car {
 	 * 경로 정보
 	 */
 	protected ArrayList<Point> route;
-
-	/**
-	 * CCH, SCH에 시간 할당
-	 */
-	protected Thread timer;
 	
 
 	protected Car(String name, String num, Point departure, Point destination) {
@@ -40,21 +35,8 @@ public class Car {
 
 		geoFetcher = new GeocodeFetcher(departure, destination);
 		route = geoFetcher.getGeocode();
-		timer = new Thread(new SwitchTimer());
 	}
 	
-	
-	
-	// WAVE communication
-	protected void CCHPeriod() throws InterruptedException { }
-	protected void SCHPeriod() throws InterruptedException { }
-	
-	
-	// Read & Write Packet
-	protected void readPacket(Socket sock, Point p) throws IOException, ClassNotFoundException { }
-	protected void readPacket(Socket sock, ArrayList<Point> plist) throws IOException, ClassNotFoundException { }
-	protected void writePacket(Socket sock, Point p) throws IOException { }
-	protected void writePacket(Socket sock, ArrayList<Point> plist) throws IOException { }
 
 
 	// Getter & Setter

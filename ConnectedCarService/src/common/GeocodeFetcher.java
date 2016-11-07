@@ -30,7 +30,7 @@ public class GeocodeFetcher {
 	
 	public URL genURL() throws MalformedURLException {
 		String strURL = String.format("%soutput=xml&wp.0=%s&" + "wp.1=%s&" + "key=%s", 
-				Environment.BING_ROUTE_URL, departure.toString(), destination.toString(), Environment.KEY);
+				Environment._BING_ROUTE_URL, departure.toString(), destination.toString(), Environment._KEY);
 		return new URL(strURL);
 	}
 	

@@ -14,6 +14,13 @@ public class Point {
 		longitude = lg;
 	}
 	
+	public boolean isEqual(Point p) {
+		if (p.latitude != latitude || p.longitude != longitude)
+			return false;
+		
+		return true;
+	}
+	
 	public String toString() {
 		return latitude + "," + longitude;
 	}

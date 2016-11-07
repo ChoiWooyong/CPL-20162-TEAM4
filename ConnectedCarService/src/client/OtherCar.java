@@ -23,64 +23,54 @@ public class OtherCar extends Car {
 		super(name, num, departure, destination);
 	}
 
-	public void startConnectedCar_Client(String serv_ip)  throws InterruptedException, IOException {
-		sock = new Socket(serv_ip, Environment.PORT_NUM);
+	public void startConnectedCar_Client(String serv_ip)  throws Exception {
+		sock = new Socket(serv_ip, Environment._PORT_NUM);
 
 		while (true) {
-			CCHPeriod();
-			SCHPeriod();
+			int reqCode = readReqCode();
+			Object obj = null;
+			switch (reqCode) {
+			case Environment._RQ_FIRST_LEG:
+				obj = route.get(0);
+				break;
+			case Environment._RQ_FULL_LEGS:
+				obj = route;
+				break;
+			}
+			writePacket(obj);
 		}
 	}
 
-	@Override
-	protected void CCHPeriod() throws InterruptedException {
-		timer.start();
 
-		// 할 사람? 읽고 판단
-		// 본인 첫번쨰 leg 씀
-
-		timer.join();
-	}
-
-	@Override
-	protected void SCHPeriod() throws InterruptedException {
-		timer.start();
-
-		// 풀 path 내놔 읽음
-		// 풀 path 씀
-
-		timer.join();
-	}
-
-
-	@Override
-	protected void readPacket(Socket sock, Point p) throws IOException, ClassNotFoundException {
+	// read & write Packet
+	/**
+	 * 
+	 * @return requestCode를 return
+	 * @throws Exception
+	 */
+	private int readReqCode() throws Exception {
 		ObjectInputStream in = new ObjectInputStream(sock.getInputStream());
 		Packet pk = (Packet) in.readObject();
-		p = (Point) pk.getMessage();
 		in.close();
+		return pk.getRequestCode();
 	}
 
-	@Override
-	protected void readPacket(Socket sock, ArrayList<Point> plist) throws IOException, ClassNotFoundException {
-		ObjectInputStream in = new ObjectInputStream(sock.getInputStream());
-		Packet pk = (Packet) in.readObject();
-		plist = (ArrayList<Point>) pk.getMessage();
-		in.close();
-	}
-
-	@Override
-	protected void writePacket(Socket sock, Point p) throws IOException {
+	/**
+	 * 
+	 * @param obj 보낼 객체 (first-leg or full-legs)
+	 * @throws Exception
+	 */
+	private void writePacket(Object obj) throws Exception {
 		ObjectOutputStream out = new ObjectOutputStream(sock.getOutputStream());
-		Packet pk = new Packet("CCH", p);
-		out.writeObject(pk);
-		out.close();
-	}
 
-	@Override
-	protected void writePacket(Socket sock, ArrayList<Point> plist) throws IOException {
-		ObjectOutputStream out = new ObjectOutputStream(sock.getOutputStream());
-		Packet pk = new Packet("SCH", plist);
+		int chnType = 0;
+		if (obj instanceof Point) {
+			chnType = Environment._CCH;
+
+		} else if (obj instanceof ArrayList<?>) {
+			chnType = Environment._SCH;
+		}
+		Packet pk = new Packet(chnType, Environment._RQ_NONE, obj);
 		out.writeObject(pk);
 		out.close();
 	}

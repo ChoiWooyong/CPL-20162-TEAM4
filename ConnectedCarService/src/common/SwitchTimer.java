@@ -6,7 +6,7 @@ public class SwitchTimer implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 		try {
-			Thread.sleep(Environment.CHANNEL_SWITCHING_TIME);
+			Thread.sleep(Environment._CHANNEL_SWITCHING_TIME);
 			
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block

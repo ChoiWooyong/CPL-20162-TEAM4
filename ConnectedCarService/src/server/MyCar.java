@@ -42,15 +42,16 @@ public class MyCar extends Car implements Runnable {
 		super(name, num, departure, destination);
 		selList = new ArrayList<Socket>();
 		fullPathList = new ArrayList<ArrayList<Point>>();
+		timer = new Thread(new SwitchTimer());
 	}
 
-	public void startConnectedCar_Server() throws InterruptedException {
+	public void startConnectedCar_Server() throws Exception {
 		// 주변의 차량을 계속 탐색하기 위한 무한 루프 쓰레드
 		new Thread(this).start();
 
 		// Car num만큼 찾을 때까지 기다림
 		System.out.println("Waiting for detecting car...");
-		while (socks.size() < Environment.CAR_NUM) ;
+		while (socks.size() < Environment._CAR_NUM) ;
 
 		// 통신 시작
 		System.out.println("Starting to communication with other cars...");
@@ -75,33 +76,36 @@ public class MyCar extends Car implements Runnable {
 
 
 	// Method for WAVE communication
-	@Override
-	protected void CCHPeriod() throws InterruptedException {
+	protected void CCHPeriod() throws Exception {
 		timer.start();
 
+		Point firstLeg = route.get(0);
 		// Broadcasting my first leg
-		for (Socket sock : socks) {
-			// 할 사람? 씀
+		for (int i = 0; i < socks.size(); i++){
+			writePacket(i, Environment._RQ_FIRST_LEG);
 		}
 
 		// Getting response from other cars
-		for (Socket sock : socks) {
-			// 차량들 첫번쨰 leg 읽음
+		for (int i = 0; i < socks.size(); i++){
+			Point p = (Point) readMsg(i);
+			if (firstLeg.isEqual(p)) {
+				// CarInfo add
+			}
 		}
 		
-		// 같은지 아닌지 체크
+		
 
 		timer.join();
 	}
 
-	@Override
-	protected void SCHPeriod() throws InterruptedException {
+	protected void SCHPeriod() throws Exception {
 		timer.start();
 
-		Socket sock = selList.get(selectionAlg());
+		int idx = selectionAlg();
 
-		// 풀 path 내놔 씀
-		// 풀 path 읽음
+		writePacket(idx, Environment._RQ_FULL_LEGS);
+		// CarInfo에 추가
+		ArrayList<Point> temp = (ArrayList<Point>) readMsg(idx);
 
 		timer.join();
 	}
@@ -111,34 +115,37 @@ public class MyCar extends Car implements Runnable {
 	}
 
 
-	@Override
-	protected void readPacket(Socket sock, Point p) throws ClassNotFoundException, IOException {
-		ObjectInputStream in = new ObjectInputStream(sock.getInputStream());
+	// Read & Write Packet
+	/**
+	 * Packet에서 Message를 읽어 옴
+	 * @param idx
+	 * @return Packet의 Message 객체를 넘김
+	 * @throws Exception
+	 */
+	private Object readMsg(int idx) throws Exception {
+		ObjectInputStream in = new ObjectInputStream(socks.get(idx).getInputStream());
 		Packet pk = (Packet) in.readObject();
-		p = (Point) pk.getMessage();
 		in.close();
+		return pk.getMessage();
 	}
 
-	@Override
-	protected void readPacket(Socket sock, ArrayList<Point> plist) throws ClassNotFoundException, IOException {
-		ObjectInputStream in = new ObjectInputStream(sock.getInputStream());
-		Packet pk = (Packet) in.readObject();
-		plist = (ArrayList<Point>) pk.getMessage();
-		in.close();
-	}
+	/**
+	 * Packet을 보낸다
+	 * @param idx sock의 index
+	 * @param requestCode 무엇을 request할 것 인가
+	 * @throws Exception
+	 */
+	private void writePacket(int idx, int requestCode) throws Exception {
+		ObjectOutputStream out = new ObjectOutputStream(socks.get(idx).getOutputStream());
 
-	@Override
-	protected void writePacket(Socket sock, Point p) throws IOException {
-		ObjectOutputStream out = new ObjectOutputStream(sock.getOutputStream());
-		Packet pk = new Packet("CCH", p);
-		out.writeObject(pk);
-		out.close();
-	}
-
-	@Override
-	protected void writePacket(Socket sock, ArrayList<Point> plist) throws IOException {
-		ObjectOutputStream out = new ObjectOutputStream(sock.getOutputStream());
-		Packet pk = new Packet("SCH", plist);
+		int chnType = 0;
+		if (requestCode == Environment._RQ_FIRST_LEG) {
+			chnType = Environment._CCH;
+			
+		} else if (requestCode == Environment._RQ_FULL_LEGS) {
+			chnType = Environment._SCH;
+		}
+		Packet pk = new Packet(chnType, requestCode, null);
 		out.writeObject(pk);
 		out.close();
 	}

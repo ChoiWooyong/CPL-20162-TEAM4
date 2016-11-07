@@ -7,7 +7,7 @@ import common.Environment;
 import common.Point;
 
 public class ServerMain {
-	public static void main(String[] args) throws InterruptedException
+	public static void main(String[] args) throws Exception
 	{
 
 		Scanner in = new Scanner(System.in);

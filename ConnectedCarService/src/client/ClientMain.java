@@ -13,7 +13,7 @@ import common.Point;
 
 public class ClientMain {
 
-	public static void main(String[] args) throws InterruptedException, IOException{
+	public static void main(String[] args) throws Exception{
 		
 		System.out.println("My IP Address : " + InetAddress.getLocalHost().getHostAddress());
 		
