@@ -21,27 +21,33 @@ public class MyCar extends Car implements Runnable {
 	private ServerSocket serv_sock;
 
 	/**
-	 * 모든 차량 
+	 * 모든 socks
 	 */
 	private ArrayList<Socket> socks;
-
-	/**
-	 * CCH에서 걸러진 차량
-	 */
-	private ArrayList<Socket> selList;
 
 	/**
 	 * CCH, SCH에 시간 할당
 	 */
 	private Thread timer;
-	
-	private ArrayList<ArrayList<Point>> fullPathList;
-	
 
-	public MyCar(String name, String num, Point departure, Point destination) {
+	private ArrayList<CarInfo> carInfo;
+	
+	/**
+	 * 이미 CCH에서 통신한 차량 패스
+	 */
+	private ArrayList<Integer> mark;
+	
+	private int cnt = 0;
+
+	//car info (socket정보 , full path list, score ) selList에있는것만
+
+
+	public MyCar(String name, String num, Point departure, Point destination) throws IOException {
 		super(name, num, departure, destination);
-		selList = new ArrayList<Socket>();
-		fullPathList = new ArrayList<ArrayList<Point>>();
+		serv_sock = new ServerSocket(Environment._PORT_NUM);
+		serv_sock.setSoTimeout(0);
+		socks = new ArrayList<Socket>();
+		carInfo = new ArrayList<CarInfo>();
 		timer = new Thread(new SwitchTimer());
 	}
 
@@ -55,12 +61,14 @@ public class MyCar extends Car implements Runnable {
 
 		// 통신 시작
 		System.out.println("Starting to communication with other cars...");
-		while (true) {
+		//while (true) {
+			System.out.println("CCH");
 			CCHPeriod();
+			System.out.println("SCH");
 			SCHPeriod();
-		}
+		//}
 	}
-	
+
 	@Override
 	public void run() {
 		try {
@@ -89,11 +97,10 @@ public class MyCar extends Car implements Runnable {
 		for (int i = 0; i < socks.size(); i++){
 			Point p = (Point) readMsg(i);
 			if (firstLeg.isEqual(p)) {
-				// CarInfo add
+				carInfo.add(new CarInfo(i));
+				// 중복 거르기
 			}
 		}
-		
-		
 
 		timer.join();
 	}
@@ -101,17 +108,64 @@ public class MyCar extends Car implements Runnable {
 	protected void SCHPeriod() throws Exception {
 		timer.start();
 
-		int idx = selectionAlg();
+		if (cnt < carInfo.size()) {
+			int idx = cnt++;  // 멀리가서 통신안되는거 배제
 
-		writePacket(idx, Environment._RQ_FULL_LEGS);
-		// CarInfo에 추가
-		ArrayList<Point> temp = (ArrayList<Point>) readMsg(idx);
+			// Request Full legs
+			writePacket(idx, Environment._RQ_FULL_LEGS);
+
+			// Read Full legs 
+			CarInfo selInfo = carInfo.get(idx);
+			selInfo.setFullpath((ArrayList<Point>) readMsg(idx));
+			selectScore(selInfo);
+		}
 
 		timer.join();
 	}
-		
-	public int selectionAlg() {
-		return 0;
+
+	/**
+	 * 점수계산해서 넣는 것
+	 */
+	public void selectScore(CarInfo car) {
+
+		int score=0;
+		ArrayList<Point> temppoint = car.getFullpath();
+
+		for(int j=0 ; j<temppoint.size() ; j++)
+		{
+			if(Math.abs(temppoint.get(j).getLatitude()-route.get(j).getLatitude()) < Environment.ERRORRANGE)
+				score += 1;
+			if(Math.abs(temppoint.get(j).getLongitude()-route.get(j).getLatitude()) < Environment.ERRORRANGE)
+				score += 1;
+		}
+
+		car.setScore(score);
+	}
+
+	/**
+	 * maxscore max값비교하는거
+	 * maxindex score가 max인 값의 carInfolist에서 index
+	 * @return
+	 */
+	public int selectionAlg(){
+
+		int score=0;
+		int maxscore=0;
+		int maxindex = 0;
+		ArrayList<Point> temppoint;
+
+		for(int index=0 ; index<carInfo.size() ; index++)
+		{
+			CarInfo car = carInfo.get(index);
+			score = car.getScore();
+			if(maxscore<score)
+			{
+				maxscore=score;
+				maxindex = index;
+			}
+		}
+
+		return maxindex;
 	}
 
 
@@ -141,7 +195,7 @@ public class MyCar extends Car implements Runnable {
 		int chnType = 0;
 		if (requestCode == Environment._RQ_FIRST_LEG) {
 			chnType = Environment._CCH;
-			
+
 		} else if (requestCode == Environment._RQ_FULL_LEGS) {
 			chnType = Environment._SCH;
 		}
