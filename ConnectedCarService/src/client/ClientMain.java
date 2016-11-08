@@ -1,14 +1,8 @@
 package client;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.InetAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.Scanner;
 
-import common.Environment;
-import common.GeocodeFetcher;
 import common.Point;
 
 public class ClientMain {

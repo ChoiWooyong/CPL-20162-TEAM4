@@ -31,12 +31,12 @@ public class MyCar extends Car implements Runnable {
 	private Thread timer;
 
 	private ArrayList<CarInfo> carInfo;
-	
+
 	/**
 	 * 이미 CCH에서 통신한 차량 패스
 	 */
 	private ArrayList<Integer> mark;
-	
+
 	private int cnt = 0;
 
 	//car info (socket정보 , full path list, score ) selList에있는것만
@@ -57,15 +57,16 @@ public class MyCar extends Car implements Runnable {
 
 		// Car num만큼 찾을 때까지 기다림
 		System.out.println("Waiting for detecting car...");
-		while (socks.size() < Environment._CAR_NUM) ;
+		while (socks.size() < Environment._CAR_NUM)
+			Thread.sleep(500);
 
 		// 통신 시작
 		System.out.println("Starting to communication with other cars...");
 		//while (true) {
-			System.out.println("CCH");
-			CCHPeriod();
-			System.out.println("SCH");
-			SCHPeriod();
+		System.out.println("CCH");
+		CCHPeriod();
+		System.out.println("SCH");
+		SCHPeriod();
 		//}
 	}
 
@@ -74,7 +75,7 @@ public class MyCar extends Car implements Runnable {
 		try {
 			while (true) {
 				socks.add(serv_sock.accept());
-				System.out.println("A car is detected.");
+				System.out.println("A car is detected. " + socks.size());
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -88,6 +89,7 @@ public class MyCar extends Car implements Runnable {
 		timer.start();
 
 		Point firstLeg = route.get(0);
+		
 		// Broadcasting my first leg
 		for (int i = 0; i < socks.size(); i++){
 			writePacket(i, Environment._RQ_FIRST_LEG);
@@ -116,26 +118,27 @@ public class MyCar extends Car implements Runnable {
 
 			// Read Full legs 
 			CarInfo selInfo = carInfo.get(idx);
-			selInfo.setFullpath((ArrayList<Point>) readMsg(idx));
-			selectScore(selInfo);
+			selInfo.setFullPath((ArrayList<Point>) readMsg(idx));
+			calScore(selInfo);
 		}
 
 		timer.join();
 	}
 
+	
+	
+	// Selection Algorithm 관련
 	/**
 	 * 점수계산해서 넣는 것
 	 */
-	public void selectScore(CarInfo car) {
+	public void calScore(CarInfo car) {
+		int score = 0;
+		ArrayList<Point> fullPath = car.getFullPath();
 
-		int score=0;
-		ArrayList<Point> temppoint = car.getFullpath();
-
-		for(int j=0 ; j<temppoint.size() ; j++)
-		{
-			if(Math.abs(temppoint.get(j).getLatitude()-route.get(j).getLatitude()) < Environment.ERRORRANGE)
-				score += 1;
-			if(Math.abs(temppoint.get(j).getLongitude()-route.get(j).getLatitude()) < Environment.ERRORRANGE)
+		for (int i = 0; i < fullPath.size(); i++) {
+			Point curPath = fullPath.get(i);
+			Point curRoute = route.get(i);
+			if(curPath.isEqual(curRoute))  // 위도와 경도가 서로 허용오차범위 이내이면 1점 추가
 				score += 1;
 		}
 
@@ -143,24 +146,18 @@ public class MyCar extends Car implements Runnable {
 	}
 
 	/**
-	 * maxscore max값비교하는거
-	 * maxindex score가 max인 값의 carInfolist에서 index
-	 * @return
+	 * CarInfo에서 Score 중 최고 값을 찾음
+	 * @return max 값을 가진 index
 	 */
-	public int selectionAlg(){
+	public int selectionAlg() {
+		int maxscore = 0;  // score의 max값
+		int maxindex = 0;  // max score을 가진 carInfo의 index
 
-		int score=0;
-		int maxscore=0;
-		int maxindex = 0;
-		ArrayList<Point> temppoint;
-
-		for(int index=0 ; index<carInfo.size() ; index++)
+		for (int index = 0; index < carInfo.size(); index++)
 		{
-			CarInfo car = carInfo.get(index);
-			score = car.getScore();
-			if(maxscore<score)
-			{
-				maxscore=score;
+			int score = carInfo.get(index).getScore();
+			if(maxscore < score) {
+				maxscore = score;
 				maxindex = index;
 			}
 		}

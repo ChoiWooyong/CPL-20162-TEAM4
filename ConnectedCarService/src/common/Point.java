@@ -31,7 +31,7 @@ public class Point {
 	}
 	
 	public boolean isEqual(Point p) {
-		if (p.latitude != latitude || p.longitude != longitude)
+		if (Math.abs(p.latitude - latitude) > Environment.ERRORRANGE || Math.abs(p.longitude - longitude) > Environment.ERRORRANGE)
 			return false;
 		
 		return true;

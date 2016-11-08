@@ -1,6 +1,5 @@
 package server;
 
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -8,10 +7,9 @@ import common.Point;
 
 public class CarInfo {
 	
-	private ArrayList<Point> fullpath;
+	private ArrayList<Point> fullPath;
 	private int score;
 	private int sockIdx;
-	private ArrayList<Socket> selList;
 
 	
 	public CarInfo(int sockIdx)
@@ -20,12 +18,12 @@ public class CarInfo {
 	}
 	
 	
-	public ArrayList<Point> getFullpath() {
-		return fullpath;
+	public ArrayList<Point> getFullPath() {
+		return fullPath;
 	}
 
-	public void setFullpath(ArrayList<Point> fullpath) {
-		this.fullpath = fullpath;
+	public void setFullPath(ArrayList<Point> fullpath) {
+		this.fullPath = fullpath;
 	}
 
 	public int getScore() {
@@ -36,21 +34,11 @@ public class CarInfo {
 		this.score = score;
 	}
 
-	public int getSockIdx() {
-		return sockIdx;
-	}
-
-	public void setSock(int sockIdx) {
+	public void setSockIdx(int sockIdx) {
 		this.sockIdx = sockIdx;
 	}
 
-	public ArrayList<Socket> getSelList() {
-		return selList;
+	public int getSockIdx() {
+		return sockIdx;
 	}
-
-	public void setSelList(ArrayList<Socket> selList) {
-		this.selList = selList;
-	}
-
-	
 }

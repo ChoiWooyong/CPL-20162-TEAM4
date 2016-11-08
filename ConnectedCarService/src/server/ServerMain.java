@@ -1,9 +1,7 @@
 package server;
 
-import java.io.IOException;
 import java.util.Scanner;
 
-import common.Environment;
 import common.Point;
 
 public class ServerMain {
