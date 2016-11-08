@@ -4,15 +4,7 @@ import java.util.ArrayList;
 
 public class Car {
 
-	/**
-	 * 차의 이름
-	 */
-	protected String name;
-
-	/**
-	 * 차 번호
-	 */
-	protected String num;
+	protected CarAttribute attr;
 
 	/**
 	 * Bing Map REST Service 사용을 위한 객체
@@ -25,38 +17,30 @@ public class Car {
 	protected ArrayList<Point> route;
 	
 
-	protected Car(String name, String num, Point departure, Point destination) {
-		this.name = name;
-		this.num = num;
-
+	protected Car(String num, Point departure, Point destination) {
+		attr = new CarAttribute(num);
 		geoFetcher = new GeocodeFetcher(departure, destination);
 		route = geoFetcher.getGeocode();
 	}
-	
 
 
 	// Getter & Setter
-	public String getName() {
-		return name;
+	public CarAttribute getAttr() {
+		return attr;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getNum() {
-		return num;
-	}
-
-	public void setNum(String num) {
-		this.num = num;
-	}
-
-	public void setRoute(ArrayList<Point> route) {
-		this.route = route;
+	public void setAttr(CarAttribute attr) {
+		this.attr = attr;
 	}
 
 	public ArrayList<Point> getRoute() {
 		return route;
 	}
+	
+	public void setRoute(ArrayList<Point> route) {
+		this.route = route;
+	}
+
+
+
 }

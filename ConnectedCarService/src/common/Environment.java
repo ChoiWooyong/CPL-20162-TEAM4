@@ -19,6 +19,7 @@ public class Environment {
 
 	// requestCode, 통신에서 요청할 때 사용
 	public static final int _RQ_NONE = 0;
-	public static final int _RQ_FIRST_LEG = 1;
-	public static final int _RQ_FULL_LEGS = 2;
+	public static final int _RQ_INFO = 1;
+	public static final int _RQ_FIRST_LEG = 2;
+	public static final int _RQ_FULL_LEGS = 3;
 }

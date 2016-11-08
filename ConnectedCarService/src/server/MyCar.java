@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import common.Car;
+import common.CarAttribute;
 import common.Environment;
 import common.Packet;
 import common.Point;
@@ -19,11 +20,6 @@ public class MyCar extends Car implements Runnable {
 	 * 서버 소켓 
 	 */
 	private ServerSocket serv_sock;
-
-	/**
-	 * 모든 socks
-	 */
-	private ArrayList<Socket> socks;
 
 	/**
 	 * CCH, SCH에 시간 할당
@@ -39,16 +35,12 @@ public class MyCar extends Car implements Runnable {
 
 	private int cnt = 0;
 
-	//car info (socket정보 , full path list, score ) selList에있는것만
 
-
-	public MyCar(String name, String num, Point departure, Point destination) throws IOException {
-		super(name, num, departure, destination);
+	public MyCar(String num, Point departure, Point destination) throws IOException {
+		super(num, departure, destination);
+		
 		serv_sock = new ServerSocket(Environment._PORT_NUM);
-		serv_sock.setSoTimeout(0);
-		socks = new ArrayList<Socket>();
 		carInfo = new ArrayList<CarInfo>();
-		timer = new Thread(new SwitchTimer());
 	}
 
 	public void startConnectedCar_Server() throws Exception {
@@ -57,27 +49,28 @@ public class MyCar extends Car implements Runnable {
 
 		// Car num만큼 찾을 때까지 기다림
 		System.out.println("Waiting for detecting car...");
-		while (socks.size() < Environment._CAR_NUM)
+		while (carInfo.size() < Environment._CAR_NUM)
 			Thread.sleep(500);
 
 		// 통신 시작
 		System.out.println("Starting to communication with other cars...");
 		//while (true) {
-		System.out.println("CCH");
 		CCHPeriod();
-		System.out.println("SCH");
 		SCHPeriod();
 		//}
+		System.out.println(carInfo.get(0).getScore());
 	}
 
 	@Override
 	public void run() {
 		try {
-			while (true) {
-				socks.add(serv_sock.accept());
-				System.out.println("A car is detected. " + socks.size());
+			for (int i = 0; ; i++) {
+				Socket sock = serv_sock.accept();
+				carInfo.add(new CarInfo(sock));
+				writePacket(i, Environment._RQ_INFO);
+				carInfo.get(i).setAttr((CarAttribute) readMsg(i));
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {	
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -86,21 +79,22 @@ public class MyCar extends Car implements Runnable {
 
 	// Method for WAVE communication
 	protected void CCHPeriod() throws Exception {
+		System.out.println("CCH Period");
+		timer = new Thread(new SwitchTimer());
 		timer.start();
 
 		Point firstLeg = route.get(0);
 		
 		// Broadcasting my first leg
-		for (int i = 0; i < socks.size(); i++){
+		for (int i = 0; i < carInfo.size(); i++){
 			writePacket(i, Environment._RQ_FIRST_LEG);
 		}
 
 		// Getting response from other cars
-		for (int i = 0; i < socks.size(); i++){
+		for (int i = 0; i < carInfo.size(); i++){
 			Point p = (Point) readMsg(i);
 			if (firstLeg.isEqual(p)) {
-				carInfo.add(new CarInfo(i));
-				// 중복 거르기
+				carInfo.get(i).setWorth(true);
 			}
 		}
 
@@ -108,6 +102,8 @@ public class MyCar extends Car implements Runnable {
 	}
 
 	protected void SCHPeriod() throws Exception {
+		System.out.println("SCH Period");
+		timer = new Thread(new SwitchTimer());
 		timer.start();
 
 		if (cnt < carInfo.size()) {
@@ -150,7 +146,7 @@ public class MyCar extends Car implements Runnable {
 	 * @return max 값을 가진 index
 	 */
 	public int selectionAlg() {
-		int maxscore = 0;  // score의 max값
+		int maxscore = 0;  // score의 max 값
 		int maxindex = 0;  // max score을 가진 carInfo의 index
 
 		for (int index = 0; index < carInfo.size(); index++)
@@ -174,36 +170,29 @@ public class MyCar extends Car implements Runnable {
 	 * @throws Exception
 	 */
 	private Object readMsg(int idx) throws Exception {
-		ObjectInputStream in = new ObjectInputStream(socks.get(idx).getInputStream());
+		ObjectInputStream in = new ObjectInputStream(carInfo.get(idx).getSock().getInputStream());
 		Packet pk = (Packet) in.readObject();
-		in.close();
 		return pk.getMessage();
 	}
 
 	/**
 	 * Packet을 보낸다
-	 * @param idx sock의 index
-	 * @param requestCode 무엇을 request할 것 인가
+	 * @param idx CarInfo의 index
+	 * @param requestCode 무엇을 요청할 것 인가
 	 * @throws Exception
 	 */
 	private void writePacket(int idx, int requestCode) throws Exception {
-		ObjectOutputStream out = new ObjectOutputStream(socks.get(idx).getOutputStream());
-
+		ObjectOutputStream out = new ObjectOutputStream(carInfo.get(idx).getSock().getOutputStream());
+		
 		int chnType = 0;
-		if (requestCode == Environment._RQ_FIRST_LEG) {
+		if (requestCode == Environment._RQ_FIRST_LEG || requestCode == Environment._RQ_INFO) {
 			chnType = Environment._CCH;
-
+			
 		} else if (requestCode == Environment._RQ_FULL_LEGS) {
 			chnType = Environment._SCH;
 		}
+		
 		Packet pk = new Packet(chnType, requestCode, null);
 		out.writeObject(pk);
-		out.close();
-	}
-
-
-	// Getter & Setter
-	public ArrayList<Socket> getSocks() {
-		return socks;
 	}
 }

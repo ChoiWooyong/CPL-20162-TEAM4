@@ -1,11 +1,13 @@
 package common;
 
+import java.io.Serializable;
+
 /**
  * 위도, 경도 정보를 담을 Information class
  * @author 최우용
  *
  */
-public class Point {
+public class Point implements Serializable {
 	private double latitude;
 	private double longitude;
 	

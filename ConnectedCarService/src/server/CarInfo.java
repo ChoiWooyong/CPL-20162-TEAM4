@@ -3,21 +3,29 @@ package server;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import common.CarAttribute;
 import common.Point;
 
 public class CarInfo {
 	
+	private Socket sock;
+	private CarAttribute attr;
 	private ArrayList<Point> fullPath;
 	private int score;
-	private int sockIdx;
+	
+	/**
+	 * SCH에서 고려 할 가치가 있는가
+	 */
+	private boolean isWorth;
 
 	
-	public CarInfo(int sockIdx)
-	{
+	public CarInfo(Socket sock) {
+		this.sock = sock;
 		score = -1;
+		isWorth = false;
 	}
-	
-	
+
+
 	public ArrayList<Point> getFullPath() {
 		return fullPath;
 	}
@@ -34,11 +42,27 @@ public class CarInfo {
 		this.score = score;
 	}
 
-	public void setSockIdx(int sockIdx) {
-		this.sockIdx = sockIdx;
+	public CarAttribute getAttr() {
+		return attr;
 	}
 
-	public int getSockIdx() {
-		return sockIdx;
+	public void setAttr(CarAttribute attr) {
+		this.attr = attr;
+	}
+
+	public Socket getSock() {
+		return sock;
+	}
+
+	public void setSock(Socket sock) {
+		this.sock = sock;
+	}
+
+	public boolean isWorth() {
+		return isWorth;
+	}
+
+	public void setWorth(boolean isWorth) {
+		this.isWorth = isWorth;
 	}
 }
