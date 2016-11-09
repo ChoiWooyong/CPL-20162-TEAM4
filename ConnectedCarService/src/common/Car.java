@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 public class Car {
 
+	/**
+	 * 해당 차의 특성 (차번호 등)
+	 */
 	protected CarAttribute attr;
 
 	/**
@@ -17,9 +20,23 @@ public class Car {
 	protected ArrayList<Point> route;
 	
 
+	// test용 생성자
 	protected Car(String num, Point departure, Point destination) {
 		attr = new CarAttribute(num);
 		geoFetcher = new GeocodeFetcher(departure, destination);
+		route = geoFetcher.getGeocode();
+	}
+	
+	// test용 생성자
+	protected Car(CarAttribute attr, Point departure, Point destination) {
+		this.attr = attr;
+		geoFetcher = new GeocodeFetcher(departure, destination);
+		route = geoFetcher.getGeocode();
+	}
+	
+	protected Car(String num, Point destination) {
+		attr = new CarAttribute(num);
+		geoFetcher = new GeocodeFetcher(getCurPosistion(), destination);
 		route = geoFetcher.getGeocode();
 	}
 
@@ -40,7 +57,10 @@ public class Car {
 	public void setRoute(ArrayList<Point> route) {
 		this.route = route;
 	}
-
-
-
+	
+	public Point getCurPosistion() {
+		
+		
+		return new Point(0.0, 0.0);
+	}
 }

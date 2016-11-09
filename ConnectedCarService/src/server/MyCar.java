@@ -26,6 +26,9 @@ public class MyCar extends Car implements Runnable {
 	 */
 	private Thread timer;
 
+	/**
+	 * 소켓과 풀 패쓰 등 차량 정보를 가지고 있음
+	 */
 	private ArrayList<CarInfo> carInfo;
 
 	/**
@@ -33,11 +36,21 @@ public class MyCar extends Car implements Runnable {
 	 */
 	private ArrayList<Integer> mark;
 
-	private int cnt = 0;
+	/**
+	 * 다음 SCH할 index 및 SCH 통신 한 개수
+	 */
+	private int schCnt = 0;
 
 
 	public MyCar(String num, Point departure, Point destination) throws IOException {
 		super(num, departure, destination);
+		
+		serv_sock = new ServerSocket(Environment._PORT_NUM);
+		carInfo = new ArrayList<CarInfo>();
+	}
+	
+	public MyCar(CarAttribute attr, Point departure, Point destination) throws IOException {
+		super(attr, departure, destination);
 		
 		serv_sock = new ServerSocket(Environment._PORT_NUM);
 		carInfo = new ArrayList<CarInfo>();
@@ -49,18 +62,22 @@ public class MyCar extends Car implements Runnable {
 
 		// Car num만큼 찾을 때까지 기다림
 		System.out.println("Waiting for detecting car...");
-		while (carInfo.size() < Environment._CAR_NUM)
-			Thread.sleep(500);
 
 		// 통신 시작
 		System.out.println("Starting to communication with other cars...");
-		//while (true) {
-		CCHPeriod();
-		SCHPeriod();
-		//}
-		System.out.println(carInfo.get(0).getScore());
+		while (true) {
+			if (schCnt == Environment._CAR_NUM)
+				break;
+			//System.out.print("CCC");
+			CCHPeriod();
+			//System.out.print("SSS");
+			SCHPeriod();
+		}
+		
+		System.out.println(selectionAlg() + "번째 차량이 셀렉트됨.");
 	}
 
+	
 	@Override
 	public void run() {
 		try {
@@ -84,17 +101,24 @@ public class MyCar extends Car implements Runnable {
 		timer.start();
 
 		Point firstLeg = route.get(0);
-		
+
+		//System.out.println("Broadcast send");
 		// Broadcasting my first leg
-		for (int i = 0; i < carInfo.size(); i++){
+		for (int i = 0; i < carInfo.size(); i++) {
+			if (carInfo.get(i).getState() >= 1)
+				continue;
 			writePacket(i, Environment._RQ_FIRST_LEG);
 		}
 
+		//System.out.println("Broadcast receive");
 		// Getting response from other cars
-		for (int i = 0; i < carInfo.size(); i++){
+		for (int i = 0; i < carInfo.size(); i++) {
+			if (carInfo.get(i).getState() >= 1)
+				continue;
 			Point p = (Point) readMsg(i);
-			if (firstLeg.isEqual(p)) {
-				carInfo.get(i).setWorth(true);
+			carInfo.get(i).goNextState();  // CCH 했다 표시
+			if (!firstLeg.isEqual(p)) {
+				carInfo.remove(i);
 			}
 		}
 
@@ -106,16 +130,24 @@ public class MyCar extends Car implements Runnable {
 		timer = new Thread(new SwitchTimer());
 		timer.start();
 
-		if (cnt < carInfo.size()) {
-			int idx = cnt++;  // 멀리가서 통신안되는거 배제
+		// Mutex 써야되나..?
+		if (schCnt < carInfo.size() && carInfo.get(schCnt).getState() == 1) {
+			int idx = schCnt++;
 
+			//System.out.println("request Full legs");
 			// Request Full legs
 			writePacket(idx, Environment._RQ_FULL_LEGS);
 
+			//System.out.println("read Full legs");
 			// Read Full legs 
-			CarInfo selInfo = carInfo.get(idx);
-			selInfo.setFullPath((ArrayList<Point>) readMsg(idx));
-			calScore(selInfo);
+			CarInfo curCar = carInfo.get(idx);
+			Object obj = readMsg(idx);
+			if (obj instanceof ArrayList<?>) {
+				curCar.setFullPath((ArrayList<Point>) obj);
+				carInfo.get(idx).goNextState();
+			
+				calScore(curCar);
+			}
 		}
 
 		timer.join();
@@ -128,15 +160,33 @@ public class MyCar extends Car implements Runnable {
 	 * 점수계산해서 넣는 것
 	 */
 	public void calScore(CarInfo car) {
-		int score = 0;
+		float score = 0;
 		ArrayList<Point> fullPath = car.getFullPath();
 
-		for (int i = 0; i < fullPath.size(); i++) {
+		// Route 비교하면서 기본 점수 계산
+		int minSize = Math.min(fullPath.size(), route.size());
+		for (int i = 0; i < minSize; i++) {
 			Point curPath = fullPath.get(i);
 			Point curRoute = route.get(i);
 			if(curPath.isEqual(curRoute))  // 위도와 경도가 서로 허용오차범위 이내이면 1점 추가
 				score += 1;
 		}
+		
+		// Attribute에 따라서 점수 가감
+		CarAttribute curAttr = car.getAttr();
+
+		int suit = 0;
+		if (curAttr.getCareer() == attr.getCareer())
+			suit++;
+		if (curAttr.getGender() == attr.getGender())
+			suit++;
+		if (curAttr.getAge() == attr.getAge())
+			suit++;
+		if (curAttr.getType() == attr.getType())
+			suit++;
+		
+		// 1개 같을 때 마다 10% 가산점
+		score = (float) (score * (1.0 + (suit / 100.0)));
 
 		car.setScore(score);
 	}
@@ -146,12 +196,12 @@ public class MyCar extends Car implements Runnable {
 	 * @return max 값을 가진 index
 	 */
 	public int selectionAlg() {
-		int maxscore = 0;  // score의 max 값
+		float maxscore = 0;  // score의 max 값
 		int maxindex = 0;  // max score을 가진 carInfo의 index
 
 		for (int index = 0; index < carInfo.size(); index++)
 		{
-			int score = carInfo.get(index).getScore();
+			float score = carInfo.get(index).getScore();
 			if(maxscore < score) {
 				maxscore = score;
 				maxindex = index;

@@ -11,18 +11,19 @@ public class CarInfo {
 	private Socket sock;
 	private CarAttribute attr;
 	private ArrayList<Point> fullPath;
-	private int score;
+	private float score;
 	
 	/**
-	 * SCH에서 고려 할 가치가 있는가
+	 * state = 0 : Before CCH
+	 * state = 1 : After CCH & Before SCH
+	 * state = 2 : After SCH
 	 */
-	private boolean isWorth;
-
+	private short state;
 	
 	public CarInfo(Socket sock) {
 		this.sock = sock;
+		state = 0;
 		score = -1;
-		isWorth = false;
 	}
 
 
@@ -34,11 +35,11 @@ public class CarInfo {
 		this.fullPath = fullpath;
 	}
 
-	public int getScore() {
+	public float getScore() {
 		return score;
 	}
 
-	public void setScore(int score) {
+	public void setScore(float score) {
 		this.score = score;
 	}
 
@@ -58,11 +59,11 @@ public class CarInfo {
 		this.sock = sock;
 	}
 
-	public boolean isWorth() {
-		return isWorth;
+	public short getState() {
+		return state;
 	}
 
-	public void setWorth(boolean isWorth) {
-		this.isWorth = isWorth;
+	public void goNextState() {
+		state++;
 	}
 }
