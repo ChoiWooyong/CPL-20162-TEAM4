@@ -39,24 +39,6 @@ public class Car {
 		geoFetcher = new GeocodeFetcher(getCurPosistion(), destination);
 		route = geoFetcher.getGeocode();
 	}
-
-
-	// Getter & Setter
-	public CarAttribute getAttr() {
-		return attr;
-	}
-
-	public void setAttr(CarAttribute attr) {
-		this.attr = attr;
-	}
-
-	public ArrayList<Point> getRoute() {
-		return route;
-	}
-	
-	public void setRoute(ArrayList<Point> route) {
-		this.route = route;
-	}
 	
 	public Point getCurPosistion() {
 		

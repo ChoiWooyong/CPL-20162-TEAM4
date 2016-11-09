@@ -57,10 +57,10 @@ public class CarAttribute implements Serializable, Runnable {
 	
 	@Override
 	public void run() {
-		// while(true) {
-		// updateMaxSpeed
-		// sleep(2000);
-		// }
+		//while(true) {
+		//	if maxSpeed 
+		//	sleep(2000);
+		//}
 	}
 	
 	// Getter & Setter
