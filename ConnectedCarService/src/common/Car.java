@@ -1,48 +1,60 @@
 package common;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Car {
 
-	/**
-	 * 해당 차의 특성 (차번호 등)
-	 */
+	String[] cmd = {"sudo", "gpsd", "/dev/ttyS0", "-F", "/var/run/gpsd.sock"};
+
 	protected CarAttribute attr;
 
-	/**
-	 * Bing Map REST Service 사용을 위한 객체
-	 */
 	protected GeocodeFetcher geoFetcher;
-	
-	/**
-	 * 경로 정보
-	 */
+
 	protected ArrayList<Point> route;
 	
+    protected getGpsInfo getInfo;
 
-	// test용 생성자
+
 	protected Car(String num, Point departure, Point destination) {
 		attr = new CarAttribute(num);
 		geoFetcher = new GeocodeFetcher(departure, destination);
 		route = geoFetcher.getGeocode();
 	}
 	
-	// test용 생성자
+
 	protected Car(CarAttribute attr, Point departure, Point destination) {
 		this.attr = attr;
 		geoFetcher = new GeocodeFetcher(departure, destination);
 		route = geoFetcher.getGeocode();
 	}
 	
-	protected Car(String num, Point destination) {
-		attr = new CarAttribute(num);
+	protected Car(CarAttribute attr, Point destination) {
+		this.attr = attr;
 		geoFetcher = new GeocodeFetcher(getCurPosistion(), destination);
 		route = geoFetcher.getGeocode();
 	}
-	
+
+
 	public Point getCurPosistion() {
-		
-		
-		return new Point(0.0, 0.0);
+		Process p = null;
+		try{
+			p=Runtime.getRuntime().exec(cmd);
+			p.getErrorStream().close();
+			p.getInputStream().close();
+			p.getOutputStream().close();
+			p.waitFor();
+		}catch(Exception e){
+			e.printStackTrace();
+		}		
+
+		System.out.println("Getting GPS Information...");	
+		getInfo = new getGpsInfo();
+         	double[] infoArray;
+         	infoArray = getInfo.makeArray();
+         	getInfo.getGps(infoArray);
+
+         	return new Point(infoArray[0], infoArray[1]);
+
 	}
 }

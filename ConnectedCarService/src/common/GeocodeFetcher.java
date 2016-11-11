@@ -62,10 +62,10 @@ public class GeocodeFetcher {
         	
         	Document doc = parseXML(is);
 
-        	// Tree 구성
+     
             doc.getDocumentElement().normalize();
 
-            // 잡다한거 많이 -> Route -> RouteLeg -> ItineraryItem
+
             NodeList RouteLeg = doc.getFirstChild().getLastChild().getFirstChild().getLastChild().getFirstChild().getLastChild().getChildNodes();
             
             
@@ -84,13 +84,7 @@ public class GeocodeFetcher {
         
         return null;
 	}
-	
-	/**
-	 * XML string -> Document object
-	 * @param stream
-	 * @return
-	 * @throws Exception
-	 */
+
 	private Document parseXML(InputSource stream) {
 
 	    DocumentBuilderFactory objDocumentBuilderFactory = null;

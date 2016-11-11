@@ -6,6 +6,7 @@ import java.util.Scanner;
 import common.CarAttribute;
 import common.Point;
 
+
 public class ServerMain {
 	public static void main(String[] args) throws Exception
 	{
@@ -13,7 +14,7 @@ public class ServerMain {
 
 		Scanner in = new Scanner(System.in);
 		System.out.print("Car Number : ");
-		String num = in.nextLine();
+		String num = in.next();
 		
 		// Attribute
 		System.out.print("Target Driving Career : ");
@@ -29,7 +30,6 @@ public class ServerMain {
 		//MyCar myCar = new MyCar(num, new Point(0, 0), new Point(0, 0));
 		MyCar myCar = new MyCar(
 				new CarAttribute(num, career, gender, age, type),
-				new Point(35.885122, 128.614304),
 				new Point(35.899157, 128.638201)
 		);
 

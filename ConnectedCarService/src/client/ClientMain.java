@@ -15,7 +15,7 @@ public class ClientMain {
 		Scanner in = new Scanner(System.in);
 		
 		System.out.print("Car Number : ");
-		String num = in.nextLine();
+		String num = in.next();
 		
 		// Attribute
 		System.out.print("Driving Career : ");
@@ -28,12 +28,11 @@ public class ClientMain {
 		short type = in.nextShort();
 
 		System.out.print("Server IP : ");
-		String serv_ip = in.nextLine();
+		String serv_ip = in.next();
 		
 		//OtherCar car = new OtherCar(name, num, new Point(0, 0), new Point(0, 0));  35.899157
 		OtherCar car = new OtherCar(
 				new CarAttribute(num, career, gender, age, type),
-				new Point(35.885122, 128.614304),
 				new Point(Double.parseDouble(num), 128.638201)
 		);
 		

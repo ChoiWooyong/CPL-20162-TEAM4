@@ -4,37 +4,19 @@ import java.io.Serializable;
 
 public class CarAttribute implements Serializable, Runnable {
 
-	/**
-	 * 차 번호
-	 */
+
 	private String num;
 	
-	/**
-	 * career = 1 : 운전 경력 2년 이하 
-	 * career = 2 : 운전 경력 2년 ~ 5년 
-	 * career = 3 : 운전 경력 5년 이상
-	 */
 	private short career;
-	
-	/**
-	 * gender = 1 : 남성
-	 * gender = 2 : 여성
-	 */
+
 	private short gender;
 	
 	private short age;
 	
-	/**
-	 * type = 1 : 소형
-	 * type = 2 : 중형
-	 * type = 3 : 대형
-	 */
 	private short type;
 	
 	private double maxSpeed;
 	
-	// 운전 경력, 운전 평균 속도, 성별, 차종, 나이
-
 	public CarAttribute(String num) {
 		this.num = num;
 		this.career = -1;

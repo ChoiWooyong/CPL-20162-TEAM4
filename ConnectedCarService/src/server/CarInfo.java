@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import common.CarAttribute;
 import common.Point;
 
+
 public class CarInfo {
 	
 	private Socket sock;

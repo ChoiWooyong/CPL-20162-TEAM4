@@ -11,11 +11,9 @@ import common.Environment;
 import common.Packet;
 import common.Point;
 
+
 public class OtherCar extends Car {
 
-	/**
-	 * 서버와의 소켓
-	 */
 	private Socket sock;
 
 	public OtherCar(String num, Point departure, Point destination) {
@@ -24,6 +22,10 @@ public class OtherCar extends Car {
 	
 	public OtherCar(CarAttribute attr, Point departure, Point destination) {
 		super(attr, departure, destination);
+	}
+
+	public OtherCar(CarAttribute attr, Point destination) {
+		super(attr, destination);
 	}
 
 	public void startConnectedCar_Client(String serv_ip) throws Exception {
@@ -51,23 +53,13 @@ public class OtherCar extends Car {
 	}
 
 
-	// Read & Write Packet
-	/**
-	 * 
-	 * @return requestCode를 return
-	 * @throws Exception
-	 */
 	private int readReqCode() throws Exception {
 		ObjectInputStream in = new ObjectInputStream(sock.getInputStream());
 		Packet pk = (Packet) in.readObject();
 		return pk.getRequestCode();
 	}
 
-	/**
-	 * 
-	 * @param obj 보낼 객체 (first-leg or full-legs or attribute)
-	 * @throws Exception
-	 */
+
 	private void writePacket(Object obj) throws Exception {
 		ObjectOutputStream out = new ObjectOutputStream(sock.getOutputStream());
 
