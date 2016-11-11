@@ -31,9 +31,10 @@ public class ClientMain {
 		String serv_ip = in.next();
 		
 		//OtherCar car = new OtherCar(name, num, new Point(0, 0), new Point(0, 0));  35.899157
+		// Daegu Airport : 35.899500, 128.638377
 		OtherCar car = new OtherCar(
 				new CarAttribute(num, career, gender, age, type),
-				new Point(Double.parseDouble(num), 128.638201)
+				new Point(35.899500, 128.638201)
 		);
 		
 		System.out.println("Starting Connected Car Service for client...");

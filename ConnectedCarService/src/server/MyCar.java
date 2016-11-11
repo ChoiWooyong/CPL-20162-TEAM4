@@ -52,7 +52,8 @@ public class MyCar extends Car implements Runnable {
 
 	public void startConnectedCar_Server() throws Exception {
 
-		new Thread(this).start();
+		Thread accepter = new Thread(this);
+		accepter.start();
 
 		System.out.println("Waiting for detecting car...");
 
@@ -61,13 +62,12 @@ public class MyCar extends Car implements Runnable {
 		while (true) {
 			if (schCnt == Environment._CAR_NUM)
 				break;
-			//System.out.print("CCC");
 			CCHPeriod();
-			//System.out.print("SSS");
 			SCHPeriod();
 		}
 		
 		System.out.println(selectionAlg() + "is selected");
+		accepter.stop();
 	}
 
 	
@@ -95,7 +95,6 @@ public class MyCar extends Car implements Runnable {
 
 		Point firstLeg = route.get(0);
 
-		//System.out.println("Broadcast send");
 		// Broadcasting my first leg
 		for (int i = 0; i < carInfo.size(); i++) {
 			if (carInfo.get(i).getState() >= 1)
@@ -103,7 +102,6 @@ public class MyCar extends Car implements Runnable {
 			writePacket(i, Environment._RQ_FIRST_LEG);
 		}
 
-		//System.out.println("Broadcast receive");
 		// Getting response from other cars
 		for (int i = 0; i < carInfo.size(); i++) {
 			if (carInfo.get(i).getState() >= 1)
@@ -125,11 +123,9 @@ public class MyCar extends Car implements Runnable {
 		if (schCnt < carInfo.size() && carInfo.get(schCnt).getState() == 1) {
 			int idx = schCnt++;
 
-			//System.out.println("request Full legs");
 			// Request Full legs
 			writePacket(idx, Environment._RQ_FULL_LEGS);
 
-			//System.out.println("read Full legs");
 			// Read Full legs 
 			CarInfo curCar = carInfo.get(idx);
 			Object obj = readMsg(idx);
