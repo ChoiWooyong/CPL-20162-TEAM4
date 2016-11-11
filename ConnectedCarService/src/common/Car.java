@@ -20,7 +20,6 @@ public class Car {
 		attr = new CarAttribute(num);
 		geoFetcher = new GeocodeFetcher(departure, destination);
 		route = geoFetcher.getGeocode();
-		System.out.println("route.size = " + route.size());
 	}
 
 
@@ -32,8 +31,12 @@ public class Car {
 
 	protected Car(CarAttribute attr, Point destination) {
 		this.attr = attr;
-		geoFetcher = new GeocodeFetcher(getCurPosistion(), destination);
+		Point curPos = getCurPosistion();
+		geoFetcher = new GeocodeFetcher(curPos, destination);
 		route = geoFetcher.getGeocode();
+
+		System.out.println(curPos + " -> " + destination);
+		System.out.println("route.size = " + route.size());
 	}
 
 
