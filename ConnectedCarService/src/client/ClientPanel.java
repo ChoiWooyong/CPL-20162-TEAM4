@@ -3,13 +3,27 @@ package client;
 import java.net.InetAddress;
 import java.util.Scanner;
 
+import javax.swing.JPanel;
+
 import common.CarAttribute;
 import common.Point;
+import javax.swing.JTextField;
+import javax.swing.JButton;
 
-public class ClientMain {
+public class ClientPanel extends JPanel {
 
-	public static void main(String[] args) throws Exception{
+	public ClientPanel() throws Exception {
+		setBounds(0, 0, 1008, 730);
+		setLayout(null);
 		
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.setBounds(350, 261, 97, 23);
+		add(btnNewButton);
+		
+		setVisible(true);
+		
+		
+		/*
 		System.out.println("My IP Address : " + InetAddress.getLocalHost().getHostAddress());
 		
 		Scanner in = new Scanner(System.in);
@@ -39,7 +53,6 @@ public class ClientMain {
 		
 		System.out.println("Starting Connected Car Service for client...");
 		car.startConnectedCar_Client(serv_ip);
+		*/
 	}
-	
-	
 }

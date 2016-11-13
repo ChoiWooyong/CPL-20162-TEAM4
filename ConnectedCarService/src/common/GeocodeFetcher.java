@@ -62,9 +62,7 @@ public class GeocodeFetcher {
         	
         	Document doc = parseXML(is);
 
-     
             doc.getDocumentElement().normalize();
-
 
             NodeList RouteLeg = doc.getFirstChild().getLastChild().getFirstChild().getLastChild().getFirstChild().getLastChild().getChildNodes();
             
@@ -90,7 +88,7 @@ public class GeocodeFetcher {
 	    DocumentBuilderFactory objDocumentBuilderFactory = null;
 	    DocumentBuilder objDocumentBuilder = null;
 	    Document doc = null;
-
+	    
 	    try{
 	        objDocumentBuilderFactory = DocumentBuilderFactory.newInstance();
 	        objDocumentBuilder = objDocumentBuilderFactory.newDocumentBuilder();
