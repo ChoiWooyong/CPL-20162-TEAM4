@@ -3,13 +3,39 @@ package server;
 import java.net.InetAddress;
 import java.util.Scanner;
 
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
 import common.CarAttribute;
 import common.Point;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import java.awt.Font;
 
 
-public class ServerMain {
-	public static void main(String[] args) throws Exception
+public class ServerPanel extends JPanel {
+	
+	public ServerPanel() 
 	{
+		setBounds(0, 0, 1008, 730);
+		setLayout(null);
+		
+		JLabel label = new JLabel("\uC131\uBCC4");
+		label.setFont(new Font("±¼¸²", Font.PLAIN, 20));
+		label.setBounds(431, 208, 46, 23);
+		add(label);
+		
+		JRadioButton radioButton = new JRadioButton("\uB0A8");
+		radioButton.setBounds(485, 210, 37, 23);
+		add(radioButton);
+		
+		JRadioButton radioButton_1 = new JRadioButton("\uC5EC");
+		radioButton_1.setBounds(526, 210, 37, 23);
+		add(radioButton_1);
+		
+		setVisible(true);
+		
+		/*
 		System.out.println("My IP Address : " + InetAddress.getLocalHost().getHostAddress()); 
 
 		Scanner in = new Scanner(System.in);
@@ -34,5 +60,6 @@ public class ServerMain {
 		);
 
 		myCar.startConnectedCar_Server();
+		*/
 	}
 }
