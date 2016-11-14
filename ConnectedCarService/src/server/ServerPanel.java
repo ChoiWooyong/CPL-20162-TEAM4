@@ -3,37 +3,116 @@ package server;
 import java.net.InetAddress;
 import java.util.Scanner;
 
+import javax.swing.Box;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import common.CarAttribute;
 import common.Point;
+import common.gui.MyPanel;
+
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+
 import java.awt.Font;
 
 
-public class ServerPanel extends JPanel {
+public class ServerPanel extends MyPanel {
 	
 	public ServerPanel() 
-	{
-		setBounds(0, 0, 1008, 730);
-		setLayout(null);
+	{		
+		Box labelBox = Box.createVerticalBox();
+		labelBox.setToolTipText("");
+		labelBox.setBounds(320, 500, 133, 98);
+		add(labelBox);
 		
-		JLabel label = new JLabel("\uC131\uBCC4");
-		label.setFont(new Font("±¼¸²", Font.PLAIN, 20));
-		label.setBounds(431, 208, 46, 23);
-		add(label);
+		JLabel lblAge = new JLabel("Age");
+		lblAge.setFont(new Font("±¼¸²", Font.BOLD, 20));
+		labelBox.add(lblAge);
 		
-		JRadioButton radioButton = new JRadioButton("\uB0A8");
-		radioButton.setBounds(485, 210, 37, 23);
-		add(radioButton);
+		JLabel lblGender = new JLabel("Gender");
+		lblGender.setFont(new Font("±¼¸²", Font.BOLD, 20));
+		labelBox.add(lblGender);
 		
-		JRadioButton radioButton_1 = new JRadioButton("\uC5EC");
-		radioButton_1.setBounds(526, 210, 37, 23);
-		add(radioButton_1);
+		JLabel lblCareer = new JLabel("Driving Career");
+		lblCareer.setFont(new Font("±¼¸²", Font.BOLD, 20));
+		labelBox.add(lblCareer);
 		
-		setVisible(true);
+		JLabel lblType = new JLabel("Car Type");
+		lblType.setFont(new Font("±¼¸²", Font.BOLD, 20));
+		labelBox.add(lblType);
+		
+		
+		Box infoBox = Box.createVerticalBox();
+		infoBox.setBounds(453, 500, 243, 98);
+		add(infoBox);
+		
+		JTextField ageField = new JTextField();
+		infoBox.add(ageField);
+		ageField.setHorizontalAlignment(JTextField.CENTER);
+		ageField.setColumns(9);
+		
+		Box GenderBox = Box.createHorizontalBox();
+		infoBox.add(GenderBox);
+		
+		JRadioButton rdbtnMale = new JRadioButton("Male    ");
+		GenderBox.add(rdbtnMale);
+		
+		JRadioButton rdbtnFemale = new JRadioButton("Female");
+		GenderBox.add(rdbtnFemale);
+
+		ButtonGroup genderGroup = new ButtonGroup();
+		genderGroup.add(rdbtnMale);
+		genderGroup.add(rdbtnFemale);
+		
+		
+		Box CareerBox = Box.createHorizontalBox();
+		infoBox.add(CareerBox);
+		
+		JRadioButton rdbtnBeginner = new JRadioButton("Beginner");
+		CareerBox.add(rdbtnBeginner);
+		
+		JRadioButton rdbtnIntermediate = new JRadioButton("Intermediate");
+		CareerBox.add(rdbtnIntermediate);
+		
+		JRadioButton rdbtnExpert = new JRadioButton("Expert");
+		CareerBox.add(rdbtnExpert);
+		
+		ButtonGroup careerGroup = new ButtonGroup();
+		careerGroup.add(rdbtnBeginner);
+		careerGroup.add(rdbtnIntermediate);
+		careerGroup.add(rdbtnExpert);
+		
+		
+		Box TypeBox = Box.createHorizontalBox();
+		infoBox.add(TypeBox);
+		
+		JRadioButton rdbtnSmall = new JRadioButton("Small  ");
+		TypeBox.add(rdbtnSmall);
+		
+		JRadioButton rdbtnMedium = new JRadioButton("Medium  ");
+		TypeBox.add(rdbtnMedium);
+		
+		JRadioButton rdbtnLarge = new JRadioButton("Large");
+		TypeBox.add(rdbtnLarge);
+
+		ButtonGroup typeGroup = new ButtonGroup();
+		typeGroup.add(rdbtnSmall);
+		typeGroup.add(rdbtnMedium);
+		typeGroup.add(rdbtnLarge);
+		
+		
+		JButton btnCommit = new JButton("Commit");
+		btnCommit.setFont(new Font("±¼¸²", Font.BOLD, 20));
+		btnCommit.setBounds(444, 634, 121, 38);
+		add(btnCommit);
+		
+		JLabel lblChooseOptionYou = new JLabel("Choose options you want");
+		lblChooseOptionYou.setFont(new Font("±¼¸²", Font.PLAIN, 14));
+		lblChooseOptionYou.setBounds(320, 471, 183, 15);
+		add(lblChooseOptionYou);
 		
 		/*
 		System.out.println("My IP Address : " + InetAddress.getLocalHost().getHostAddress()); 

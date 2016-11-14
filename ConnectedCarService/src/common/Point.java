@@ -29,7 +29,7 @@ public class Point implements Serializable {
 	}
 	
 	public boolean isEqual(Point p) {
-		if (Math.abs(p.latitude - latitude) > Environment.ERRORRANGE || Math.abs(p.longitude - longitude) > Environment.ERRORRANGE)
+		if (Math.abs(p.latitude - latitude) > Environment._ERRORRANGE || Math.abs(p.longitude - longitude) > Environment._ERRORRANGE)
 			return false;
 		
 		return true;
