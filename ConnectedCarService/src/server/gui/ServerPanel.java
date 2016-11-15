@@ -1,28 +1,28 @@
-package client;
+package server.gui;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.net.InetAddress;
 import java.util.Scanner;
 
+import javax.swing.Box;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 
 import common.CarAttribute;
 import common.Point;
 import common.gui.MyPanel;
 
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.Box;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 
-public class ClientPanel extends MyPanel {
+import java.awt.Font;
 
-	public ClientPanel() throws Exception {
-		
+
+public class ServerPanel extends MyPanel {
+	
+	public ServerPanel(String[] args) 
+	{		
 		Box labelBox = Box.createVerticalBox();
 		labelBox.setToolTipText("");
 		labelBox.setBounds(320, 500, 133, 98);
@@ -109,36 +109,36 @@ public class ClientPanel extends MyPanel {
 		btnCommit.setBounds(444, 634, 121, 38);
 		add(btnCommit);
 		
+		JLabel lblChooseOptionYou = new JLabel("Choose options you want");
+		lblChooseOptionYou.setFont(new Font("±¼¸²", Font.PLAIN, 14));
+		lblChooseOptionYou.setBounds(320, 471, 183, 15);
+		add(lblChooseOptionYou);
+		
 		/*
-		System.out.println("My IP Address : " + InetAddress.getLocalHost().getHostAddress());
-		
+		System.out.println("My IP Address : " + InetAddress.getLocalHost().getHostAddress()); 
+
 		Scanner in = new Scanner(System.in);
-		
 		System.out.print("Car Number : ");
 		String num = in.next();
 		
 		// Attribute
-		System.out.print("Driving Career : ");
+		System.out.print("Target Driving Career : ");
 		short career = in.nextShort();
-		System.out.print("Gender : ");
+		System.out.print("Target Gender : ");
 		short gender = in.nextShort();
-		System.out.print("Age : ");
+		System.out.print("Target Age : ");
 		short age = in.nextShort();
-		System.out.print("Type : ");
+		System.out.print("Target Type : ");
 		short type = in.nextShort();
 
-		System.out.print("Server IP : ");
-		String serv_ip = in.next();
-		
-		//OtherCar car = new OtherCar(name, num, new Point(0, 0), new Point(0, 0));  35.899157
-		// Daegu Airport : 35.899500, 128.638377
-		OtherCar car = new OtherCar(
+		System.out.println("Starting to Connected Car Service for server.");
+		//MyCar myCar = new MyCar(num, new Point(0, 0), new Point(0, 0));
+		MyCar myCar = new MyCar(
 				new CarAttribute(num, career, gender, age, type),
-				new Point(35.899500, 128.638201)
+				new Point(35.899157, 128.638201)
 		);
-		
-		System.out.println("Starting Connected Car Service for client...");
-		car.startConnectedCar_Client(serv_ip);
+
+		myCar.startConnectedCar_Server();
 		*/
 	}
 }

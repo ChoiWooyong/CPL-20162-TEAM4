@@ -27,6 +27,10 @@ public class OtherCar extends Car {
 	public OtherCar(CarAttribute attr, Point destination) {
 		super(attr, destination);
 	}
+	
+	public OtherCar(CarAttribute attr) {
+		super(attr);
+	}
 
 	public void startConnectedCar_Client(String serv_ip) throws Exception {
 		sock = new Socket(serv_ip, Environment._PORT_NUM);

@@ -39,10 +39,16 @@ public class Car {
 		System.out.println("route.size = " + route.size());
 	}
 
+	protected Car(CarAttribute attr) {
+		this.attr = attr;
+		Point curPos = getCurPosistion();
+		// ¤·¤·
+	}
+
 
 	public Point getCurPosistion() {
 		Process p = null;
-		
+
 		try{
 			p=Runtime.getRuntime().exec(cmd);
 			p.getErrorStream().close();

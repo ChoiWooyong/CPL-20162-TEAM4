@@ -8,6 +8,9 @@ import javax.swing.JLabel;
 import java.awt.Component;
 import java.awt.Font;
 import javax.swing.border.SoftBevelBorder;
+
+import common.gui.ImagePanel;
+
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
@@ -22,15 +25,21 @@ public class test extends JPanel {
 	/**
 	 * Create the panel.
 	 */
+	JPanel innerPanel;
+	
 	public test() {
-		super();
-		
-		setBounds(0, 0, 1008, 730);
-		setLayout(null);
-		/////////////////
-		
-		
-		
 
+		setLayout(null);
+		setSize(1008, 638);
+		
+		JButton btnFinded = new JButton("Allow to be finded");
+		btnFinded.setBounds(706, 177, 139, 23);
+		add(btnFinded);
+		
+		JButton btnNewButton_1 = new JButton("New button");
+		btnNewButton_1.setBounds(706, 389, 139, 23);
+		add(btnNewButton_1);
+		
+		
 	}
 }

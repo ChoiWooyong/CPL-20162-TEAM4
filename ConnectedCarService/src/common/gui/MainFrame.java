@@ -4,9 +4,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import client.ClientPanel;
+import client.gui.ClientPanel;
 import common.Environment;
-import server.ServerPanel;
+import server.gui.ServerPanel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -19,11 +19,11 @@ public class MainFrame extends JFrame implements ActionListener {
 	
 	MyPanel curPanel;
 
-	public MainFrame() throws Exception {
+	public MainFrame(String[] args) throws Exception {
 		// Construct panels
 		initPanel = new InitPanel();
-		clientPanel = new ClientPanel();
-		serverPanel = new ServerPanel();
+		clientPanel = new ClientPanel(args);
+		serverPanel = new ServerPanel(args);
 		
 		// Configure frame
 		setSize(1024, 768);
@@ -69,6 +69,13 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		new MainFrame();
+		// For Test
+		args = new String[]{"Path", "TEST", "127.0.0.1"};
+		
+		if (args.length != 2 && args.length != 3) {
+			System.out.println("Arguments must be \"CarNumber (Server IP)\". \n(Server may have 1 argument and client may have 2 arguments)");
+			return;
+		}
+		new MainFrame(args);
 	}
 }
