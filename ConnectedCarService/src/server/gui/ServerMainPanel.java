@@ -10,7 +10,7 @@ public class ServerMainPanel extends MyPanel {
 
 	private MyCar car; 
 	
-	public ServerMainPanel(CarAttribute attr, String serv_ip) throws Exception {
+	public ServerMainPanel(CarAttribute attr) throws Exception {
 		setSize(1008, 638);
 		
 		JButton btnNewButton_1 = new JButton("SERVER");
@@ -18,6 +18,6 @@ public class ServerMainPanel extends MyPanel {
 		add(btnNewButton_1);
 		
 		car = new MyCar(attr);
-		car.startConnectedCar_Client(serv_ip);
+		car.startConnectedCar_Server();
 	}
 }
