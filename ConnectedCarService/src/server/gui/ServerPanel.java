@@ -10,23 +10,74 @@ import javax.swing.JPanel;
 
 import common.CarAttribute;
 import common.Point;
+import common.gui.ImagePanel;
 import common.gui.MyPanel;
 
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import client.gui.ClientMainPanel;
+
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
-public class ServerPanel extends MyPanel {
+public class ServerPanel extends MyPanel implements ActionListener {
 	
-	public ServerPanel(String[] args) 
-	{		
+	// InnerPanel to switch ClientMainPanel
+	private JPanel innerPanel;
+
+	// For Car Attribute
+	private String num;
+	private JTextField ageField;
+	private ButtonGroup genderGroup;
+	private ButtonGroup careerGroup;
+	private ButtonGroup typeGroup;
+
+	public ServerPanel(String[] args) throws Exception {
+
+		// Set variables
+		num = args[1];
+
+		
+		// Set default UI of Client
+		JLabel lblClientMode = new JLabel("Client Mode");
+		lblClientMode.setFont(new Font("±¼¸²", Font.BOLD, 25));
+		lblClientMode.setBounds(12, 10, 155, 30);
+		add(lblClientMode);
+		
+		JLabel lblTeamWave = new JLabel("Team WAVE");
+		lblTeamWave.setFont(new Font("±¼¸²", Font.BOLD, 25));
+		lblTeamWave.setBounds(844, 10, 155, 30);
+		add(lblTeamWave);
+		
+		
+		// InnerPanel for Client
+		innerPanel = new JPanel();
+		innerPanel.setBounds(0, 46, 1008, 684);
+		add(innerPanel);
+		innerPanel.setLayout(null);
+		
+		
+		// ImagePanel
+		ImagePanel imagePanel = new ImagePanel();
+		imagePanel.setBounds(242, 108, 500, 300);
+		imagePanel.view("C:\\Users\\SSELAB\\git\\CPL-20162-TEAM4\\ConnectedCarService\\src\\common\\gui\\ConnectedCar.png");
+		innerPanel.add(imagePanel);
+		
+		
+		// Construct ButtonGroup for RadioButton
+		genderGroup = new ButtonGroup();
+		careerGroup = new ButtonGroup();
+		typeGroup = new ButtonGroup();
+		
+		// Description of Car Attribute
 		Box labelBox = Box.createVerticalBox();
+		labelBox.setBounds(324, 458, 130, 96);
+		innerPanel.add(labelBox);
 		labelBox.setToolTipText("");
-		labelBox.setBounds(320, 500, 133, 98);
-		add(labelBox);
 		
 		JLabel lblAge = new JLabel("Age");
 		lblAge.setFont(new Font("±¼¸²", Font.BOLD, 20));
@@ -45,74 +96,84 @@ public class ServerPanel extends MyPanel {
 		labelBox.add(lblType);
 		
 		
+		// TextField & RadioButton for Car Attribute
 		Box infoBox = Box.createVerticalBox();
-		infoBox.setBounds(453, 500, 243, 98);
-		add(infoBox);
+		infoBox.setBounds(464, 458, 231, 96);
+		innerPanel.add(infoBox);
 		
-		JTextField ageField = new JTextField();
+		ageField = new JTextField();
 		infoBox.add(ageField);
 		ageField.setHorizontalAlignment(JTextField.CENTER);
-		ageField.setColumns(9);
+		ageField.setColumns(10);
 		
+		// Box for Radiobuttons of the gender
 		Box GenderBox = Box.createHorizontalBox();
 		infoBox.add(GenderBox);
 		
 		JRadioButton rdbtnMale = new JRadioButton("Male    ");
+		rdbtnMale.setActionCommand("1");
 		GenderBox.add(rdbtnMale);
 		
 		JRadioButton rdbtnFemale = new JRadioButton("Female");
+		rdbtnFemale.setActionCommand("2");
 		GenderBox.add(rdbtnFemale);
-
-		ButtonGroup genderGroup = new ButtonGroup();
+		
 		genderGroup.add(rdbtnMale);
 		genderGroup.add(rdbtnFemale);
-		
-		
+
+		// Box for Radiobuttons of the career
 		Box CareerBox = Box.createHorizontalBox();
 		infoBox.add(CareerBox);
 		
 		JRadioButton rdbtnBeginner = new JRadioButton("Beginner");
+		rdbtnBeginner.setActionCommand("1");
 		CareerBox.add(rdbtnBeginner);
 		
 		JRadioButton rdbtnIntermediate = new JRadioButton("Intermediate");
+		rdbtnIntermediate.setActionCommand("2");
 		CareerBox.add(rdbtnIntermediate);
 		
 		JRadioButton rdbtnExpert = new JRadioButton("Expert");
+		rdbtnExpert.setActionCommand("3");
 		CareerBox.add(rdbtnExpert);
 		
-		ButtonGroup careerGroup = new ButtonGroup();
 		careerGroup.add(rdbtnBeginner);
 		careerGroup.add(rdbtnIntermediate);
 		careerGroup.add(rdbtnExpert);
 		
-		
+		// Box for Radiobuttons of the car type
 		Box TypeBox = Box.createHorizontalBox();
 		infoBox.add(TypeBox);
 		
 		JRadioButton rdbtnSmall = new JRadioButton("Small  ");
+		rdbtnSmall.setActionCommand("1");
 		TypeBox.add(rdbtnSmall);
 		
 		JRadioButton rdbtnMedium = new JRadioButton("Medium  ");
+		rdbtnMedium.setActionCommand("2");
 		TypeBox.add(rdbtnMedium);
 		
 		JRadioButton rdbtnLarge = new JRadioButton("Large");
+		rdbtnLarge.setActionCommand("3");
 		TypeBox.add(rdbtnLarge);
-
-		ButtonGroup typeGroup = new ButtonGroup();
+		
 		typeGroup.add(rdbtnSmall);
 		typeGroup.add(rdbtnMedium);
 		typeGroup.add(rdbtnLarge);
 		
-		
+
+		// Commit button
 		JButton btnCommit = new JButton("Commit");
-		btnCommit.setFont(new Font("±¼¸²", Font.BOLD, 20));
-		btnCommit.setBounds(444, 634, 121, 38);
-		add(btnCommit);
+		btnCommit.setBounds(447, 586, 110, 39);
+		innerPanel.add(btnCommit);
+		btnCommit.setFont(new Font("±¼¸²", Font.BOLD, 20));	
+		btnCommit.addActionListener(this);
 		
+		// Description of options
 		JLabel lblChooseOptionYou = new JLabel("Choose options you want");
 		lblChooseOptionYou.setFont(new Font("±¼¸²", Font.PLAIN, 14));
-		lblChooseOptionYou.setBounds(320, 471, 183, 15);
-		add(lblChooseOptionYou);
+		lblChooseOptionYou.setBounds(324, 437, 183, 15);
+		innerPanel.add(lblChooseOptionYou);
 		
 		/*
 		System.out.println("My IP Address : " + InetAddress.getLocalHost().getHostAddress()); 
@@ -140,5 +201,22 @@ public class ServerPanel extends MyPanel {
 
 		myCar.startConnectedCar_Server();
 		*/
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+
+		short age = (short) (Short.parseShort(ageField.getText()) % 10);
+		short career = Short.parseShort(careerGroup.getSelection().getActionCommand());
+		short gender = Short.parseShort(genderGroup.getSelection().getActionCommand());
+		short type = Short.parseShort(typeGroup.getSelection().getActionCommand());
+		
+		try {
+			innerPanel = new ServerMainPanel(new CarAttribute(num, career, gender, age, type));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

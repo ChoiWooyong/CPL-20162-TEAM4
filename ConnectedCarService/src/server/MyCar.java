@@ -49,6 +49,14 @@ public class MyCar extends Car implements Runnable {
 		serv_sock = new ServerSocket(Environment._PORT_NUM);
 		carInfo = new ArrayList<CarInfo>();
 	}
+	
+	public MyCar(CarAttribute attr) throws IOException {
+		super(attr);
+		
+		serv_sock = new ServerSocket(Environment._PORT_NUM);
+		carInfo = new ArrayList<CarInfo>();
+	}
+
 
 	public void startConnectedCar_Server() throws Exception {
 
