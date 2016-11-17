@@ -1,5 +1,6 @@
 package server.gui;
 
+import java.io.File;
 import java.net.InetAddress;
 import java.util.Scanner;
 
@@ -43,7 +44,7 @@ public class ServerPanel extends MyPanel implements ActionListener {
 
 		
 		// Set default UI of Client
-		JLabel lblClientMode = new JLabel("Client Mode");
+		JLabel lblClientMode = new JLabel("Server Mode");
 		lblClientMode.setFont(new Font("±¼¸²", Font.BOLD, 25));
 		lblClientMode.setBounds(12, 10, 155, 30);
 		add(lblClientMode);
@@ -62,9 +63,8 @@ public class ServerPanel extends MyPanel implements ActionListener {
 		
 		
 		// ImagePanel
-		ImagePanel imagePanel = new ImagePanel();
-		imagePanel.setBounds(242, 108, 500, 300);
-		imagePanel.view("C:\\Users\\SSELAB\\git\\CPL-20162-TEAM4\\ConnectedCarService\\src\\common\\gui\\ConnectedCar.png");
+		ImagePanel imagePanel = new ImagePanel(new File("ConnectedCar.png"));
+		imagePanel.setBounds(222, 50, 540, 340);
 		innerPanel.add(imagePanel);
 		
 		
@@ -212,11 +212,6 @@ public class ServerPanel extends MyPanel implements ActionListener {
 		short gender = Short.parseShort(genderGroup.getSelection().getActionCommand());
 		short type = Short.parseShort(typeGroup.getSelection().getActionCommand());
 		
-		try {
-			innerPanel = new ServerMainPanel(new CarAttribute(num, career, gender, age, type));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		innerPanel = new ServerMainPanel(new CarAttribute(num, career, gender, age, type));
 	}
 }

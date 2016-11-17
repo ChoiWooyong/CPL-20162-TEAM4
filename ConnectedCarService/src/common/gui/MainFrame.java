@@ -27,6 +27,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 		// Configure frame
 		setSize(1024, 768);
+		setResizable(false);
 		setTitle(Environment._TITLE);
 		getContentPane().setLayout(null);
 		setVisible(true);

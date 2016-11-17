@@ -3,6 +3,7 @@ package client.gui;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
@@ -58,9 +59,8 @@ public class ClientPanel extends MyPanel implements ActionListener {
 		
 		
 		// ImagePanel
-		ImagePanel imagePanel = new ImagePanel();
-		imagePanel.setBounds(242, 108, 500, 300);
-		imagePanel.view("C:\\Users\\SSELAB\\git\\CPL-20162-TEAM4\\ConnectedCarService\\src\\common\\gui\\ConnectedCar.png");
+		ImagePanel imagePanel = new ImagePanel(new File("ConnectedCar.png"));
+		imagePanel.setBounds(222, 50, 540, 340);
 		innerPanel.add(imagePanel);
 		
 		
@@ -206,12 +206,8 @@ public class ClientPanel extends MyPanel implements ActionListener {
 		short career = Short.parseShort(careerGroup.getSelection().getActionCommand());
 		short gender = Short.parseShort(genderGroup.getSelection().getActionCommand());
 		short type = Short.parseShort(typeGroup.getSelection().getActionCommand());
-		
-		try {
-			innerPanel = new ClientMainPanel(new CarAttribute(num, career, gender, age, type), serv_ip);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		innerPanel = new ClientMainPanel(new CarAttribute(num, career, gender, age, type), serv_ip);
+		//innerPanel.setBounds(0, 46, 1008, 684);
 	}
 }
