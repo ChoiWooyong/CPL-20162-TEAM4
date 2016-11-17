@@ -68,4 +68,45 @@ public class Car {
 		return new Point(infoArray[0], infoArray[1]);
 
 	}
+
+
+	public CarAttribute getAttr() {
+		return attr;
+	}
+
+
+	public void setAttr(CarAttribute attr) {
+		this.attr = attr;
+	}
+
+
+	public GeocodeFetcher getGeoFetcher() {
+		return geoFetcher;
+	}
+
+
+	public void setGeoFetcher(GeocodeFetcher geoFetcher) {
+		this.geoFetcher = geoFetcher;
+	}
+
+
+	public ArrayList<Point> getRoute() {
+		return route;
+	}
+
+
+	public void setRoute(ArrayList<Point> route) {
+		this.route = route;
+	}
+
+
+	public getGpsInfo getGetInfo() {
+		return getInfo;
+	}
+
+
+	public void setGetInfo(getGpsInfo getInfo) {
+		this.getInfo = getInfo;
+	}
+	
 }

@@ -60,7 +60,7 @@ public class ClientPanel extends MyPanel implements ActionListener {
 		
 		// ImagePanel
 		ImagePanel imagePanel = new ImagePanel(new File("ConnectedCar.png"));
-		imagePanel.setBounds(222, 50, 540, 340);
+		imagePanel.setBounds(getWidth()/2-691/2, 40, 691, 350);  // 691 463
 		innerPanel.add(imagePanel);
 		
 		
@@ -206,8 +206,14 @@ public class ClientPanel extends MyPanel implements ActionListener {
 		short career = Short.parseShort(careerGroup.getSelection().getActionCommand());
 		short gender = Short.parseShort(genderGroup.getSelection().getActionCommand());
 		short type = Short.parseShort(typeGroup.getSelection().getActionCommand());
-
+		
+		remove(innerPanel);
+		revalidate();
+		repaint();
+		
 		innerPanel = new ClientMainPanel(new CarAttribute(num, career, gender, age, type), serv_ip);
-		//innerPanel.setBounds(0, 46, 1008, 684);
+		innerPanel.setBounds(0, 46, 1008, 684);
+		add(innerPanel);
+		innerPanel.setLayout(null);
 	}
 }

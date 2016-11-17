@@ -18,28 +18,20 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JToggleButton;
+import javax.swing.ImageIcon;
 
 public class test extends JPanel {
+	public test() {
+		
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.setIcon(new ImageIcon(test.class.getResource("/common/gui/ConnectedCar.png")));
+		btnNewButton.setForeground(UIManager.getColor("Button.darkShadow"));
+		btnNewButton.setBackground(Color.WHITE);
+		add(btnNewButton);
+	}
 	private JTextField textField;
 
-	/**
-	 * Create the panel.
-	 */
-	JPanel innerPanel;
-	
-	public test() {
-
-		setLayout(null);
-		setSize(1008, 638);
-		
-		JButton btnFinded = new JButton("Allow to be finded");
-		btnFinded.setBounds(706, 177, 139, 23);
-		add(btnFinded);
-		
-		JButton btnNewButton_1 = new JButton("New button");
-		btnNewButton_1.setBounds(706, 389, 139, 23);
-		add(btnNewButton_1);
-		
-		
-	}
 }

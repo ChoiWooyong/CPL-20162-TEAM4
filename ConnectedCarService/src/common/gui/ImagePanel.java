@@ -18,14 +18,14 @@ public class ImagePanel extends JPanel {
 		image = ImageIO.read(file);
 	}
 	
-	public ImagePanel(URL url) throws IOException {
+	public ImagePanel(BufferedImage img) throws IOException {
 		setLayout(null);
-		image = ImageIO.read(url);
+		image = img;
 	}
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(image, 0, 0, this);            
+        g.drawImage(image, 0, 0, this);
     }
 }
