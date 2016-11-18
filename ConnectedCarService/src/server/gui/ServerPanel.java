@@ -63,7 +63,7 @@ public class ServerPanel extends MyPanel implements ActionListener {
 		
 		
 		// ImagePanel
-		ImagePanel imagePanel = new ImagePanel(new File("ConnectedCar.png"));
+		ImagePanel imagePanel = new ImagePanel(new File("src/common/gui/ConnectedCar.png"));
 		imagePanel.setBounds(getWidth()/2-691/2, 40, 691, 350);  // 691 463
 		innerPanel.add(imagePanel);
 		

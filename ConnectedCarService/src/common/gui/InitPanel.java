@@ -15,7 +15,7 @@ public class InitPanel extends MyPanel {
 	public InitPanel() throws IOException {
 		super();
 
-		ImagePanel imagePanel = new ImagePanel(new File("ConnectedCar.png"));
+		ImagePanel imagePanel = new ImagePanel(new File("src/common/gui/ConnectedCar.png"));
 		imagePanel.setBounds(getWidth()/2-691/2, 80, 691, 463);  // 691 463
 		add(imagePanel);
 		

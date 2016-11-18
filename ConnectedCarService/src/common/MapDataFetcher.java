@@ -25,9 +25,11 @@ public class MapDataFetcher {
 
 	public static BufferedImage getCurImage(Point cur, String carNum) {
 
-		String strURL = String.format("%s" + "%s/", "%s/?" + "pushpin=%s;" + "%s;" + "%s&" + "key=%s",
+		String strURL = String.format("%s%s/%s/?pushpin=%s;%s;%s&key=%s",
 				Environment._BING_CUR_IMAGE_URL, ZOOM_LEVEL, cur.toString(), cur.toString(), PUSH_PIN_SHAPE, carNum, Environment._KEY);		
 
+		System.out.println(strURL);
+		
 		HttpURLConnection urlConnect = null;
 		int rspCode = -1;
 

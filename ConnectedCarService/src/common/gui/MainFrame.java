@@ -70,13 +70,14 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		// For Test
-		args = new String[]{"Path", "TEST", "127.0.0.1"};
 		
-		if (args.length != 2 && args.length != 3) {
+		args = new String[]{"TEST_PATH", "--DEBUG"};
+		
+		if (args.length != 1 && args.length != 2 && args.length != 3) {
 			System.out.println("Arguments must be \"CarNumber (Server IP)\". \n(Server may have 1 argument and client may have 2 arguments)");
 			return;
 		}
+		
 		new MainFrame(args);
 	}
 }

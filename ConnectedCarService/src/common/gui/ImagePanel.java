@@ -15,12 +15,14 @@ public class ImagePanel extends JPanel {
 	
 	public ImagePanel(File file) throws IOException {
 		setLayout(null);
-		//image = ImageIO.read(file);
+		image = ImageIO.read(file);
+		setVisible(true);
 	}
 	
 	public ImagePanel(BufferedImage img) throws IOException {
 		setLayout(null);
 		image = img;
+		setVisible(true);
 	}
 
     @Override

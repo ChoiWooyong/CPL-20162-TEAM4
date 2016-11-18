@@ -20,6 +20,9 @@ import common.gui.MyPanel;
 
 public class ClientPanel extends MyPanel implements ActionListener {
 	
+	// DEBUG
+	private boolean isDebug = false;
+	
 	// Server IP
 	private String serv_ip;
 	
@@ -36,8 +39,17 @@ public class ClientPanel extends MyPanel implements ActionListener {
 	public ClientPanel(String[] args) throws Exception {
 
 		// Set variables
-		num = args[1];
-		serv_ip = args[2];
+		isDebug = args[1] == "--DEBUG" ? true : false;
+		
+		if (isDebug) {
+			num = "TEST";
+			serv_ip = "127.0.0.1";
+			
+		} else {
+			num = args[1];
+			serv_ip = args[2];
+		}
+			
 
 		
 		// Set default UI of Client
@@ -60,7 +72,7 @@ public class ClientPanel extends MyPanel implements ActionListener {
 		
 		
 		// ImagePanel
-		ImagePanel imagePanel = new ImagePanel(new File("ConnectedCar.png"));
+		ImagePanel imagePanel = new ImagePanel(new File("src/common/gui/ConnectedCar.png"));
 		imagePanel.setBounds(getWidth()/2-691/2, 40, 691, 350);  // 691 463
 		innerPanel.add(imagePanel);
 		
@@ -160,7 +172,7 @@ public class ClientPanel extends MyPanel implements ActionListener {
 
 		// Commit button
 		JButton btnCommit = new JButton("Commit");
-		btnCommit.setBounds(447, 586, 110, 39);
+		btnCommit.setBounds(447, 586, 110, 40);
 		innerPanel.add(btnCommit);
 		btnCommit.setFont(new Font("±¼¸²", Font.BOLD, 20));	
 		btnCommit.addActionListener(this);
@@ -211,7 +223,7 @@ public class ClientPanel extends MyPanel implements ActionListener {
 		revalidate();
 		repaint();
 		try {
-			innerPanel = new ClientMainPanel(new CarAttribute(num, career, gender, age, type), serv_ip);
+			innerPanel = new ClientMainPanel(new CarAttribute(num, career, gender, age, type), serv_ip, isDebug);
 			add(innerPanel);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

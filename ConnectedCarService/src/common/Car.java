@@ -16,10 +16,6 @@ public class Car implements Runnable {
 
 	protected Car(CarAttribute attr) {
 		this.attr = attr;
-		curPos = updateCurPosistion();
-		
-		// Repeat to get current position
-		new Thread(this).start();
 	}
 	
 	public void makeRoute(Point dst) {
@@ -64,6 +60,10 @@ public class Car implements Runnable {
 	
 	public Point getCurPos() {
 		return curPos;
+	}
+
+	public void setCurPos(Point pos) {
+		curPos = pos;
 	}
 
 	public CarAttribute getAttr() {

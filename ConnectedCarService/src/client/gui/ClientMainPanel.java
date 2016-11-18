@@ -16,11 +16,15 @@ import client.OtherCar;
 import common.CarAttribute;
 import common.Environment;
 import common.MapDataFetcher;
+import common.Point;
 import common.gui.ImagePanel;
+
 import javax.swing.ImageIcon;
 
 public class ClientMainPanel extends JPanel implements Runnable, ActionListener {
 
+	private boolean isDebug = false;
+	
 	private String serv_ip;
 	private OtherCar car;
 
@@ -30,25 +34,23 @@ public class ClientMainPanel extends JPanel implements Runnable, ActionListener 
 	private JToggleButton tglbtnONOFF;
 	private JLabel lblConnectedCar;
 
-	public ClientMainPanel(CarAttribute attr, String serv_ip) throws IOException {
+	public ClientMainPanel(CarAttribute attr, String serv_ip, boolean isDebug) throws IOException {
 
+		this.isDebug = isDebug;
+		
 		setLayout(null);
 		setSize(1008, 638);
-
-		//mapPanel = new ImagePanel();
-		//mapPanel.setBounds(0, 0, 1008, 550);
-		//add(mapPanel);
 
 		btnSetDest = new JButton("Set Destination");
 		btnSetDest.setActionCommand("1");
 		btnSetDest.setFont(new Font("±¼¸²", Font.PLAIN, 20));
-		btnSetDest.setBounds(81, 564, 217, 57);
+		btnSetDest.setBounds(81, 564, 220, 57);
 		add(btnSetDest);
 
 		tglbtnONOFF = new JToggleButton("");
 		tglbtnONOFF.setActionCommand("2");
-		//tglbtnONOFF.setSelectedIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/ON.png")));
-		//tglbtnONOFF.setIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/OFF.png")));
+		tglbtnONOFF.setSelectedIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/ON.png")));
+		tglbtnONOFF.setIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/OFF.png")));
 		tglbtnONOFF.setFont(new Font("±¼¸²", Font.PLAIN, 20));
 		tglbtnONOFF.setBounds(358, 564, 240, 57);
 		add(tglbtnONOFF);
@@ -57,13 +59,24 @@ public class ClientMainPanel extends JPanel implements Runnable, ActionListener 
 		lblConnectedCar.setFont(new Font("±¼¸²", Font.PLAIN, 20));
 		lblConnectedCar.setBounds(664, 578, 264, 24);
 		add(lblConnectedCar);
-
+		
 		// If GPS isn't connected well, It will wait
-		//car = new OtherCar(attr);
-		//mapPanel = new ImagePanel(MapDataFetcher.getCurImage(car.getCurPos(), car.getAttr().getNum()));
+		car = new OtherCar(attr);
+		
+		if (isDebug) {
+			car.setCurPos(new Point(35.892441, 128.609169));
+			
+		} else {
+			new Thread(car).run();
+		}
+		
+		mapPanel = new ImagePanel(MapDataFetcher.getCurImage(car.getCurPos(), car.getAttr().getNum()));
+		mapPanel.setBounds(0, 0, 1008, 550);
+		
+		add(mapPanel);
 		
 		// Thread for Update Map Image
-		//new Thread(this).run();
+		new Thread(this).run();
 
 		setVisible(true);
 	}
@@ -95,8 +108,10 @@ public class ClientMainPanel extends JPanel implements Runnable, ActionListener 
 		// TODO Auto-generated method stub
 		try {
 			// Update Map Image
-			mapPanel.updateImage(MapDataFetcher.getCurImage(car.getCurPos(), car.getAttr().getNum()));
-			Thread.sleep(Environment._IMAGE_UPDATE_TIME);
+			while (true) {
+				mapPanel.updateImage(MapDataFetcher.getCurImage(car.getCurPos(), car.getAttr().getNum()));
+				Thread.sleep(Environment._IMAGE_UPDATE_TIME);
+			}
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
