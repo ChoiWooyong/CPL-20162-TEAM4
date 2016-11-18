@@ -46,13 +46,13 @@ public class ServerPanel extends MyPanel implements ActionListener {
 	public ServerPanel(String[] args) throws Exception {
 
 		// Set variables
-		isDebug = args[1] == "--DEBUG" ? true : false;
+		isDebug = args[0] == "--DEBUG" ? true : false;
 		
 		if (isDebug) {
 			num = "TEST";
 			
 		} else {
-			num = args[1];
+			num = args[0];
 		}
 		
 		// Set default UI of Client

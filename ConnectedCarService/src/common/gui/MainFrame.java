@@ -25,8 +25,12 @@ public class MainFrame extends JFrame implements ActionListener {
 	public MainFrame(String[] args) throws Exception {
 		// Construct panels
 		initPanel = new InitPanel();
-		clientPanel = new ClientPanel(args);
-		serverPanel = new ServerPanel(args);
+		if (args.length == 1) {
+			clientPanel = new ClientPanel(args);
+		} else {
+			clientPanel = new ClientPanel(args);
+			serverPanel = new ServerPanel(args);
+		}
 		
 		// Configure frame
 		setSize(800,480);

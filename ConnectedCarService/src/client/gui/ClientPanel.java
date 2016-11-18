@@ -42,15 +42,15 @@ public class ClientPanel extends MyPanel implements ActionListener {
 	public ClientPanel(String[] args) throws Exception {
 
 		// Set variables
-		isDebug = args[1] == "--DEBUG" ? true : false;
+		isDebug = args[0] == "--DEBUG" ? true : false;
 		
 		if (isDebug) {
 			num = "TEST";
 			serv_ip = "127.0.0.1";
 			
 		} else {
-			num = args[1];
-			serv_ip = args[2];
+			num = args[0];
+			serv_ip = args[1];
 		}
 			
 
