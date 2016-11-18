@@ -56,12 +56,12 @@ public class ClientPanel extends MyPanel implements ActionListener {
 
 		// Set default UI of Client
 		JLabel lblClientMode = new JLabel("Manual Drive");
-		lblClientMode.setFont(new Font("±¼¸²", Font.BOLD, 22));
+		lblClientMode.setFont(new Font(Environment._FONT, Font.BOLD, 22));
 		lblClientMode.setBounds(12, 10, 155, 30);
 		add(lblClientMode);
 		
 		JLabel lblTeamWave = new JLabel("Team WAVE");
-		lblTeamWave.setFont(new Font("±¼¸²", Font.BOLD, 22));
+		lblTeamWave.setFont(new Font(Environment._FONT, Font.BOLD, 22));
 		lblTeamWave.setBounds(655, 10, 155, 30);
 		add(lblTeamWave);
 		
@@ -92,20 +92,20 @@ public class ClientPanel extends MyPanel implements ActionListener {
 		innerPanel.add(labelBox);
 		
 		JLabel lblAge = new JLabel("Age");
-		lblAge.setFont(new Font("±¼¸²", Font.BOLD, 20));
+		lblAge.setFont(new Font(Environment._FONT, Font.BOLD, 20));
 		labelBox.add(lblAge);
 		
 		JLabel lblGender = new JLabel("Gender");
-		lblGender.setFont(new Font("±¼¸²", Font.BOLD, 20));
+		lblGender.setFont(new Font(Environment._FONT, Font.BOLD, 20));
 		labelBox.add(lblGender);
 		
 		
 		JLabel lblCareer = new JLabel("Driving Career");
-		lblCareer.setFont(new Font("±¼¸²", Font.BOLD, 20));
+		lblCareer.setFont(new Font(Environment._FONT, Font.BOLD, 20));
 		labelBox.add(lblCareer);
 		
 		JLabel lblType = new JLabel("Car Type");
-		lblType.setFont(new Font("±¼¸²", Font.BOLD, 20));
+		lblType.setFont(new Font(Environment._FONT, Font.BOLD, 20));
 		labelBox.add(lblType);
 		
 		
@@ -188,7 +188,7 @@ public class ClientPanel extends MyPanel implements ActionListener {
 		btnCommit.setBounds(510, 340, 200, 60);
 		btnCommit.setIcon(new ImageIcon(InitPanel.class.getResource("/common/gui/Commit.png")));
 		innerPanel.add(btnCommit);
-		btnCommit.setFont(new Font("±¼¸²", Font.BOLD, 20));	
+		btnCommit.setFont(new Font(Environment._FONT, Font.BOLD, 20));	
 		btnCommit.addActionListener(this);
 		
 		/*

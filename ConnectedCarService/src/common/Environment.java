@@ -8,6 +8,7 @@ public class Environment {
 	// For GUI
 	public static final String _TITLE = "Connected Car Service (Team WAVE)";
 	public static final int _IMAGE_UPDATE_TIME = 1000;
+	public static final String _FONT = "±¼¸²";
 	
 	// For WAVE communication
 	public static final int _CAR_NUM = 3;

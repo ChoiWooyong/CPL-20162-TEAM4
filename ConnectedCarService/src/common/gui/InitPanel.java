@@ -8,6 +8,8 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+import common.Environment;
+
 public class InitPanel extends MyPanel {
 	JButton btnClient;
 	JButton btnServer;
@@ -23,13 +25,13 @@ public class InitPanel extends MyPanel {
 		
 		btnClient = new JButton("");
 		btnClient.setBounds(getWidth()/2 - 220, 350, 200, 60);
-		btnClient.setFont(new Font("±¼¸²", Font.BOLD, 25));
+		btnClient.setFont(new Font(Environment._FONT, Font.BOLD, 25));
 		//btnClient.setBackground(Color.BLACK);
 		btnClient.setIcon(new ImageIcon(InitPanel.class.getResource("/common/gui/ManualMode.png")));
 		add(btnClient);
 		
 		btnServer = new JButton("");
-		btnServer.setFont(new Font("±¼¸²", Font.BOLD, 25));
+		btnServer.setFont(new Font(Environment._FONT, Font.BOLD, 25));
 		btnServer.setBounds(getWidth()/2 + 25, 350, 200, 60);
 		btnServer.setIcon(new ImageIcon(InitPanel.class.getResource("/common/gui/AutoMode.png")));
 		add(btnServer);

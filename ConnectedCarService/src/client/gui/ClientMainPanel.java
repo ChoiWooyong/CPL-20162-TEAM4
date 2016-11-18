@@ -57,7 +57,7 @@ public class ClientMainPanel extends JPanel implements Runnable {
 		btnSetDest = new JToggleButton("");
 		btnSetDest.setSelectedIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/SetDst.png")));
 		btnSetDest.setIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/SetDst.png")));
-		btnSetDest.setFont(new Font("±¼¸²", Font.PLAIN, 20));
+		btnSetDest.setFont(new Font(Environment._FONT, Font.PLAIN, 20));
 		btnSetDest.setBounds(20, 335, 240, 57);
 		btnSetDest.addActionListener(new ActionListener() {
 			@Override
@@ -86,7 +86,7 @@ public class ClientMainPanel extends JPanel implements Runnable {
 		tglbtnONOFF = new JToggleButton("");
 		tglbtnONOFF.setSelectedIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/ON.png")));
 		tglbtnONOFF.setIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/OFF.png")));
-		tglbtnONOFF.setFont(new Font("±¼¸²", Font.PLAIN, 20));
+		tglbtnONOFF.setFont(new Font(Environment._FONT, Font.PLAIN, 20));
 		tglbtnONOFF.setBounds(290, 335, 240, 57);
 		tglbtnONOFF.setEnabled(false);
 		tglbtnONOFF.addActionListener(new ActionListener() {
@@ -181,13 +181,13 @@ public class ClientMainPanel extends JPanel implements Runnable {
 		speedText = new JLabel(Integer.toString(car.getCurSpeed()));
 		speedText.setHorizontalAlignment(SwingConstants.RIGHT);
 		speedText.setForeground(Color.DARK_GRAY);
-		speedText.setFont(new Font("±¼¸²", Font.BOLD, 30));
+		speedText.setFont(new Font(Environment._FONT, Font.BOLD, 30));
 		speedText.setBounds(732, 10, 56, 54);
 		mapPanel.add(speedText);
 		mapPanel.setVisible(true);
 
 		lblConnectedCar = new JLabel("Connected Car : None");
-		lblConnectedCar.setFont(new Font("±¼¸²", Font.PLAIN, 20));
+		lblConnectedCar.setFont(new Font(Environment._FONT, Font.PLAIN, 20));
 		lblConnectedCar.setBounds(560, 350, 264, 24);
 		add(lblConnectedCar);
 		

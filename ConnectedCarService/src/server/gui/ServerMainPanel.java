@@ -86,7 +86,7 @@ public class ServerMainPanel extends JPanel implements Runnable {
 		add(btnFind);
 
 		lblConnectedCar = new JLabel("Connected Car : None");
-		lblConnectedCar.setFont(new Font("±¼¸²", Font.PLAIN, 20));
+		lblConnectedCar.setFont(new Font(Environment._FONT, Font.PLAIN, 20));
 		lblConnectedCar.setBounds(560, 350, 264, 24);
 		add(lblConnectedCar);
 
@@ -136,7 +136,7 @@ public class ServerMainPanel extends JPanel implements Runnable {
 		speedText = new JLabel();
 		speedText.setHorizontalAlignment(SwingConstants.RIGHT);
 		speedText.setForeground(Color.DARK_GRAY);
-		speedText.setFont(new Font("±¼¸²", Font.BOLD, 30));
+		speedText.setFont(new Font(Environment._FONT, Font.BOLD, 30));
 		speedText.setBounds(732, 10, 56, 54);
 		mapPanel.add(speedText);
 		mapPanel.setVisible(true);
