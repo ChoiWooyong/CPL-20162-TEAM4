@@ -1,22 +1,19 @@
 package server.gui;
 
+import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import server.MyCar;
 
 import common.CarAttribute;
 import common.MapDataFetcher;
 import common.Point;
 import common.gui.ImagePanel;
-import common.gui.MyPanel;
-import server.MyCar;
-
-import javax.swing.JLabel;
-
-import java.awt.Font;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class ServerMainPanel extends JPanel implements Runnable {
 	
@@ -30,7 +27,7 @@ public class ServerMainPanel extends JPanel implements Runnable {
 		
 		setLayout(null);
 		
-		setSize(1008, 638);
+		setSize(1020, 722);
 		
 		btnSetDest = new JButton("Set Destination");
 		btnSetDest.setActionCommand("1");
