@@ -89,6 +89,12 @@ public class Car implements Runnable {
 	public void setCurSpeed(int curSpeed) {
 		this.curSpeed = curSpeed;
 	}
-	
-	
+
+	public short getSignal() {
+		return signal;
+	}
+
+	public void setSignal(short signal) {
+		this.signal = signal;
+	}	
 }

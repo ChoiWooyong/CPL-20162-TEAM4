@@ -14,6 +14,11 @@ public class Environment {
 	public static final int _CHANNEL_SWITCHING_TIME = 2000;
 	public static final double _ERRORRANGE = 0.001;
 	
+	// For Signal
+	public static final short _SIG_EMG = 0b001;
+	public static final short _SIG_RIG = 0b010;
+	public static final short _SIG_LFT = 0b100;
+	
 	// (GeocodeFetcher) For Bing Map API
 	public static final String _BING_ROUTE_DATA_URL = "http://dev.virtualearth.net/REST/v1/Routes?";
 	public static final String _BING_CUR_IMAGE_URL = "http://dev.virtualearth.net/REST/v1/Imagery/Map/Road/";

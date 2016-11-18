@@ -71,7 +71,7 @@ public class MyCar extends Car {
 		// Broadcasting my first leg
 		for (int i = 0; i < carInfo.size(); i++) {
 			if (carInfo.get(i).getState() >= 1) {
-				if (carInfo.get(i).getState() == 2) 
+				if (i == selectedIdx && carInfo.get(i).getState() == 2) 
 					writePacket(i, Environment._RQ_SIGNAL);
 				continue;
 			}
@@ -81,13 +81,13 @@ public class MyCar extends Car {
 		// Getting response from other cars
 		for (int i = 0; i < carInfo.size(); i++) {
 			if (carInfo.get(i).getState() >= 1) {
-				if (carInfo.get(i).getState() == 2) 
+				if (i == selectedIdx && carInfo.get(i).getState() == 2) 
 					signal = (short) readMsg(i);
 				continue;
 			}
 			
 			Point p = (Point) readMsg(i);
-			carInfo.get(i).goNextState(); 
+			carInfo.get(i).goNextState();
 			if (!firstLeg.isEqual(p)) {
 				carInfo.remove(i);
 			}

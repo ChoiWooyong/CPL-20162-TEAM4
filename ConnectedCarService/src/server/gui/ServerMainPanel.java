@@ -86,7 +86,6 @@ public class ServerMainPanel extends JPanel implements Runnable {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				new Thread(new CarManager()).start();
-				
 			}
 		});
 		add(btnFind);
@@ -113,8 +112,8 @@ public class ServerMainPanel extends JPanel implements Runnable {
 		
 		tglbtnEmergency = new JToggleButton("");
 		tglbtnEmergency.setBounds(12, 22, 64, 64);
-		tglbtnEmergency.setSelectedIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/EmergencyOn.png")));
-		tglbtnEmergency.setIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/EmergencyOff.png")));
+		tglbtnEmergency.setSelectedIcon(new ImageIcon(ServerMainPanel.class.getResource("/common/gui/EmergencyOn.png")));
+		tglbtnEmergency.setIcon(new ImageIcon(ServerMainPanel.class.getResource("/common/gui/EmergencyOff.png")));
 		tglbtnEmergency.setOpaque(false);
 		tglbtnEmergency.setContentAreaFilled(false);
 		tglbtnEmergency.setBorderPainted(false);
@@ -122,8 +121,8 @@ public class ServerMainPanel extends JPanel implements Runnable {
 		
 		tglbtnLeftlight = new JToggleButton("");
 		tglbtnLeftlight.setBounds(12, 122, 64, 64);
-		tglbtnLeftlight.setSelectedIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/LeftLightOn.png")));
-		tglbtnLeftlight.setIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/LeftLightOff.png")));
+		tglbtnLeftlight.setSelectedIcon(new ImageIcon(ServerMainPanel.class.getResource("/common/gui/LeftLightOn.png")));
+		tglbtnLeftlight.setIcon(new ImageIcon(ServerMainPanel.class.getResource("/common/gui/LeftLightOff.png")));
 		tglbtnLeftlight.setOpaque(false);
 		tglbtnLeftlight.setContentAreaFilled(false);
 		tglbtnLeftlight.setBorderPainted(false);
@@ -131,8 +130,8 @@ public class ServerMainPanel extends JPanel implements Runnable {
 		
 		tglbtnRightlight = new JToggleButton("");
 		tglbtnRightlight.setBounds(12, 222, 64, 64);
-		tglbtnRightlight.setSelectedIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/RightLightOn.png")));
-		tglbtnRightlight.setIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/RightLightOff.png")));
+		tglbtnRightlight.setSelectedIcon(new ImageIcon(ServerMainPanel.class.getResource("/common/gui/RightLightOn.png")));
+		tglbtnRightlight.setIcon(new ImageIcon(ServerMainPanel.class.getResource("/common/gui/RightLightOff.png")));
 		tglbtnRightlight.setOpaque(false);
 		tglbtnRightlight.setContentAreaFilled(false);
 		tglbtnRightlight.setBorderPainted(false);
@@ -167,7 +166,7 @@ public class ServerMainPanel extends JPanel implements Runnable {
 					img = MapDataFetcher.getRouteImage(car.getAttr().getCurPos(), destPoint, car.getAttr().getNum());
 					mapPanel.updateImage(img);
 					mapPanel.updateUI();
-					Thread.sleep(Environment._IMAGE_UPDATE_TIME * 3);			
+					Thread.sleep(Environment._IMAGE_UPDATE_TIME * 3);
 					mapMode = 3;
 					break;
 				case 3:
@@ -177,6 +176,10 @@ public class ServerMainPanel extends JPanel implements Runnable {
 				mapPanel.updateImage(img);
 				mapPanel.updateUI();
 				speedText.setText(Integer.toString(car.getCurSpeed()));
+				tglbtnEmergency.setSelected((car.getSignal() & Environment._SIG_EMG) >= 1);
+				tglbtnLeftlight.setSelected((car.getSignal() & Environment._SIG_LFT) >= 1);
+				tglbtnRightlight.setSelected((car.getSignal() & Environment._SIG_RIG) >= 1);
+				
 				Thread.sleep(Environment._IMAGE_UPDATE_TIME);
 			}
 		} catch (Exception e) {

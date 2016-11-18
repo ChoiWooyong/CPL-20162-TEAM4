@@ -24,6 +24,8 @@ import common.gui.ImagePanel;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class ClientMainPanel extends JPanel implements Runnable {
 
@@ -39,9 +41,11 @@ public class ClientMainPanel extends JPanel implements Runnable {
 
 	private JToggleButton btnSetDest;
 	private JToggleButton tglbtnONOFF;
+	
 	private JToggleButton tglbtnEmergency;
 	private JToggleButton tglbtnLeftlight;
 	private JToggleButton tglbtnRightlight;
+	
 	private JLabel lblConnectedCar;
 	
 	private JLabel speedText;
@@ -122,6 +126,18 @@ public class ClientMainPanel extends JPanel implements Runnable {
 		tglbtnEmergency.setOpaque(false);
 		tglbtnEmergency.setContentAreaFilled(false);
 		tglbtnEmergency.setBorderPainted(false);
+		tglbtnEmergency.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				// TODO Auto-generated method stub
+				if (tglbtnEmergency.isSelected()) {
+					car.setSignal((short) (car.getSignal() | Environment._SIG_EMG));
+					
+				} else {
+					car.setSignal((short) (car.getSignal() & ~Environment._SIG_EMG));
+				}
+			}
+		});
 		mapPanel.add(tglbtnEmergency);
 		
 		tglbtnLeftlight = new JToggleButton("");
@@ -131,6 +147,18 @@ public class ClientMainPanel extends JPanel implements Runnable {
 		tglbtnLeftlight.setOpaque(false);
 		tglbtnLeftlight.setContentAreaFilled(false);
 		tglbtnLeftlight.setBorderPainted(false);
+		tglbtnLeftlight.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				// TODO Auto-generated method stub
+				if (tglbtnLeftlight.isSelected()) {
+					car.setSignal((short) (car.getSignal() | Environment._SIG_LFT));
+					
+				} else {
+					car.setSignal((short) (car.getSignal() & ~Environment._SIG_LFT));
+				}
+			}
+		});
 		mapPanel.add(tglbtnLeftlight);
 		
 		tglbtnRightlight = new JToggleButton("");
@@ -140,6 +168,18 @@ public class ClientMainPanel extends JPanel implements Runnable {
 		tglbtnRightlight.setOpaque(false);
 		tglbtnRightlight.setContentAreaFilled(false);
 		tglbtnRightlight.setBorderPainted(false);
+		tglbtnRightlight.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				// TODO Auto-generated method stub
+				if (tglbtnRightlight.isSelected()) {
+					car.setSignal((short) (car.getSignal() | Environment._SIG_RIG));
+					
+				} else {
+					car.setSignal((short) (car.getSignal() & ~Environment._SIG_RIG));
+				}
+			}
+		});
 		mapPanel.add(tglbtnRightlight);
 		
 		speedText = new JLabel(Integer.toString(car.getCurSpeed()));
