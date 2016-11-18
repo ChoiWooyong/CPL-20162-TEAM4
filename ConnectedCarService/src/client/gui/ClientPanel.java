@@ -17,6 +17,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import common.CarAttribute;
+import common.Environment;
 import common.gui.ImagePanel;
 import common.gui.InitPanel;
 import common.gui.MyPanel;

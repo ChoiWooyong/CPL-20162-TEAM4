@@ -13,5 +13,4 @@ public class SwitchTimer implements Runnable {
 			e.printStackTrace();
 		}
 	}
-	
 }
