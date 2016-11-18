@@ -23,7 +23,7 @@ import common.gui.ImagePanel;
 
 import javax.swing.ImageIcon;
 
-public class ClientMainPanel extends JPanel implements Runnable, ActionListener {
+public class ClientMainPanel extends JPanel implements Runnable {
 
 	private boolean isDebug = false;
 
@@ -47,7 +47,6 @@ public class ClientMainPanel extends JPanel implements Runnable, ActionListener 
 		setBackground(Color.WHITE);
 
 		btnSetDest = new JButton("");
-		btnSetDest.setActionCommand("1"); 
 		btnSetDest.setIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/SetDst.png")));
 		btnSetDest.setFont(new Font("±¼¸²", Font.PLAIN, 20));
 		btnSetDest.setBounds(83, 616, 240, 57);
@@ -73,7 +72,6 @@ public class ClientMainPanel extends JPanel implements Runnable, ActionListener 
 		add(btnSetDest);
 
 		tglbtnONOFF = new JToggleButton("");
-		tglbtnONOFF.setActionCommand("2");
 		tglbtnONOFF.setSelectedIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/ON.png")));
 		tglbtnONOFF.setIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/OFF.png")));
 		tglbtnONOFF.setFont(new Font("±¼¸²", Font.PLAIN, 20));
@@ -104,27 +102,6 @@ public class ClientMainPanel extends JPanel implements Runnable, ActionListener 
 		new Thread(this).start();
 		
 		setVisible(true);
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		JButton btn = (JButton) arg0.getSource();
-		char command = btn.getActionCommand().charAt(0);
-
-		switch(command) {
-		case 1:  // Set Destination
-			break;
-		case 2:  // Connected Car ON/OFF
-			//if ((JToggleButton) btn).get) {  // ON
-			//	new Thread(new CarManager()).start();
-
-			//} else {  // OFF
-			// Close safely
-			//}
-			break;
-		}
-
 	}
 
 	@Override
