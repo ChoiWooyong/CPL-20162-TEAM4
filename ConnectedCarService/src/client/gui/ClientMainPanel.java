@@ -37,7 +37,7 @@ public class ClientMainPanel extends JPanel implements Runnable {
 	private Point deptPoint;
 	private Point destPoint;
 
-	private JButton btnSetDest;
+	private JToggleButton btnSetDest;
 	private JToggleButton tglbtnONOFF;
 	private JToggleButton tglbtnEmergency;
 	private JToggleButton tglbtnLeftlight;
@@ -54,13 +54,15 @@ public class ClientMainPanel extends JPanel implements Runnable {
 		setSize(800, 480);
 		setBackground(Color.WHITE);
 
-		btnSetDest = new JButton("");
+		btnSetDest = new JToggleButton("");
+		btnSetDest.setSelectedIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/SetDst.png")));
 		btnSetDest.setIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/SetDst.png")));
 		btnSetDest.setFont(new Font("±¼¸²", Font.PLAIN, 20));
 		btnSetDest.setBounds(20, 335, 240, 57);
 		btnSetDest.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+
 				String destMsg = JOptionPane.showInputDialog("Input your destination");
 
 				System.out.println(destMsg);
@@ -75,6 +77,8 @@ public class ClientMainPanel extends JPanel implements Runnable {
 				else if(destMsg.equals("5")) // Exercise park
 					destPoint = new Point(35.864444, 128.631835);
 				mapMode = 2;
+				tglbtnONOFF.setEnabled(true);
+				btnSetDest.setEnabled(false);
 			}
 		});
 		add(btnSetDest);
@@ -84,6 +88,7 @@ public class ClientMainPanel extends JPanel implements Runnable {
 		tglbtnONOFF.setIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/OFF.png")));
 		tglbtnONOFF.setFont(new Font("±¼¸²", Font.PLAIN, 20));
 		tglbtnONOFF.setBounds(290, 335, 240, 57);
+		tglbtnONOFF.setEnabled(false);
 		tglbtnONOFF.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -96,7 +101,7 @@ public class ClientMainPanel extends JPanel implements Runnable {
 		
 		car = new OtherCar(attr, isDebug);
 		deptPoint = car.getAttr().getCurPos();
-		
+
 		if (isDebug) {
 			car.getAttr().setCurPos(new Point(35.892441, 128.609169));
 
@@ -105,7 +110,7 @@ public class ClientMainPanel extends JPanel implements Runnable {
 			new Thread(car).start();
 		}
 
-		
+
 		mapPanel = new ImagePanel(MapDataFetcher.getCurImage(car.getAttr().getCurPos(), car.getAttr().getNum()));
 		mapPanel.setBounds(0, 0, 800, 320);
 		add(mapPanel);
@@ -152,7 +157,7 @@ public class ClientMainPanel extends JPanel implements Runnable {
 		
 		// Thread for Update Map Image
 		new Thread(this).start();
-		
+
 		setVisible(true);
 	}
 
@@ -180,10 +185,10 @@ public class ClientMainPanel extends JPanel implements Runnable {
 				}
 				mapPanel.updateImage(img);
 				mapPanel.updateUI();
-				
+
 				// Speed Update
 				speedText.setText(Integer.toString(car.getCurSpeed()));  
-				
+
 				Thread.sleep(Environment._IMAGE_UPDATE_TIME);
 			}
 

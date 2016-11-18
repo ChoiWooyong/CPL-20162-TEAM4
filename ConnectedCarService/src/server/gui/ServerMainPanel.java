@@ -14,6 +14,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.JTextField;
+
+import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 
 import client.gui.ClientMainPanel;
@@ -32,8 +34,8 @@ public class ServerMainPanel extends JPanel implements Runnable {
 	private int mapMode = 1;
 	private Point destPoint;
 
-	private JButton btnSetDest;
-	private JButton btnFind;
+	private JToggleButton btnSetDest;
+	private JToggleButton btnFind;
 	private JToggleButton tglbtnEmergency;
 	private JToggleButton tglbtnLeftlight;
 	private JToggleButton tglbtnRightlight;
@@ -46,9 +48,10 @@ public class ServerMainPanel extends JPanel implements Runnable {
 		setSize(800, 480);
 		setBackground(Color.WHITE);
 
-		btnSetDest = new JButton("");  // Set destination
+		btnSetDest = new JToggleButton("");  // Set destination
 		btnSetDest.setActionCommand("1");
 		btnSetDest.setIcon(new ImageIcon(ServerMainPanel.class.getResource("/common/gui/SetDst.png")));
+		btnSetDest.setSelectedIcon(new ImageIcon(ServerMainPanel.class.getResource("/common/gui/SetDst.png")));
 		btnSetDest.setBounds(20, 335, 240, 57);
 		btnSetDest.addActionListener(new ActionListener() {
 			@Override
@@ -67,18 +70,23 @@ public class ServerMainPanel extends JPanel implements Runnable {
 				else if(destMsg.equals("5")) // Exercise park
 					destPoint = new Point(35.864444, 128.631835);
 				mapMode = 2;
+				btnSetDest.setEnabled(false);
+				btnFind.setEnabled(true);
 			}
 		});
 		add(btnSetDest);
 
-		btnFind = new JButton("");  // Find car
+		btnFind = new JToggleButton("");  // Find car
 		btnFind.setActionCommand("2");
 		btnFind.setIcon(new ImageIcon(ServerMainPanel.class.getResource("/common/gui/Find.png")));
+		btnFind.setSelectedIcon(new ImageIcon(ServerMainPanel.class.getResource("/common/gui/Find.png")));
 		btnFind.setBounds(290, 335, 240, 57);
+		btnFind.setEnabled(false);
 		btnFind.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				new Thread(new CarManager()).start();
+				
 			}
 		});
 		add(btnFind);
