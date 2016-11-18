@@ -111,8 +111,9 @@ public class ServerMainPanel extends JPanel implements Runnable {
 					break;
 				case 2:
 					img = MapDataFetcher.getRouteImage(car.getCurPos(), destPoint, car.getAttr().getNum());
-					Thread.sleep(Environment._IMAGE_UPDATE_TIME*3);
 					mapPanel.updateImage(img);
+					mapPanel.updateUI();
+					Thread.sleep(Environment._IMAGE_UPDATE_TIME * 3);					
 					mapMode = 3;
 					break;
 				case 3:

@@ -13,12 +13,12 @@ public class Environment {
 	public static final int _CHANNEL_SWITCHING_TIME = 2000;
 	public static final double _ERRORRANGE = 0.001;
 	
-	// (GeocodeFetcher) For Bing Map API 
+	// (GeocodeFetcher) For Bing Map API
 	public static final String _BING_ROUTE_DATA_URL = "http://dev.virtualearth.net/REST/v1/Routes?";
 	public static final String _BING_CUR_IMAGE_URL = "http://dev.virtualearth.net/REST/v1/Imagery/Map/Road/";
 	public static final String _KEY = "AmHs8uhFO0ODZi-ng9hzHXCbCAR-ehsfpWyenSZqvNuT8cp7VeCeEVsy7Hf-F-4U";
 	
-	// (Packet) Make a division for Channel 
+	// (Packet) Make a division for Channel
 	public static final int _CCH = 1;
 	public static final int _SCH = 2;
 
