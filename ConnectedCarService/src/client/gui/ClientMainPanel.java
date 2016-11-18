@@ -16,7 +16,6 @@ import client.OtherCar;
 import common.CarAttribute;
 import common.Environment;
 import common.MapDataFetcher;
-import common.MapImageFetcher;
 import common.gui.ImagePanel;
 import javax.swing.ImageIcon;
 
@@ -26,7 +25,6 @@ public class ClientMainPanel extends JPanel implements Runnable, ActionListener 
 	private OtherCar car;
 
 	private ImagePanel mapPanel;
-	private MapImageFetcher fetcher;
 
 	private JButton btnSetDest;
 	private JToggleButton tglbtnONOFF;
