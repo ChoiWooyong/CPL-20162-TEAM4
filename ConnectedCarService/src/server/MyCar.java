@@ -25,8 +25,6 @@ public class MyCar extends Car {
 
 	private ArrayList<CarInfo> carInfo;
 
-	private ArrayList<Integer> mark;
-
 	private int selectedIdx = -1;
 
 	private int schCnt = 0;
@@ -72,15 +70,22 @@ public class MyCar extends Car {
 
 		// Broadcasting my first leg
 		for (int i = 0; i < carInfo.size(); i++) {
-			if (carInfo.get(i).getState() >= 1)
+			if (carInfo.get(i).getState() >= 1) {
+				if (carInfo.get(i).getState() == 2) 
+					writePacket(i, Environment._RQ_SIGNAL);
 				continue;
+			}
 			writePacket(i, Environment._RQ_FIRST_LEG);
 		}
 
 		// Getting response from other cars
 		for (int i = 0; i < carInfo.size(); i++) {
-			if (carInfo.get(i).getState() >= 1)
+			if (carInfo.get(i).getState() >= 1) {
+				if (carInfo.get(i).getState() == 2) 
+					signal = (short) readMsg(i);
 				continue;
+			}
+			
 			Point p = (Point) readMsg(i);
 			carInfo.get(i).goNextState(); 
 			if (!firstLeg.isEqual(p)) {
@@ -160,8 +165,7 @@ public class MyCar extends Car {
 		float maxscore = 0;  
 		int maxindex = 0; 
 
-		for (int index = 0; index < carInfo.size(); index++)
-		{
+		for (int index = 0; index < carInfo.size(); index++) {
 			float score = carInfo.get(index).getScore();
 			if(maxscore < score) {
 				maxscore = score;
@@ -178,7 +182,7 @@ public class MyCar extends Car {
 		Packet pk = (Packet) in.readObject();
 		return pk.getMessage();
 	}
-
+	
 
 	private void writePacket(int idx, int requestCode) throws Exception {
 		ObjectOutputStream out = new ObjectOutputStream(carInfo.get(idx).getSock().getOutputStream());

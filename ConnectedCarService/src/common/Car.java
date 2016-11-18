@@ -9,6 +9,8 @@ public class Car implements Runnable {
 
 	protected CarAttribute attr;
 
+	protected short signal = 0b000;
+	
 	protected int curSpeed = 0;
 
 	protected ArrayList<Point> route;
@@ -31,12 +33,13 @@ public class Car implements Runnable {
 	private void updateGPSInfo() {
 		Process p = null;
 
-		try{
+		try {
 			p = Runtime.getRuntime().exec(cmd);
 			p.getErrorStream().close();
 			p.getInputStream().close();
 			p.getOutputStream().close();
 			p.waitFor();
+			
 		} catch(Exception e){
 			e.printStackTrace();
 		}
@@ -58,6 +61,7 @@ public class Car implements Runnable {
 
 			try {
 				Thread.sleep(Environment._IMAGE_UPDATE_TIME / 3);
+				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

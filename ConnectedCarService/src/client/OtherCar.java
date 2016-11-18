@@ -41,6 +41,10 @@ public class OtherCar extends Car {
 				System.out.println("Send Attribute");
 				obj = attr;
 				break;
+			case Environment._RQ_SIGNAL:
+				System.out.println("Send Signal");
+				obj = signal;
+				break;
 			}
 			writePacket(obj);
 		}
@@ -66,7 +70,10 @@ public class OtherCar extends Car {
 		} else if (obj instanceof ArrayList<?>) {
 			chnType = Environment._SCH;
 			
-		} else if (obj instanceof CarAttribute){
+		} else if (obj instanceof CarAttribute) {
+			chnType = Environment._CCH;
+			
+		} else if (obj instanceof Short) {
 			chnType = Environment._CCH;
 		}
 		Packet pk = new Packet(chnType, Environment._RQ_NONE, obj);

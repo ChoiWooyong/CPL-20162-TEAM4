@@ -227,7 +227,6 @@ public class ClientPanel extends MyPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
-
 		short age = (short) (Short.parseShort(ageField.getText()) % 10);
 		short career = Short.parseShort(careerGroup.getSelection().getActionCommand());
 		short gender = Short.parseShort(genderGroup.getSelection().getActionCommand());

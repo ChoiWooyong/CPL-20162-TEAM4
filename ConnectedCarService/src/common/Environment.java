@@ -28,5 +28,5 @@ public class Environment {
 	public static final int _RQ_INFO = 1;
 	public static final int _RQ_FIRST_LEG = 2;
 	public static final int _RQ_FULL_LEGS = 3;
-	public static final int _RQ_SIGNAL = 3;
+	public static final int _RQ_SIGNAL = 4;
 }

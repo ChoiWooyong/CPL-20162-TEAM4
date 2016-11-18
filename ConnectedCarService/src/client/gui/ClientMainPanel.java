@@ -151,7 +151,10 @@ public class ClientMainPanel extends JPanel implements Runnable {
 				}
 				mapPanel.updateImage(img);
 				mapPanel.updateUI();
-				speedText.setText(Integer.toString(car.getCurSpeed()));//speed update
+				
+				// Speed Update
+				speedText.setText(Integer.toString(car.getCurSpeed()));  
+				
 				Thread.sleep(Environment._IMAGE_UPDATE_TIME);
 			}
 
