@@ -12,6 +12,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import server.MyCar;
 import common.CarAttribute;
@@ -31,6 +33,7 @@ public class ServerMainPanel extends JPanel implements Runnable {
 	private JButton btnSetDest;
 	private JButton btnFind;
 	private JLabel lblConnectedCar;
+	private JLabel speedText;
 
 	public ServerMainPanel(CarAttribute attr, boolean isDebug) throws IOException {
 
@@ -94,6 +97,13 @@ public class ServerMainPanel extends JPanel implements Runnable {
 		mapPanel = new ImagePanel(MapDataFetcher.getCurImage(car.getAttr().getCurPos(), car.getAttr().getNum()));
 		mapPanel.setBounds(0, 0, 800, 320);
 		add(mapPanel);
+		
+		speedText = new JLabel();
+		speedText.setHorizontalAlignment(SwingConstants.RIGHT);
+		speedText.setForeground(Color.DARK_GRAY);
+		speedText.setFont(new Font("±¼¸²", Font.BOLD, 30));
+		speedText.setBounds(732, 10, 56, 54);
+		mapPanel.add(speedText);
 		mapPanel.setVisible(true);
 
 		new Thread(this).start();
@@ -125,6 +135,7 @@ public class ServerMainPanel extends JPanel implements Runnable {
 				}
 				mapPanel.updateImage(img);
 				mapPanel.updateUI();
+				speedText.setText(Integer.toString(car.getCurSpeed()));
 				Thread.sleep(Environment._IMAGE_UPDATE_TIME);
 			}
 		} catch (Exception e) {

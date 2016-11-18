@@ -3,6 +3,7 @@ package common;
 public class Environment {
 	// For socket communication
 	public static final int _PORT_NUM = 8888;
+	public static final double MILE_TO_KILO = 1.61;
 	
 	// For GUI
 	public static final String _TITLE = "Connected Car Service (Team WAVE)";

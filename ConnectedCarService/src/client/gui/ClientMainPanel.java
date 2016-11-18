@@ -22,6 +22,8 @@ import common.Point;
 import common.gui.ImagePanel;
 
 import javax.swing.ImageIcon;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class ClientMainPanel extends JPanel implements Runnable {
 
@@ -38,6 +40,7 @@ public class ClientMainPanel extends JPanel implements Runnable {
 	private JButton btnSetDest;
 	private JToggleButton tglbtnONOFF;
 	private JLabel lblConnectedCar;
+	private JLabel speedText;
 
 	public ClientMainPanel(CarAttribute attr, String serv_ip, boolean isDebug) throws IOException {
 
@@ -103,12 +106,21 @@ public class ClientMainPanel extends JPanel implements Runnable {
 			new Thread(car).start();
 		}
 
+		
 		mapPanel = new ImagePanel(MapDataFetcher.getCurImage(car.getAttr().getCurPos(), car.getAttr().getNum()));
 		mapPanel.setBounds(0, 0, 800, 320);
-		
 		add(mapPanel);
+		
+		speedText = new JLabel(Integer.toString(car.getCurSpeed()));
+		speedText.setHorizontalAlignment(SwingConstants.RIGHT);
+		speedText.setForeground(Color.DARK_GRAY);
+		speedText.setFont(new Font("±¼¸²", Font.BOLD, 30));
+		speedText.setBounds(732, 10, 56, 54);
+		mapPanel.add(speedText);
+		
 		mapPanel.setVisible(true);
 
+		
 		// Thread for Update Map Image
 		new Thread(this).start();
 		
@@ -139,6 +151,7 @@ public class ClientMainPanel extends JPanel implements Runnable {
 				}
 				mapPanel.updateImage(img);
 				mapPanel.updateUI();
+				speedText.setText(Integer.toString(car.getCurSpeed()));//speed update
 				Thread.sleep(Environment._IMAGE_UPDATE_TIME);
 			}
 

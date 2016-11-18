@@ -9,7 +9,7 @@ public class Car implements Runnable {
 
 	protected CarAttribute attr;
 
-	protected int curSpeed;
+	protected int curSpeed = 0;
 
 	protected ArrayList<Point> route;
 
@@ -48,7 +48,7 @@ public class Car implements Runnable {
 		getInfo.getGps(infoArray);
 
 		getAttr().setCurPos(new Point(infoArray[0], infoArray[1]));
-		curSpeed = (int) infoArray[3];
+		curSpeed = (int) (infoArray[3] * Environment.MILE_TO_KILO);
 	}
 
 	@Override
@@ -78,4 +78,14 @@ public class Car implements Runnable {
 	public ArrayList<Point> getRoute() {
 		return route;
 	}
+
+	public int getCurSpeed() {
+		return curSpeed;
+	}
+
+	public void setCurSpeed(int curSpeed) {
+		this.curSpeed = curSpeed;
+	}
+	
+	
 }
