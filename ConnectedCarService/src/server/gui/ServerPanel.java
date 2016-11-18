@@ -7,12 +7,14 @@ import java.util.Scanner;
 
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import common.CarAttribute;
 import common.Point;
 import common.gui.ImagePanel;
+import common.gui.InitPanel;
 import common.gui.MyPanel;
 
 import javax.swing.JLabel;
@@ -21,6 +23,7 @@ import javax.swing.JTextField;
 
 import client.gui.ClientMainPanel;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -55,7 +58,7 @@ public class ServerPanel extends MyPanel implements ActionListener {
 		// Set default UI of Client
 		JLabel lblClientMode = new JLabel("Server Mode");
 		lblClientMode.setFont(new Font("±¼¸²", Font.BOLD, 25));
-		lblClientMode.setBounds(12, 10, 155, 30);
+		lblClientMode.setBounds(12, 10, 160, 30);
 		add(lblClientMode);
 		
 		JLabel lblTeamWave = new JLabel("Team WAVE");
@@ -66,7 +69,8 @@ public class ServerPanel extends MyPanel implements ActionListener {
 		
 		// InnerPanel for Client
 		innerPanel = new JPanel();
-		innerPanel.setBounds(0, 46, 1008, 684);
+		innerPanel.setBounds(0, 46, 1020, 684);
+		innerPanel.setBackground(Color.WHITE);
 		add(innerPanel);
 		innerPanel.setLayout(null);
 		
@@ -74,6 +78,7 @@ public class ServerPanel extends MyPanel implements ActionListener {
 		// ImagePanel
 		ImagePanel imagePanel = new ImagePanel(new File("src/common/gui/ConnectedCar.png"));
 		imagePanel.setBounds(getWidth()/2-691/2, 40, 691, 350);  // 691 463
+		imagePanel.setBackground(Color.WHITE);
 		innerPanel.add(imagePanel);
 		
 		
@@ -121,10 +126,12 @@ public class ServerPanel extends MyPanel implements ActionListener {
 		
 		JRadioButton rdbtnMale = new JRadioButton("Male    ");
 		rdbtnMale.setActionCommand("1");
+		rdbtnMale.setBackground(Color.WHITE);
 		GenderBox.add(rdbtnMale);
 		
 		JRadioButton rdbtnFemale = new JRadioButton("Female");
 		rdbtnFemale.setActionCommand("2");
+		rdbtnFemale.setBackground(Color.WHITE);
 		GenderBox.add(rdbtnFemale);
 		
 		genderGroup.add(rdbtnMale);
@@ -136,14 +143,17 @@ public class ServerPanel extends MyPanel implements ActionListener {
 		
 		JRadioButton rdbtnBeginner = new JRadioButton("Beginner");
 		rdbtnBeginner.setActionCommand("1");
+		rdbtnBeginner.setBackground(Color.WHITE);
 		CareerBox.add(rdbtnBeginner);
 		
 		JRadioButton rdbtnIntermediate = new JRadioButton("Intermediate");
 		rdbtnIntermediate.setActionCommand("2");
+		rdbtnIntermediate.setBackground(Color.WHITE);
 		CareerBox.add(rdbtnIntermediate);
 		
 		JRadioButton rdbtnExpert = new JRadioButton("Expert");
 		rdbtnExpert.setActionCommand("3");
+		rdbtnExpert.setBackground(Color.WHITE);
 		CareerBox.add(rdbtnExpert);
 		
 		careerGroup.add(rdbtnBeginner);
@@ -156,14 +166,17 @@ public class ServerPanel extends MyPanel implements ActionListener {
 		
 		JRadioButton rdbtnSmall = new JRadioButton("Small  ");
 		rdbtnSmall.setActionCommand("1");
+		rdbtnSmall.setBackground(Color.WHITE);
 		TypeBox.add(rdbtnSmall);
 		
 		JRadioButton rdbtnMedium = new JRadioButton("Medium  ");
 		rdbtnMedium.setActionCommand("2");
+		rdbtnMedium.setBackground(Color.WHITE);
 		TypeBox.add(rdbtnMedium);
 		
 		JRadioButton rdbtnLarge = new JRadioButton("Large");
 		rdbtnLarge.setActionCommand("3");
+		rdbtnLarge.setBackground(Color.WHITE);
 		TypeBox.add(rdbtnLarge);
 		
 		typeGroup.add(rdbtnSmall);
@@ -172,8 +185,9 @@ public class ServerPanel extends MyPanel implements ActionListener {
 		
 
 		// Commit button
-		JButton btnCommit = new JButton("Commit");
-		btnCommit.setBounds(447, 586, 110, 39);
+		JButton btnCommit = new JButton("");
+		btnCommit.setBounds(447, 586, 200, 60);
+		btnCommit.setIcon(new ImageIcon(InitPanel.class.getResource("/common/gui/Commit.png")));
 		innerPanel.add(btnCommit);
 		btnCommit.setFont(new Font("±¼¸²", Font.BOLD, 20));	
 		btnCommit.addActionListener(this);

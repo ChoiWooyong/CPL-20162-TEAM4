@@ -1,14 +1,17 @@
 package common.gui;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import client.gui.ClientMainPanel;
 import client.gui.ClientPanel;
 import common.Environment;
 import server.gui.ServerPanel;
 
 import java.awt.event.ActionListener;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 
 public class MainFrame extends JFrame implements ActionListener {
@@ -31,7 +34,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		setTitle(Environment._TITLE);
 		getContentPane().setLayout(null);
 		setVisible(true);
-		
+
 		// Add panels to frame
 		getContentPane().add(initPanel);
 		getContentPane().add(clientPanel);
@@ -41,8 +44,12 @@ public class MainFrame extends JFrame implements ActionListener {
 		initPanel.btnClient.addActionListener(this);
 		initPanel.btnServer.addActionListener(this);
 		
+		
 		// InitPanel must be first panel to be viewed.
 		curPanel = initPanel;
+		
+		//close frame option
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
