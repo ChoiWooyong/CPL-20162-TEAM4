@@ -2,6 +2,7 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 import javax.swing.UIManager;
+import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
@@ -17,21 +18,30 @@ import javax.swing.border.MatteBorder;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.JToggleButton;
 import javax.swing.ImageIcon;
 
-public class test extends JPanel {
-	public test() {
+public class test extends JFrame {
+	public test() throws IOException {
+
+		setSize(500, 500);
 		
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.setIcon(new ImageIcon(test.class.getResource("/common/gui/ConnectedCar.png")));
-		btnNewButton.setForeground(UIManager.getColor("Button.darkShadow"));
-		btnNewButton.setBackground(Color.WHITE);
-		add(btnNewButton);
+		ImagePanel imgPanel = new ImagePanel(new File("test.png"));
+		add(imgPanel);
+		
+		imgPanel.updateImage(ImageIO.read(new File("test2.png")));
+		
+		setVisible(true);
 	}
-	private JTextField textField;
+	
+	public static void main(String[] args) throws IOException {
+		new test();
+	}
 
 }

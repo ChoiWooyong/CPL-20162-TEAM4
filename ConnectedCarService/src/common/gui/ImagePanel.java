@@ -15,7 +15,7 @@ public class ImagePanel extends JPanel {
 	
 	public ImagePanel(File file) throws IOException {
 		setLayout(null);
-		image = ImageIO.read(file);
+		//image = ImageIO.read(file);
 	}
 	
 	public ImagePanel(BufferedImage img) throws IOException {
@@ -27,5 +27,9 @@ public class ImagePanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(image, 0, 0, this);
+    }
+    
+    public void updateImage(BufferedImage img) {
+    	image = img;
     }
 }

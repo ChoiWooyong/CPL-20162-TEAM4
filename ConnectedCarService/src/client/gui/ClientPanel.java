@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
@@ -73,7 +74,6 @@ public class ClientPanel extends MyPanel implements ActionListener {
 		Box labelBox = Box.createVerticalBox();
 		labelBox.setBounds(324, 458, 130, 96);
 		innerPanel.add(labelBox);
-		labelBox.setToolTipText("");
 		
 		JLabel lblAge = new JLabel("Age");
 		lblAge.setFont(new Font("±¼¸²", Font.BOLD, 20));
@@ -210,10 +210,12 @@ public class ClientPanel extends MyPanel implements ActionListener {
 		remove(innerPanel);
 		revalidate();
 		repaint();
-		
-		innerPanel = new ClientMainPanel(new CarAttribute(num, career, gender, age, type), serv_ip);
-		innerPanel.setBounds(0, 46, 1008, 684);
-		add(innerPanel);
-		innerPanel.setLayout(null);
+		try {
+			innerPanel = new ClientMainPanel(new CarAttribute(num, career, gender, age, type), serv_ip);
+			add(innerPanel);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

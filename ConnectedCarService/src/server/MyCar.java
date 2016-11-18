@@ -16,7 +16,7 @@ import common.SwitchTimer;
 
 
 
-public class MyCar extends Car implements Runnable {
+public class MyCar extends Car {
 
 	private ServerSocket serv_sock;
 
@@ -29,30 +29,9 @@ public class MyCar extends Car implements Runnable {
 	private int schCnt = 0;
 
 
-	public MyCar(String num, Point departure, Point destination) throws IOException {
-		super(num, departure, destination);
-		
-		serv_sock = new ServerSocket(Environment._PORT_NUM);
-		carInfo = new ArrayList<CarInfo>();
-	}
-	
-	public MyCar(CarAttribute attr, Point departure, Point destination) throws IOException {
-		super(attr, departure, destination);
-		
-		serv_sock = new ServerSocket(Environment._PORT_NUM);
-		carInfo = new ArrayList<CarInfo>();
-	}
-
-	public MyCar(CarAttribute attr, Point destination) throws IOException {
-		super(attr, destination);
-		
-		serv_sock = new ServerSocket(Environment._PORT_NUM);
-		carInfo = new ArrayList<CarInfo>();
-	}
-	
 	public MyCar(CarAttribute attr) throws IOException {
 		super(attr);
-		
+
 		serv_sock = new ServerSocket(Environment._PORT_NUM);
 		carInfo = new ArrayList<CarInfo>();
 	}
@@ -60,11 +39,10 @@ public class MyCar extends Car implements Runnable {
 
 	public void startConnectedCar_Server() throws Exception {
 
-		Thread accepter = new Thread(this);
+		Thread accepter = new Thread(new Accepter());
 		accepter.start();
 
 		System.out.println("Waiting for detecting car...");
-
 
 		System.out.println("Starting to communication with other cars...");
 		while (true) {
@@ -73,25 +51,9 @@ public class MyCar extends Car implements Runnable {
 			CCHPeriod();
 			SCHPeriod();
 		}
-		
+
 		System.out.println(selectionAlg() + "is selected");
 		accepter.stop();
-	}
-
-	
-	@Override
-	public void run() {
-		try {
-			for (int i = 0; ; i++) {
-				Socket sock = serv_sock.accept();
-				carInfo.add(new CarInfo(sock));
-				writePacket(i, Environment._RQ_INFO);
-				carInfo.get(i).setAttr((CarAttribute) readMsg(i));
-			}
-		} catch (Exception e) {	
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 
@@ -140,7 +102,7 @@ public class MyCar extends Car implements Runnable {
 			if (obj instanceof ArrayList<?>) {
 				curCar.setFullPath((ArrayList<Point>) obj);
 				carInfo.get(idx).goNextState();
-			
+
 				calScore(curCar);
 			}
 		}
@@ -148,8 +110,6 @@ public class MyCar extends Car implements Runnable {
 		timer.join();
 	}
 
-	
-	
 
 	public void calScore(CarInfo car) {
 		float score = 0;
@@ -163,7 +123,7 @@ public class MyCar extends Car implements Runnable {
 			if(curPath.isEqual(curRoute)) 
 				score += 1;
 		}
-		
+
 
 		CarAttribute curAttr = car.getAttr();
 
@@ -176,7 +136,7 @@ public class MyCar extends Car implements Runnable {
 			suit++;
 		if (curAttr.getType() == attr.getType())
 			suit++;
-		
+
 		score = (float) (score * (1.0 + (suit / 100.0)));
 
 		car.setScore(score);
@@ -210,16 +170,34 @@ public class MyCar extends Car implements Runnable {
 
 	private void writePacket(int idx, int requestCode) throws Exception {
 		ObjectOutputStream out = new ObjectOutputStream(carInfo.get(idx).getSock().getOutputStream());
-		
+
 		int chnType = 0;
 		if (requestCode == Environment._RQ_FIRST_LEG || requestCode == Environment._RQ_INFO) {
 			chnType = Environment._CCH;
-			
+
 		} else if (requestCode == Environment._RQ_FULL_LEGS) {
 			chnType = Environment._SCH;
 		}
-		
+
 		Packet pk = new Packet(chnType, requestCode, null);
 		out.writeObject(pk);
+	}
+
+	private class Accepter implements Runnable {
+		
+		@Override
+		public void run() {
+			try {
+				for (int i = 0; ; i++) {
+					Socket sock = serv_sock.accept();
+					carInfo.add(new CarInfo(sock));
+					writePacket(i, Environment._RQ_INFO);
+					carInfo.get(i).setAttr((CarAttribute) readMsg(i));
+				}
+			} catch (Exception e) {	
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }

@@ -15,18 +15,7 @@ import common.Point;
 public class OtherCar extends Car {
 
 	private Socket sock;
-
-	public OtherCar(String num, Point departure, Point destination) {
-		super(num, departure, destination);
-	}
 	
-	public OtherCar(CarAttribute attr, Point departure, Point destination) {
-		super(attr, departure, destination);
-	}
-
-	public OtherCar(CarAttribute attr, Point destination) {
-		super(attr, destination);
-	}
 	
 	public OtherCar(CarAttribute attr) {
 		super(attr);
