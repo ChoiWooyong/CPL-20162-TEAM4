@@ -12,9 +12,13 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 import javax.swing.JTextField;
+
+import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 
+import client.gui.ClientMainPanel;
 import server.MyCar;
 import common.CarAttribute;
 import common.Environment;
@@ -30,8 +34,11 @@ public class ServerMainPanel extends JPanel implements Runnable {
 	private int mapMode = 1;
 	private Point destPoint;
 
-	private JButton btnSetDest;
-	private JButton btnFind;
+	private JToggleButton btnSetDest;
+	private JToggleButton btnFind;
+	private JToggleButton tglbtnEmergency;
+	private JToggleButton tglbtnLeftlight;
+	private JToggleButton tglbtnRightlight;
 	private JLabel lblConnectedCar;
 	private JLabel speedText;
 
@@ -41,9 +48,10 @@ public class ServerMainPanel extends JPanel implements Runnable {
 		setSize(800, 480);
 		setBackground(Color.WHITE);
 
-		btnSetDest = new JButton("");  // Set destination
+		btnSetDest = new JToggleButton("");  // Set destination
 		btnSetDest.setActionCommand("1");
 		btnSetDest.setIcon(new ImageIcon(ServerMainPanel.class.getResource("/common/gui/SetDst.png")));
+		btnSetDest.setSelectedIcon(new ImageIcon(ServerMainPanel.class.getResource("/common/gui/SetDst.png")));
 		btnSetDest.setBounds(20, 335, 240, 57);
 		btnSetDest.addActionListener(new ActionListener() {
 			@Override
@@ -62,18 +70,23 @@ public class ServerMainPanel extends JPanel implements Runnable {
 				else if(destMsg.equals("5"))  // Exercise park
 					destPoint = new Point(35.864444, 128.631835);
 				mapMode = 2;
+				btnSetDest.setEnabled(false);
+				btnFind.setEnabled(true);
 			}
 		});
 		add(btnSetDest);
 
-		btnFind = new JButton("");  // Find car
+		btnFind = new JToggleButton("");  // Find car
 		btnFind.setActionCommand("2");
 		btnFind.setIcon(new ImageIcon(ServerMainPanel.class.getResource("/common/gui/Find.png")));
+		btnFind.setSelectedIcon(new ImageIcon(ServerMainPanel.class.getResource("/common/gui/Find.png")));
 		btnFind.setBounds(290, 335, 240, 57);
+		btnFind.setEnabled(false);
 		btnFind.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				new Thread(new CarManager()).start();
+				
 			}
 		});
 		add(btnFind);
@@ -97,6 +110,34 @@ public class ServerMainPanel extends JPanel implements Runnable {
 		mapPanel = new ImagePanel(MapDataFetcher.getCurImage(car.getAttr().getCurPos(), car.getAttr().getNum()));
 		mapPanel.setBounds(0, 0, 800, 320);
 		add(mapPanel);
+		
+		tglbtnEmergency = new JToggleButton("");
+		tglbtnEmergency.setBounds(12, 22, 64, 64);
+		tglbtnEmergency.setSelectedIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/EmergencyOn.png")));
+		tglbtnEmergency.setIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/EmergencyOff.png")));
+		tglbtnEmergency.setOpaque(false);
+		tglbtnEmergency.setContentAreaFilled(false);
+		tglbtnEmergency.setBorderPainted(false);
+		mapPanel.add(tglbtnEmergency);
+		
+		tglbtnLeftlight = new JToggleButton("");
+		tglbtnLeftlight.setBounds(12, 122, 64, 64);
+		tglbtnLeftlight.setSelectedIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/LeftLightOn.png")));
+		tglbtnLeftlight.setIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/LeftLightOff.png")));
+		tglbtnLeftlight.setOpaque(false);
+		tglbtnLeftlight.setContentAreaFilled(false);
+		tglbtnLeftlight.setBorderPainted(false);
+		mapPanel.add(tglbtnLeftlight);
+		
+		tglbtnRightlight = new JToggleButton("");
+		tglbtnRightlight.setBounds(12, 222, 64, 64);
+		tglbtnRightlight.setSelectedIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/RightLightOn.png")));
+		tglbtnRightlight.setIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/RightLightOff.png")));
+		tglbtnRightlight.setOpaque(false);
+		tglbtnRightlight.setContentAreaFilled(false);
+		tglbtnRightlight.setBorderPainted(false);
+		mapPanel.add(tglbtnRightlight);
+		mapPanel.setVisible(true);
 		
 		speedText = new JLabel();
 		speedText.setHorizontalAlignment(SwingConstants.RIGHT);
