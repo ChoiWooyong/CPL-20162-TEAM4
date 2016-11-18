@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
@@ -34,6 +35,8 @@ public class ClientMainPanel extends JPanel implements Runnable, ActionListener 
 	private JToggleButton tglbtnONOFF;
 	private JLabel lblConnectedCar;
 
+	private Point destPoint;
+	
 	public ClientMainPanel(CarAttribute attr, String serv_ip, boolean isDebug) throws IOException {
 
 		this.isDebug = isDebug;
@@ -43,12 +46,32 @@ public class ClientMainPanel extends JPanel implements Runnable, ActionListener 
 		setBackground(Color.WHITE);
 
 		btnSetDest = new JButton("");
-		btnSetDest.setActionCommand("1");
+		btnSetDest.setActionCommand("1"); 
 		btnSetDest.setIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/SetDst.png")));
 		btnSetDest.setFont(new Font("±¼¸²", Font.PLAIN, 20));
 		btnSetDest.setBounds(83, 616, 240, 57);
 		add(btnSetDest);
 
+		//set destination action listener
+		btnSetDest.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String destMsg = JOptionPane.showInputDialog("Input your destination");
+				//System.out.println(destMsg);
+				if(destMsg.equals("1")) //Kyungpook North gate
+					destPoint = new Point(35.892461, 128.609228);
+				else if(destMsg.equals("2")) // Kyungpook Main gate
+					destPoint = new Point(35.885136, 128.614203);
+				else if(destMsg.equals("3")) // Daegu city hall
+					destPoint = new Point(35.871379, 128.601800);
+				else if(destMsg.equals("4")) // Daegu airport
+					destPoint = new Point(35.899019, 128.639006);
+				else if(destMsg.equals("5")) // exercise park
+					destPoint = new Point(35.864444, 128.631835);
+				//System.out.println(destPoint.getLatitude() + ":" + destPoint.getLongitude());
+			}
+		});
+		
 		tglbtnONOFF = new JToggleButton("");
 		tglbtnONOFF.setActionCommand("2");
 		tglbtnONOFF.setSelectedIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/ON.png")));
@@ -94,7 +117,7 @@ public class ClientMainPanel extends JPanel implements Runnable, ActionListener 
 			break;
 		case 2:  // Connected Car ON/OFF
 			if (btn.isSelected()) {  // ON
-				new Thread(new CarManager()).run();
+				new Thread(new CarManager()).start();
 				
 			} else {  // OFF
 				// Close safely
@@ -109,7 +132,7 @@ public class ClientMainPanel extends JPanel implements Runnable, ActionListener 
 		// TODO Auto-generated method stub
 		try {
 			// Update Map Image
-			while (true) {
+			while (true) { 
 				mapPanel.updateImage(MapDataFetcher.getCurImage(car.getCurPos(), car.getAttr().getNum()));
 				Thread.sleep(Environment._IMAGE_UPDATE_TIME);
 			}
@@ -120,7 +143,6 @@ public class ClientMainPanel extends JPanel implements Runnable, ActionListener 
 		}
 	}
 
-	
 	private class CarManager implements Runnable {
 		
 		@Override

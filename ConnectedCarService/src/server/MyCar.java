@@ -32,7 +32,7 @@ public class MyCar extends Car {
 	public MyCar(CarAttribute attr) throws IOException {
 		super(attr);
 
-		serv_sock = new ServerSocket(Environment._PORT_NUM);
+		//serv_sock = new ServerSocket(Environment._PORT_NUM);
 		carInfo = new ArrayList<CarInfo>();
 	}
 

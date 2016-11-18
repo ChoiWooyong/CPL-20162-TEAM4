@@ -240,6 +240,7 @@ public class ServerPanel extends MyPanel implements ActionListener {
 		repaint();
 		try {
 			innerPanel = new ServerMainPanel(new CarAttribute(num, career, gender, age, type), isDebug);
+			innerPanel.setBounds(0,46,1020,722);
 			add(innerPanel);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
