@@ -57,27 +57,35 @@ public class ServerPanel extends MyPanel implements ActionListener {
 		
 		// Set default UI of Client
 		JLabel lblClientMode = new JLabel("Server Mode");
-		lblClientMode.setFont(new Font("±¼¸²", Font.BOLD, 25));
-		lblClientMode.setBounds(12, 10, 160, 30);
+		lblClientMode.setFont(new Font("±¼¸²", Font.BOLD, 22));
+		lblClientMode.setBounds(12, 10, 155, 30);
 		add(lblClientMode);
 		
 		JLabel lblTeamWave = new JLabel("Team WAVE");
-		lblTeamWave.setFont(new Font("±¼¸²", Font.BOLD, 25));
-		lblTeamWave.setBounds(844, 10, 155, 30);
+		lblTeamWave.setFont(new Font("±¼¸²", Font.BOLD, 22));
+		lblTeamWave.setBounds(655, 10, 155, 30);
 		add(lblTeamWave);
 		
 		
 		// InnerPanel for Client
 		innerPanel = new JPanel();
-		innerPanel.setBounds(0, 46, 1020, 722);
+		innerPanel.setBounds(0, 20, 800, 470);
 		innerPanel.setBackground(Color.WHITE);
 		add(innerPanel);
 		innerPanel.setLayout(null);
 		
+		// Description of options
+		JLabel lblChooseOptionYou = new JLabel("Choose options you want");
+		lblChooseOptionYou.setFont(new Font("±¼¸²", Font.BOLD, 13));
+		lblChooseOptionYou.setOpaque(true);
+		lblChooseOptionYou.setForeground(Color.RED);
+		lblChooseOptionYou.setBackground(Color.WHITE);
+		lblChooseOptionYou.setBounds(90, 300, 183, 15);
+		innerPanel.add(lblChooseOptionYou);
 		
 		// ImagePanel
 		ImagePanel imagePanel = new ImagePanel(new File("src/common/gui/ConnectedCar.png"));
-		imagePanel.setBounds(getWidth()/2-691/2, 40, 691, 350);  // 691 463
+		imagePanel.setBounds(getWidth()/2-493/2, 10, 493, 298);
 		imagePanel.setBackground(Color.WHITE);
 		innerPanel.add(imagePanel);
 		
@@ -89,7 +97,7 @@ public class ServerPanel extends MyPanel implements ActionListener {
 		
 		// Description of Car Attribute
 		Box labelBox = Box.createVerticalBox();
-		labelBox.setBounds(324, 458, 130, 96);
+		labelBox.setBounds(90, 320, 150, 96);
 		innerPanel.add(labelBox);
 		labelBox.setToolTipText("");
 		
@@ -112,7 +120,7 @@ public class ServerPanel extends MyPanel implements ActionListener {
 		
 		// TextField & RadioButton for Car Attribute
 		Box infoBox = Box.createVerticalBox();
-		infoBox.setBounds(464, 458, 231, 96);
+		infoBox.setBounds(250, 320, 231, 96);
 		innerPanel.add(infoBox);
 		
 		ageField = new JTextField();
@@ -186,17 +194,12 @@ public class ServerPanel extends MyPanel implements ActionListener {
 
 		// Commit button
 		JButton btnCommit = new JButton("");
-		btnCommit.setBounds(447, 586, 200, 60);
+		btnCommit.setBounds(510, 340, 200, 60);
 		btnCommit.setIcon(new ImageIcon(InitPanel.class.getResource("/common/gui/Commit.png")));
 		innerPanel.add(btnCommit);
 		btnCommit.setFont(new Font("±¼¸²", Font.BOLD, 20));	
 		btnCommit.addActionListener(this);
-		
-		// Description of options
-		JLabel lblChooseOptionYou = new JLabel("Choose options you want");
-		lblChooseOptionYou.setFont(new Font("±¼¸²", Font.PLAIN, 14));
-		lblChooseOptionYou.setBounds(324, 437, 183, 15);
-		innerPanel.add(lblChooseOptionYou);
+
 		
 		/*
 		System.out.println("My IP Address : " + InetAddress.getLocalHost().getHostAddress()); 

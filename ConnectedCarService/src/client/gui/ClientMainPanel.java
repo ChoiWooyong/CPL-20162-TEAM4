@@ -43,13 +43,13 @@ public class ClientMainPanel extends JPanel implements Runnable {
 		this.isDebug = isDebug;
 
 		setLayout(null);
-		setSize(1020, 722);
+		setSize(800, 480);
 		setBackground(Color.WHITE);
 
 		btnSetDest = new JButton("");
 		btnSetDest.setIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/SetDst.png")));
 		btnSetDest.setFont(new Font("±¼¸²", Font.PLAIN, 20));
-		btnSetDest.setBounds(83, 616, 240, 57);
+		btnSetDest.setBounds(20, 335, 240, 57);
 		btnSetDest.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -75,7 +75,7 @@ public class ClientMainPanel extends JPanel implements Runnable {
 		tglbtnONOFF.setSelectedIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/ON.png")));
 		tglbtnONOFF.setIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/OFF.png")));
 		tglbtnONOFF.setFont(new Font("±¼¸²", Font.PLAIN, 20));
-		tglbtnONOFF.setBounds(360, 616, 240, 57);
+		tglbtnONOFF.setBounds(290, 335, 240, 57);
 		tglbtnONOFF.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -88,7 +88,7 @@ public class ClientMainPanel extends JPanel implements Runnable {
 
 		lblConnectedCar = new JLabel("Connected Car : None");
 		lblConnectedCar.setFont(new Font("±¼¸²", Font.PLAIN, 20));
-		lblConnectedCar.setBounds(666, 630, 264, 24);
+		lblConnectedCar.setBounds(560, 350, 264, 24);
 		add(lblConnectedCar);
 
 		car = new OtherCar(attr);
@@ -102,7 +102,7 @@ public class ClientMainPanel extends JPanel implements Runnable {
 		}
 
 		mapPanel = new ImagePanel(MapDataFetcher.getCurImage(car.getCurPos(), car.getAttr().getNum()));
-		mapPanel.setBounds(0, 0, 1020, 600);
+		mapPanel.setBounds(0, 0, 800, 320);
 		add(mapPanel);
 		mapPanel.setVisible(true);
 

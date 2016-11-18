@@ -25,7 +25,7 @@ public class MapDataFetcher {
 
 	public static BufferedImage getCurImage(Point cur, String carNum) {
 
-		String strURL = String.format("%s%s/%s/?mapSize=1020,600&pushpin=%s;%s;%s&key=%s",
+		String strURL = String.format("%s%s/%s/?mapSize=800,320&pushpin=%s;%s;%s&key=%s",
 				Environment._BING_CUR_IMAGE_URL, cur.toString(), ZOOM_LEVEL, cur.toString(), PUSH_PIN_SHAPE, carNum, Environment._KEY);		
 
 		return getImageFromURL(strURL);
@@ -33,7 +33,7 @@ public class MapDataFetcher {
 	
 	public static BufferedImage getRouteCurImage(Point cur, Point dep, Point dst, String carNum) {
 
-		String strURL = String.format("%s%s/%s/Routes?wp.0=%s&wp.1=%s&mapSize=1020,600&pushpin=%s;%s;%s&key=%s",
+		String strURL = String.format("%s%s/%s/Routes?wp.0=%s&wp.1=%s&mapSize=800,320&pushpin=%s;%s;%s&key=%s",
 				Environment._BING_CUR_IMAGE_URL, cur.toString(), ZOOM_LEVEL, dep.toString(), dst.toString(), cur.toString(), PUSH_PIN_SHAPE, carNum, Environment._KEY);		
 
 		return getImageFromURL(strURL);
@@ -41,7 +41,7 @@ public class MapDataFetcher {
 	
 	public static BufferedImage getRouteImage(Point dep, Point dst, String carNum) {
 		
-		String strURL = String.format("%sRoutes?wp.0=%s&wp.1=%s&mapSize=1020,600&key=%s",
+		String strURL = String.format("%sRoutes?wp.0=%s&wp.1=%s&mapSize=800,320&key=%s",
 				Environment._BING_CUR_IMAGE_URL, dep.toString(), dst.toString(), Environment._KEY);
 		
 		System.out.println(strURL);

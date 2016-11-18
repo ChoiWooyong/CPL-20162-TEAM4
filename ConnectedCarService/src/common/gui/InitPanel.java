@@ -19,18 +19,19 @@ public class InitPanel extends MyPanel {
 
 		ImagePanel imagePanel = new ImagePanel(new File("src/common/gui/ConnectedCar.png"));
 		imagePanel.setBackground(Color.WHITE);
-		imagePanel.setBounds(getWidth()/2-691/2, 80, 691, 463);  // 691 463
+		imagePanel.setBounds(getWidth()/2-493/2, 30, 493, 298);  // 493 298
 		add(imagePanel);
 		
 		btnClient = new JButton("");
-		btnClient.setBounds(getWidth()/2 - 200, 580, 200, 60);
+		btnClient.setBounds(getWidth()/2 - 220, 350, 200, 60);
 		btnClient.setFont(new Font("±¼¸²", Font.BOLD, 25));
+		//btnClient.setBackground(Color.BLACK);
 		btnClient.setIcon(new ImageIcon(InitPanel.class.getResource("/common/gui/ManualMode.png")));
 		add(btnClient);
 		
 		btnServer = new JButton("");
 		btnServer.setFont(new Font("±¼¸²", Font.BOLD, 25));
-		btnServer.setBounds(getWidth()/2 + 75, 580, 200, 60);
+		btnServer.setBounds(getWidth()/2 + 25, 350, 200, 60);
 		btnServer.setIcon(new ImageIcon(InitPanel.class.getResource("/common/gui/AutoMode.png")));
 		add(btnServer);
 		

@@ -29,7 +29,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		serverPanel = new ServerPanel(args);
 		
 		// Configure frame
-		setSize(1024, 768);
+		setSize(800,480);
 		setResizable(false);
 		setTitle(Environment._TITLE);
 		getContentPane().setLayout(null);

@@ -35,13 +35,13 @@ public class ServerMainPanel extends JPanel implements Runnable {
 	public ServerMainPanel(CarAttribute attr, boolean isDebug) throws IOException {
 
 		setLayout(null);
-		setSize(1020, 722);
+		setSize(800, 480);
 		setBackground(Color.WHITE);
 
 		btnSetDest = new JButton("");  // Set destination
 		btnSetDest.setActionCommand("1");
 		btnSetDest.setIcon(new ImageIcon(ServerMainPanel.class.getResource("/common/gui/SetDst.png")));
-		btnSetDest.setBounds(83, 616, 240, 57);
+		btnSetDest.setBounds(20, 335, 240, 57);
 		btnSetDest.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -66,7 +66,7 @@ public class ServerMainPanel extends JPanel implements Runnable {
 		btnFind = new JButton("");  // Find car
 		btnFind.setActionCommand("2");
 		btnFind.setIcon(new ImageIcon(ServerMainPanel.class.getResource("/common/gui/Find.png")));
-		btnFind.setBounds(360, 616, 240, 57);
+		btnFind.setBounds(290, 335, 240, 57);
 		btnFind.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -77,7 +77,7 @@ public class ServerMainPanel extends JPanel implements Runnable {
 
 		lblConnectedCar = new JLabel("Connected Car : None");
 		lblConnectedCar.setFont(new Font("±¼¸²", Font.PLAIN, 20));
-		lblConnectedCar.setBounds(666, 630, 264, 24);
+		lblConnectedCar.setBounds(560, 350, 264, 24);
 		add(lblConnectedCar);
 
 		setVisible(true);
@@ -92,7 +92,7 @@ public class ServerMainPanel extends JPanel implements Runnable {
 		}
 
 		mapPanel = new ImagePanel(MapDataFetcher.getCurImage(car.getCurPos(), car.getAttr().getNum()));
-		mapPanel.setBounds(0, 0, 1020, 600);
+		mapPanel.setBounds(0, 0, 800, 320);
 		add(mapPanel);
 		mapPanel.setVisible(true);
 
