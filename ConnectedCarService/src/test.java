@@ -6,8 +6,10 @@ import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
+
 import java.awt.Component;
 import java.awt.Font;
+
 import javax.swing.border.SoftBevelBorder;
 
 import common.gui.ImagePanel;
@@ -20,27 +22,25 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
+
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
+
 import javax.swing.JToggleButton;
 import javax.swing.ImageIcon;
 
 public class test extends JFrame {
-	public test() throws IOException {
+	public test() throws IOException, InterruptedException {
 
 		setSize(500, 500);
 		
-		ImagePanel imgPanel = new ImagePanel(new File("test.png"));
-		add(imgPanel);
-		
-		imgPanel.updateImage(ImageIO.read(new File("test2.png")));
 		
 		setVisible(true);
 	}
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, InterruptedException {
 		new test();
 	}
 

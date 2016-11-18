@@ -43,6 +43,8 @@ public class MapDataFetcher {
 		
 		String strURL = String.format("%sRoutes?wp.0=%s&wp.1=%s&mapSize=1020,600&key=%s",
 				Environment._BING_CUR_IMAGE_URL, dep.toString(), dst.toString(), Environment._KEY);
+		
+		System.out.println(strURL);
 
 		return getImageFromURL(strURL);
 	}
