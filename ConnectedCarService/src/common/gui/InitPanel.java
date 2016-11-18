@@ -7,7 +7,6 @@ import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JPanel;
 
 public class InitPanel extends MyPanel {
 	JButton btnClient;

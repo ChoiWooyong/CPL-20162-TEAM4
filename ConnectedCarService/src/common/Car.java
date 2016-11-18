@@ -1,6 +1,5 @@
 package common;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Car implements Runnable {

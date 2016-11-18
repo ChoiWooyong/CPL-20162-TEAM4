@@ -8,23 +8,18 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
-import javax.swing.JTextField;
-
-import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 
-import client.gui.ClientMainPanel;
-import server.MyCar;
 import common.CarAttribute;
 import common.Environment;
 import common.MapDataFetcher;
 import common.Point;
 import common.gui.ImagePanel;
+import server.MyCar;
 
 public class ServerMainPanel extends JPanel implements Runnable {
 

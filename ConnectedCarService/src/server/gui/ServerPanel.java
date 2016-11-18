@@ -1,32 +1,25 @@
 package server.gui;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.util.Scanner;
 
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JPanel;
-
-import common.CarAttribute;
-import common.Point;
-import common.gui.ImagePanel;
-import common.gui.InitPanel;
-import common.gui.MyPanel;
-
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import client.gui.ClientMainPanel;
-
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import common.CarAttribute;
+import common.gui.ImagePanel;
+import common.gui.InitPanel;
+import common.gui.MyPanel;
 
 
 public class ServerPanel extends MyPanel implements ActionListener {

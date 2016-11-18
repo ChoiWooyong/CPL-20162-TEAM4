@@ -1,18 +1,14 @@
 package common.gui;
 
-import javax.swing.ImageIcon;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
-import client.gui.ClientMainPanel;
 import client.gui.ClientPanel;
 import common.Environment;
 import server.gui.ServerPanel;
-
-import java.awt.event.ActionListener;
-import java.awt.Color;
-import java.awt.event.ActionEvent;
 
 public class MainFrame extends JFrame implements ActionListener {
 	
@@ -21,16 +17,14 @@ public class MainFrame extends JFrame implements ActionListener {
 	ServerPanel serverPanel;
 	
 	MyPanel curPanel;
+	
+	String[] args;
 
 	public MainFrame(String[] args) throws Exception {
+		this.args = args;
+		
 		// Construct panels
 		initPanel = new InitPanel();
-		if (args.length == 1) {
-			clientPanel = new ClientPanel(args);
-		} else {
-			clientPanel = new ClientPanel(args);
-			serverPanel = new ServerPanel(args);
-		}
 		
 		// Configure frame
 		setSize(800,480);
@@ -41,9 +35,6 @@ public class MainFrame extends JFrame implements ActionListener {
 
 		// Add panels to frame
 		getContentPane().add(initPanel);
-		getContentPane().add(clientPanel);
-		getContentPane().add(serverPanel);
-		
 		// Add actionListener to button
 		initPanel.btnClient.addActionListener(this);
 		initPanel.btnServer.addActionListener(this);
@@ -65,10 +56,26 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 		// Set panel visible according to button that is pressed
 		if(curBtn == initPanel.btnClient) {
+			try {
+				clientPanel = new ClientPanel(args);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			getContentPane().add(clientPanel);
+
 			clientPanel.setVisible(true);
 			curPanel = clientPanel;
 			
 		} else if(curBtn == initPanel.btnServer) {
+			try {
+				serverPanel = new ServerPanel(args);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			getContentPane().add(serverPanel);
+			
 			serverPanel.setVisible(true);
 			curPanel = serverPanel;
 		}
