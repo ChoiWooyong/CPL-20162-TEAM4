@@ -66,7 +66,7 @@ public class ServerPanel extends MyPanel implements ActionListener {
 		
 		// InnerPanel for Client
 		innerPanel = new JPanel();
-		innerPanel.setBounds(0, 46, 1008, 684);
+		innerPanel.setBounds(0, 46, 1020, 684);
 		add(innerPanel);
 		innerPanel.setLayout(null);
 		
