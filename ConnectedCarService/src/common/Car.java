@@ -40,7 +40,7 @@ public class Car implements Runnable {
 			p.getOutputStream().close();
 			p.waitFor();
 			
-		} catch(Exception e){
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 
@@ -68,7 +68,6 @@ public class Car implements Runnable {
 			}
 		}
 	}
-
 
 
 	public CarAttribute getAttr() {

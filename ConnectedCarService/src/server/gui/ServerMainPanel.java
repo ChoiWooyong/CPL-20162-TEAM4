@@ -51,15 +51,15 @@ public class ServerMainPanel extends JPanel implements Runnable {
 				String destMsg = JOptionPane.showInputDialog("Input your destination");
 
 				System.out.println(destMsg);
-				if(destMsg.equals("1")) // Kyungpook North gate
+				if(destMsg.equals("1"))  // Kyungpook North gate
 					destPoint = new Point(35.892461, 128.609228);
-				else if(destMsg.equals("2")) // Kyungpook Main gate
+				else if(destMsg.equals("2"))  // Kyungpook Main gate
 					destPoint = new Point(35.885136, 128.614203);
-				else if(destMsg.equals("3")) // Daegu city hall
+				else if(destMsg.equals("3"))  // Daegu city hall
 					destPoint = new Point(35.871379, 128.601800);
-				else if(destMsg.equals("4")) // Daegu airport
+				else if(destMsg.equals("4"))  // Daegu airport
 					destPoint = new Point(35.899019, 128.639006);
-				else if(destMsg.equals("5")) // Exercise park
+				else if(destMsg.equals("5"))  // Exercise park
 					destPoint = new Point(35.864444, 128.631835);
 				mapMode = 2;
 			}
