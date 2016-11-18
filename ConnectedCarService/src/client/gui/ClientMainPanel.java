@@ -67,7 +67,7 @@ public class ClientMainPanel extends JPanel implements Runnable, ActionListener 
 			car.setCurPos(new Point(35.892441, 128.609169));
 			
 		} else {
-			new Thread(car).run();
+			new Thread(car).start();
 		}
 		
 		mapPanel = new ImagePanel(MapDataFetcher.getCurImage(car.getCurPos(), car.getAttr().getNum()));
@@ -76,7 +76,7 @@ public class ClientMainPanel extends JPanel implements Runnable, ActionListener 
 		add(mapPanel);
 		
 		// Thread for Update Map Image
-		new Thread(this).run();
+		new Thread(this).start();
 
 		setVisible(true);
 	}
