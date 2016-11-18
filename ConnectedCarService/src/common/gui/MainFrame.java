@@ -78,10 +78,10 @@ public class MainFrame extends JFrame implements ActionListener {
 	
 	public static void main(String[] args) throws Exception {
 		
-		args = new String[]{"TEST_PATH", "--DEBUG"};
-		
 		if (args.length != 1 && args.length != 2 && args.length != 3) {
-			System.out.println("Arguments must be \"CarNumber (Server IP)\". \n(Server may have 1 argument and client may have 2 arguments)");
+			System.out.println("Server Mode : java -jar MainFrame.jar CarNumber \n"
+					+ "Client Mode : java -jar MainFrame.jar CarNumber ServerIP. \n"
+					+ "Debug Mode  : java -jar MainFrame.jar --DEBUG \n");
 			return;
 		}
 		
