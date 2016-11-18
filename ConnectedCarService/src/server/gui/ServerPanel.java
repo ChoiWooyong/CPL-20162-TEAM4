@@ -56,9 +56,9 @@ public class ServerPanel extends MyPanel implements ActionListener {
 		}
 		
 		// Set default UI of Client
-		JLabel lblClientMode = new JLabel("Server Mode");
+		JLabel lblClientMode = new JLabel("Automatic Drive");
 		lblClientMode.setFont(new Font("±¼¸²", Font.BOLD, 22));
-		lblClientMode.setBounds(12, 10, 155, 30);
+		lblClientMode.setBounds(12, 10, 165, 30);
 		add(lblClientMode);
 		
 		JLabel lblTeamWave = new JLabel("Team WAVE");

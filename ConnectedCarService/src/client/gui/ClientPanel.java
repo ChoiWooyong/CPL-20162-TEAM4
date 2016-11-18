@@ -55,7 +55,7 @@ public class ClientPanel extends MyPanel implements ActionListener {
 			
 
 		// Set default UI of Client
-		JLabel lblClientMode = new JLabel("Client Mode");
+		JLabel lblClientMode = new JLabel("Manual Drive");
 		lblClientMode.setFont(new Font("±¼¸²", Font.BOLD, 22));
 		lblClientMode.setBounds(12, 10, 155, 30);
 		add(lblClientMode);

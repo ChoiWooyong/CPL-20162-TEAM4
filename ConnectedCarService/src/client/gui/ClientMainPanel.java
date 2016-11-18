@@ -39,9 +39,13 @@ public class ClientMainPanel extends JPanel implements Runnable {
 
 	private JButton btnSetDest;
 	private JToggleButton tglbtnONOFF;
+	private JToggleButton tglbtnEmergency;
+	private JToggleButton tglbtnLeftlight;
+	private JToggleButton tglbtnRightlight;
 	private JLabel lblConnectedCar;
+	
 	private JLabel speedText;
-
+	
 	public ClientMainPanel(CarAttribute attr, String serv_ip, boolean isDebug) throws IOException {
 
 		this.isDebug = isDebug;
@@ -89,12 +93,7 @@ public class ClientMainPanel extends JPanel implements Runnable {
 			}
 		});
 		add(tglbtnONOFF);
-
-		lblConnectedCar = new JLabel("Connected Car : None");
-		lblConnectedCar.setFont(new Font("±¼¸²", Font.PLAIN, 20));
-		lblConnectedCar.setBounds(560, 350, 264, 24);
-		add(lblConnectedCar);
-
+		
 		car = new OtherCar(attr, isDebug);
 		deptPoint = car.getAttr().getCurPos();
 		
@@ -110,6 +109,33 @@ public class ClientMainPanel extends JPanel implements Runnable {
 		mapPanel = new ImagePanel(MapDataFetcher.getCurImage(car.getAttr().getCurPos(), car.getAttr().getNum()));
 		mapPanel.setBounds(0, 0, 800, 320);
 		add(mapPanel);
+				
+		tglbtnEmergency = new JToggleButton("");
+		tglbtnEmergency.setBounds(12, 22, 64, 64);
+		tglbtnEmergency.setSelectedIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/EmergencyOn.png")));
+		tglbtnEmergency.setIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/EmergencyOff.png")));
+		tglbtnEmergency.setOpaque(false);
+		tglbtnEmergency.setContentAreaFilled(false);
+		tglbtnEmergency.setBorderPainted(false);
+		mapPanel.add(tglbtnEmergency);
+		
+		tglbtnLeftlight = new JToggleButton("");
+		tglbtnLeftlight.setBounds(12, 122, 64, 64);
+		tglbtnLeftlight.setSelectedIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/LeftLightOn.png")));
+		tglbtnLeftlight.setIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/LeftLightOff.png")));
+		tglbtnLeftlight.setOpaque(false);
+		tglbtnLeftlight.setContentAreaFilled(false);
+		tglbtnLeftlight.setBorderPainted(false);
+		mapPanel.add(tglbtnLeftlight);
+		
+		tglbtnRightlight = new JToggleButton("");
+		tglbtnRightlight.setBounds(12, 222, 64, 64);
+		tglbtnRightlight.setSelectedIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/RightLightOn.png")));
+		tglbtnRightlight.setIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/RightLightOff.png")));
+		tglbtnRightlight.setOpaque(false);
+		tglbtnRightlight.setContentAreaFilled(false);
+		tglbtnRightlight.setBorderPainted(false);
+		mapPanel.add(tglbtnRightlight);
 		
 		speedText = new JLabel(Integer.toString(car.getCurSpeed()));
 		speedText.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -117,9 +143,12 @@ public class ClientMainPanel extends JPanel implements Runnable {
 		speedText.setFont(new Font("±¼¸²", Font.BOLD, 30));
 		speedText.setBounds(732, 10, 56, 54);
 		mapPanel.add(speedText);
-		
 		mapPanel.setVisible(true);
 
+		lblConnectedCar = new JLabel("Connected Car : None");
+		lblConnectedCar.setFont(new Font("±¼¸²", Font.PLAIN, 20));
+		lblConnectedCar.setBounds(560, 350, 264, 24);
+		add(lblConnectedCar);
 		
 		// Thread for Update Map Image
 		new Thread(this).start();

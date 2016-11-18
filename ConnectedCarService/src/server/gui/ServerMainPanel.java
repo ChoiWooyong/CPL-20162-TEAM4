@@ -12,9 +12,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import client.gui.ClientMainPanel;
 import server.MyCar;
 import common.CarAttribute;
 import common.Environment;
@@ -32,6 +34,9 @@ public class ServerMainPanel extends JPanel implements Runnable {
 
 	private JButton btnSetDest;
 	private JButton btnFind;
+	private JToggleButton tglbtnEmergency;
+	private JToggleButton tglbtnLeftlight;
+	private JToggleButton tglbtnRightlight;
 	private JLabel lblConnectedCar;
 	private JLabel speedText;
 
@@ -97,6 +102,34 @@ public class ServerMainPanel extends JPanel implements Runnable {
 		mapPanel = new ImagePanel(MapDataFetcher.getCurImage(car.getAttr().getCurPos(), car.getAttr().getNum()));
 		mapPanel.setBounds(0, 0, 800, 320);
 		add(mapPanel);
+		
+		tglbtnEmergency = new JToggleButton("");
+		tglbtnEmergency.setBounds(12, 22, 64, 64);
+		tglbtnEmergency.setSelectedIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/EmergencyOn.png")));
+		tglbtnEmergency.setIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/EmergencyOff.png")));
+		tglbtnEmergency.setOpaque(false);
+		tglbtnEmergency.setContentAreaFilled(false);
+		tglbtnEmergency.setBorderPainted(false);
+		mapPanel.add(tglbtnEmergency);
+		
+		tglbtnLeftlight = new JToggleButton("");
+		tglbtnLeftlight.setBounds(12, 122, 64, 64);
+		tglbtnLeftlight.setSelectedIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/LeftLightOn.png")));
+		tglbtnLeftlight.setIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/LeftLightOff.png")));
+		tglbtnLeftlight.setOpaque(false);
+		tglbtnLeftlight.setContentAreaFilled(false);
+		tglbtnLeftlight.setBorderPainted(false);
+		mapPanel.add(tglbtnLeftlight);
+		
+		tglbtnRightlight = new JToggleButton("");
+		tglbtnRightlight.setBounds(12, 222, 64, 64);
+		tglbtnRightlight.setSelectedIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/RightLightOn.png")));
+		tglbtnRightlight.setIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/RightLightOff.png")));
+		tglbtnRightlight.setOpaque(false);
+		tglbtnRightlight.setContentAreaFilled(false);
+		tglbtnRightlight.setBorderPainted(false);
+		mapPanel.add(tglbtnRightlight);
+		mapPanel.setVisible(true);
 		
 		speedText = new JLabel();
 		speedText.setHorizontalAlignment(SwingConstants.RIGHT);
