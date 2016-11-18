@@ -72,8 +72,8 @@ public class ClientMainPanel extends JPanel implements Runnable, ActionListener 
 		
 		mapPanel = new ImagePanel(MapDataFetcher.getCurImage(car.getCurPos(), car.getAttr().getNum()));
 		mapPanel.setBounds(0, 0, 1008, 550);
-		
 		add(mapPanel);
+		mapPanel.setVisible(true);
 		
 		// Thread for Update Map Image
 		new Thread(this).start();
