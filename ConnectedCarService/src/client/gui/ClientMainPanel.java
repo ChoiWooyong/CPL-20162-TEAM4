@@ -76,7 +76,14 @@ public class ClientMainPanel extends JPanel implements Runnable {
 		tglbtnONOFF.setIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/OFF.png")));
 		tglbtnONOFF.setFont(new Font("±¼¸²", Font.PLAIN, 20));
 		tglbtnONOFF.setBounds(360, 616, 240, 57);
-		//tglbtnONOFF.add(this);
+		tglbtnONOFF.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(tglbtnONOFF.isSelected()) {
+					new Thread(new CarManager()).start();
+				}
+			}
+		});
 		add(tglbtnONOFF);
 
 		lblConnectedCar = new JLabel("Connected Car : None");
@@ -90,6 +97,7 @@ public class ClientMainPanel extends JPanel implements Runnable {
 			car.setCurPos(new Point(35.892441, 128.609169));
 
 		} else {
+			// Update current position
 			new Thread(car).start();
 		}
 

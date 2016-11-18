@@ -67,6 +67,12 @@ public class ServerMainPanel extends JPanel implements Runnable {
 		btnFind.setActionCommand("2");
 		btnFind.setIcon(new ImageIcon(ServerMainPanel.class.getResource("/common/gui/Find.png")));
 		btnFind.setBounds(360, 616, 240, 57);
+		btnFind.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				new Thread(new CarManager()).start();
+			}
+		});
 		add(btnFind);
 
 		lblConnectedCar = new JLabel("Connected Car : None");

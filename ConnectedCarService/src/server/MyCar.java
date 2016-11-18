@@ -25,6 +25,8 @@ public class MyCar extends Car {
 	private ArrayList<CarInfo> carInfo;
 
 	private ArrayList<Integer> mark;
+	
+	private int selectedIdx = -1;
 
 	private int schCnt = 0;
 
@@ -46,14 +48,12 @@ public class MyCar extends Car {
 
 		System.out.println("Starting to communication with other cars...");
 		while (true) {
-			if (schCnt == Environment._CAR_NUM)
-				break;
+			if (schCnt >= Environment._CAR_NUM) {
+				selectedIdx = selectionAlg();
+			}
 			CCHPeriod();
 			SCHPeriod();
 		}
-
-		System.out.println(selectionAlg() + "is selected");
-		accepter.stop();
 	}
 
 
@@ -115,7 +115,6 @@ public class MyCar extends Car {
 		float score = 0;
 		ArrayList<Point> fullPath = car.getFullPath();
 
-
 		int minSize = Math.min(fullPath.size(), route.size());
 		for (int i = 0; i < minSize; i++) {
 			Point curPath = fullPath.get(i);
@@ -123,7 +122,6 @@ public class MyCar extends Car {
 			if(curPath.isEqual(curRoute)) 
 				score += 1;
 		}
-
 
 		CarAttribute curAttr = car.getAttr();
 
