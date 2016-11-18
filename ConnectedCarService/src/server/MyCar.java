@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import common.Car;
 import common.CarAttribute;
 import common.Environment;
+import common.MapDataFetcher;
 import common.Packet;
 import common.Point;
 import common.SwitchTimer;
@@ -34,13 +35,13 @@ public class MyCar extends Car {
 	public MyCar(CarAttribute attr) throws IOException {
 		super(attr);
 
-		//serv_sock = new ServerSocket(Environment._PORT_NUM);
+		serv_sock = new ServerSocket(Environment._PORT_NUM);
 		carInfo = new ArrayList<CarInfo>();
 	}
 
 
 	public void startConnectedCar_Server() throws Exception {
-
+		
 		Thread accepter = new Thread(new Accepter());
 		accepter.start();
 
@@ -54,6 +55,10 @@ public class MyCar extends Car {
 			CCHPeriod();
 			SCHPeriod();
 		}
+	}
+	
+	public void makeRoute(Point dst) {
+		route = MapDataFetcher.getGeocode(curPos, dst);
 	}
 
 
@@ -158,7 +163,6 @@ public class MyCar extends Car {
 	}
 
 
-
 	private Object readMsg(int idx) throws Exception {
 		ObjectInputStream in = new ObjectInputStream(carInfo.get(idx).getSock().getInputStream());
 		Packet pk = (Packet) in.readObject();
@@ -198,4 +202,25 @@ public class MyCar extends Car {
 			}
 		}
 	}
+
+	public ArrayList<CarInfo> getCarInfo() {
+		return carInfo;
+	}
+
+
+	public void setCarInfo(ArrayList<CarInfo> carInfo) {
+		this.carInfo = carInfo;
+	}
+
+
+	public int getSelectedIdx() {
+		return selectedIdx;
+	}
+
+
+	public void setSelectedIdx(int selectedIdx) {
+		this.selectedIdx = selectedIdx;
+	}
+	
+	
 }

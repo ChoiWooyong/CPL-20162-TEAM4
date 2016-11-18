@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import common.Car;
 import common.CarAttribute;
 import common.Environment;
+import common.MapDataFetcher;
 import common.Packet;
 import common.Point;
 
@@ -45,6 +46,9 @@ public class OtherCar extends Car {
 		}
 	}
 
+	public void makeRoute(Point dst) {
+		route = MapDataFetcher.getGeocode(curPos, dst);
+	}
 
 	private int readReqCode() throws Exception {
 		ObjectInputStream in = new ObjectInputStream(sock.getInputStream());

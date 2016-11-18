@@ -151,6 +151,7 @@ public class ClientMainPanel extends JPanel implements Runnable {
 		public void run() {
 			// TODO Auto-generated method stub
 			try {
+				car.makeRoute(destPoint);
 				car.startConnectedCar_Client(serv_ip);
 
 			} catch (Exception e) {

@@ -105,6 +105,9 @@ public class ServerMainPanel extends JPanel implements Runnable {
 		try {
 			BufferedImage img = null;
 			while(true)	{
+				if (car.getSelectedIdx() != -1)
+					lblConnectedCar.setText("Conntected Car : " + car.getCarInfo().get(car.getSelectedIdx()).getAttr().getNum());
+				
 				switch(mapMode) {
 				case 1:
 					img = MapDataFetcher.getCurImage(car.getCurPos(), car.getAttr().getNum());
@@ -136,6 +139,7 @@ public class ServerMainPanel extends JPanel implements Runnable {
 		public void run() {
 			// TODO Auto-generated method stub
 			try {
+				car.makeRoute(destPoint);
 				car.startConnectedCar_Server();
 
 			} catch (Exception e) {
