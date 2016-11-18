@@ -35,6 +35,10 @@ public class Point implements Serializable {
 		return true;
 	}
 	
+	public double calDistance(Point p) {
+		return Math.sqrt(Math.pow(latitude - p.latitude, 2.0) + Math.pow(longitude - p.longitude, 2.0)) ;
+	}
+	
 	public String toString() {
 		return latitude + "," + longitude;
 	}

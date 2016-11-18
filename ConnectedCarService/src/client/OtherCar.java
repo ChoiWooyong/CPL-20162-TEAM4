@@ -18,8 +18,8 @@ public class OtherCar extends Car {
 	private Socket sock;
 	
 	
-	public OtherCar(CarAttribute attr) {
-		super(attr);
+	public OtherCar(CarAttribute attr, boolean isDebug) {
+		super(attr, isDebug);
 	}
 
 	public void startConnectedCar_Client(String serv_ip) throws Exception {
@@ -47,7 +47,7 @@ public class OtherCar extends Car {
 	}
 
 	public void makeRoute(Point dst) {
-		route = MapDataFetcher.getGeocode(curPos, dst);
+		route = MapDataFetcher.getGeocode(attr.getCurPos(), dst);
 	}
 
 	private int readReqCode() throws Exception {
@@ -55,7 +55,6 @@ public class OtherCar extends Car {
 		Packet pk = (Packet) in.readObject();
 		return pk.getRequestCode();
 	}
-
 
 	private void writePacket(Object obj) throws Exception {
 		ObjectOutputStream out = new ObjectOutputStream(sock.getOutputStream());

@@ -31,7 +31,8 @@ public class ClientMainPanel extends JPanel implements Runnable {
 	private OtherCar car;
 
 	private ImagePanel mapPanel;
-	private int mapMode = 1;  // 1 : Cur Position, 2 : Whole Route, 3 : Zoom Route 
+	private int mapMode = 1;  // 1 : Cur Position, 2 : Whole Route, 3 : Zoom Route
+	private Point deptPoint;
 	private Point destPoint;
 
 	private JButton btnSetDest;
@@ -91,18 +92,20 @@ public class ClientMainPanel extends JPanel implements Runnable {
 		lblConnectedCar.setBounds(560, 350, 264, 24);
 		add(lblConnectedCar);
 
-		car = new OtherCar(attr);
-
+		car = new OtherCar(attr, isDebug);
+		deptPoint = car.getAttr().getCurPos();
+		
 		if (isDebug) {
-			car.setCurPos(new Point(35.892441, 128.609169));
+			car.getAttr().setCurPos(new Point(35.892441, 128.609169));
 
 		} else {
 			// Update current position
 			new Thread(car).start();
 		}
 
-		mapPanel = new ImagePanel(MapDataFetcher.getCurImage(car.getCurPos(), car.getAttr().getNum()));
+		mapPanel = new ImagePanel(MapDataFetcher.getCurImage(car.getAttr().getCurPos(), car.getAttr().getNum()));
 		mapPanel.setBounds(0, 0, 800, 320);
+		
 		add(mapPanel);
 		mapPanel.setVisible(true);
 
@@ -121,17 +124,17 @@ public class ClientMainPanel extends JPanel implements Runnable {
 			while (true) {
 				switch(mapMode) {
 				case 1:
-					img = MapDataFetcher.getCurImage(car.getCurPos(), car.getAttr().getNum());
+					img = MapDataFetcher.getCurImage(car.getAttr().getCurPos(), car.getAttr().getNum());
 					break;
 				case 2:
-					img = MapDataFetcher.getRouteImage(car.getCurPos(), destPoint, car.getAttr().getNum());
+					img = MapDataFetcher.getRouteImage(car.getAttr().getCurPos(), destPoint, car.getAttr().getNum());
 					mapPanel.updateImage(img);
 					mapPanel.updateUI();
 					Thread.sleep(Environment._IMAGE_UPDATE_TIME * 3);					
 					mapMode = 3;
 					continue;
 				case 3:
-					img = MapDataFetcher.getRouteCurImage(car.getCurPos(), car.getCurPos(), destPoint, car.getAttr().getNum());
+					img = MapDataFetcher.getRouteCurImage(car.getAttr().getCurPos(), deptPoint, destPoint, car.getAttr().getNum());
 					break;
 				}
 				mapPanel.updateImage(img);

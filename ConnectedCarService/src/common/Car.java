@@ -9,22 +9,26 @@ public class Car implements Runnable {
 
 	protected CarAttribute attr;
 
-	protected Point curPos;
-	
 	protected int curSpeed;
-	
+
 	protected ArrayList<Point> route;
 
 
-	protected Car(CarAttribute attr) {
+	protected Car(CarAttribute attr, boolean isDebug) {
 		this.attr = attr;
+		if (isDebug) {
+			attr.setCurPos(new Point(35.892441, 128.609169));
+			
+		} else {
+			updateGPSInfo();
+		}
 	}
-	
+
 	public void makeRoute(Point dst) {
-		route = MapDataFetcher.getGeocode(curPos, dst);
+		route = MapDataFetcher.getGeocode(getAttr().getCurPos(), dst);
 	}
-	
-	private void getGPSInfo() {
+
+	private void updateGPSInfo() {
 		Process p = null;
 
 		try{
@@ -38,35 +42,30 @@ public class Car implements Runnable {
 		}
 
 		System.out.println("Getting GPS Information...");
-		
+
 		getGpsInfo getInfo = new getGpsInfo();
 		double[] infoArray = getInfo.makeArray();
 		getInfo.getGps(infoArray);
 
-		curPos = new Point(infoArray[0], infoArray[1]);
+		getAttr().setCurPos(new Point(infoArray[0], infoArray[1]));
 		curSpeed = (int) infoArray[3];
 	}
 
 	@Override
 	public void run() {
-		getGPSInfo();
-		
-		try {
-			Thread.sleep(Environment._IMAGE_UPDATE_TIME / 3);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		while(true) {
+			updateGPSInfo();
+
+			try {
+				Thread.sleep(Environment._IMAGE_UPDATE_TIME / 3);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
-	
-	
-	public Point getCurPos() {
-		return curPos;
-	}
 
-	public void setCurPos(Point pos) {
-		curPos = pos;
-	}
+
 
 	public CarAttribute getAttr() {
 		return attr;

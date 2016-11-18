@@ -26,14 +26,14 @@ public class MyCar extends Car {
 	private ArrayList<CarInfo> carInfo;
 
 	private ArrayList<Integer> mark;
-	
+
 	private int selectedIdx = -1;
 
 	private int schCnt = 0;
 
 
-	public MyCar(CarAttribute attr) throws IOException {
-		super(attr);
+	public MyCar(CarAttribute attr, boolean isDebug) throws IOException {
+		super(attr, isDebug);
 
 		serv_sock = new ServerSocket(Environment._PORT_NUM);
 		carInfo = new ArrayList<CarInfo>();
@@ -41,7 +41,7 @@ public class MyCar extends Car {
 
 
 	public void startConnectedCar_Server() throws Exception {
-		
+
 		Thread accepter = new Thread(new Accepter());
 		accepter.start();
 
@@ -56,9 +56,9 @@ public class MyCar extends Car {
 			SCHPeriod();
 		}
 	}
-	
+
 	public void makeRoute(Point dst) {
-		route = MapDataFetcher.getGeocode(curPos, dst);
+		route = MapDataFetcher.getGeocode(getAttr().getCurPos(), dst);
 	}
 
 
@@ -120,29 +120,39 @@ public class MyCar extends Car {
 		float score = 0;
 		ArrayList<Point> fullPath = car.getFullPath();
 
-		int minSize = Math.min(fullPath.size(), route.size());
-		for (int i = 0; i < minSize; i++) {
-			Point curPath = fullPath.get(i);
-			Point curRoute = route.get(i);
-			if(curPath.isEqual(curRoute)) 
-				score += 1;
+		Point otherCur = car.getAttr().getCurPos();
+		Point cur = getAttr().getCurPos();
+
+		if (cur.calDistance(route.get(0)) > otherCur.calDistance(route.get(0))) {
+			// If the car is behind my car, do not choose
+			car.setScore(-1);
+
+		} else {
+			int minSize = Math.min(fullPath.size(), route.size());
+			
+			for (int i = 0; i < minSize; i++) {
+				Point curPath = fullPath.get(i);
+				Point curRoute = route.get(i);
+				if(curPath.isEqual(curRoute)) 
+					score += 1;
+			}
+
+			CarAttribute curAttr = car.getAttr();
+
+			int suit = 0;
+			if (curAttr.getCareer() == attr.getCareer())
+				suit++;
+			if (curAttr.getGender() == attr.getGender())
+				suit++;
+			if (curAttr.getAge() == attr.getAge())
+				suit++;
+			if (curAttr.getType() == attr.getType())
+				suit++;
+
+			score = (float) (score * (1.0 + (suit / 100.0)));
+
+			car.setScore(score);
 		}
-
-		CarAttribute curAttr = car.getAttr();
-
-		int suit = 0;
-		if (curAttr.getCareer() == attr.getCareer())
-			suit++;
-		if (curAttr.getGender() == attr.getGender())
-			suit++;
-		if (curAttr.getAge() == attr.getAge())
-			suit++;
-		if (curAttr.getType() == attr.getType())
-			suit++;
-
-		score = (float) (score * (1.0 + (suit / 100.0)));
-
-		car.setScore(score);
 	}
 
 
@@ -186,7 +196,7 @@ public class MyCar extends Car {
 	}
 
 	private class Accepter implements Runnable {
-		
+
 		@Override
 		public void run() {
 			try {
@@ -221,6 +231,6 @@ public class MyCar extends Car {
 	public void setSelectedIdx(int selectedIdx) {
 		this.selectedIdx = selectedIdx;
 	}
-	
-	
+
+
 }
