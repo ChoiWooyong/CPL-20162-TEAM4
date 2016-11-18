@@ -40,11 +40,13 @@ public class ClientMainPanel extends JPanel implements Runnable, ActionListener 
 		
 		setLayout(null);
 		setSize(1020, 722);
+		setBackground(Color.WHITE);
 
-		btnSetDest = new JButton("Set Destination");
+		btnSetDest = new JButton("");
 		btnSetDest.setActionCommand("1");
+		btnSetDest.setIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/SetDst.png")));
 		btnSetDest.setFont(new Font("±¼¸²", Font.PLAIN, 20));
-		btnSetDest.setBounds(83, 616, 220, 57);
+		btnSetDest.setBounds(83, 616, 240, 57);
 		add(btnSetDest);
 
 		tglbtnONOFF = new JToggleButton("");
