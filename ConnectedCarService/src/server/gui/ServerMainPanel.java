@@ -118,7 +118,7 @@ public class ServerMainPanel extends JPanel implements Runnable {
 				Thread.sleep(Environment._IMAGE_UPDATE_TIME);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			// TODO Auto-generated catch b
 			e.printStackTrace();
 		}
 	}
