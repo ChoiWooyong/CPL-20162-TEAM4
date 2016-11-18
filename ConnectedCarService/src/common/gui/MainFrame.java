@@ -2,13 +2,15 @@ package common.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import client.gui.ClientPanel;
-import common.Environment;
 import server.gui.ServerPanel;
+import client.gui.ClientPanel;
+
+import common.Environment;
 
 public class MainFrame extends JFrame implements ActionListener {
 	
@@ -20,7 +22,8 @@ public class MainFrame extends JFrame implements ActionListener {
 	
 	String[] args;
 
-	public MainFrame(String[] args) throws Exception {
+	public MainFrame(String[] args) throws IOException {
+	
 		this.args = args;
 		
 		// Construct panels
@@ -35,10 +38,10 @@ public class MainFrame extends JFrame implements ActionListener {
 
 		// Add panels to frame
 		getContentPane().add(initPanel);
+		
 		// Add actionListener to button
 		initPanel.btnClient.addActionListener(this);
 		initPanel.btnServer.addActionListener(this);
-		
 		
 		// InitPanel must be first panel to be viewed.
 		curPanel = initPanel;
@@ -63,7 +66,7 @@ public class MainFrame extends JFrame implements ActionListener {
 				e1.printStackTrace();
 			}
 			getContentPane().add(clientPanel);
-
+			
 			clientPanel.setVisible(true);
 			curPanel = clientPanel;
 			
@@ -88,6 +91,8 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 	
 	public static void main(String[] args) throws Exception {
+		
+		args = new String[]{"TEST_PATH", "--DEBUG"};
 		
 		if (args.length != 1 && args.length != 2 && args.length != 3) {
 			System.out.println("Server Mode : java -jar MainFrame.jar CarNumber \n"
