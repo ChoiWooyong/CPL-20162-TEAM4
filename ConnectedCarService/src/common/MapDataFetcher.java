@@ -28,31 +28,23 @@ public class MapDataFetcher {
 		String strURL = String.format("%s%s/%s/?mapSize=1020,600&pushpin=%s;%s;%s&key=%s",
 				Environment._BING_CUR_IMAGE_URL, cur.toString(), ZOOM_LEVEL, cur.toString(), PUSH_PIN_SHAPE, carNum, Environment._KEY);		
 
-		System.out.println(strURL);
-		
-		HttpURLConnection urlConnect = null;
-		int rspCode = -1;
+		return getImageFromURL(strURL);
+	}
+	
+	public static BufferedImage getRouteCurImage(Point cur, Point dep, Point dst, String carNum) {
 
-		try {
-			urlConnect = (HttpURLConnection) new URL(strURL).openConnection();
-			rspCode = urlConnect.getResponseCode();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		String strURL = String.format("%s%s/%s/Routes?wp.0=%s&wp.1=%s&mapSize=1020,600&pushpin=%s;%s;%s&key=%s",
+				Environment._BING_CUR_IMAGE_URL, cur.toString(), ZOOM_LEVEL, dep.toString(), dst.toString(), cur.toString(), PUSH_PIN_SHAPE, carNum, Environment._KEY);		
 
-		if (rspCode == 200) {
-			try {
-				BufferedImage img = ImageIO.read(urlConnect.getInputStream());
-				return img;
-				
-			} catch(IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		return getImageFromURL(strURL);
+	}
+	
+	public static BufferedImage getRouteImage(Point dep, Point dst, String carNum) {
 		
-		return null;
+		String strURL = String.format("%sRoutes?wp.0=%s&wp.1=%s&mapSize=1020,600&key=%s",
+				Environment._BING_CUR_IMAGE_URL, dep.toString(), dst.toString(), Environment._KEY);
+
+		return getImageFromURL(strURL);
 	}
 
 	public static ArrayList<Point> getGeocode(Point dep, Point dst) {
@@ -107,6 +99,32 @@ public class MapDataFetcher {
 			return Route;
 		}
 
+		return null;
+	}
+	
+	private static BufferedImage getImageFromURL(String strURL) {
+		HttpURLConnection urlConnect = null;
+		int rspCode = -1;
+
+		try {
+			urlConnect = (HttpURLConnection) new URL(strURL).openConnection();
+			rspCode = urlConnect.getResponseCode();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		if (rspCode == 200) {
+			try {
+				BufferedImage img = ImageIO.read(urlConnect.getInputStream());
+				return img;
+				
+			} catch(IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		return null;
 	}
 

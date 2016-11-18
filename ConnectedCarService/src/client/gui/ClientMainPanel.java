@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.swing.JButton;
@@ -30,12 +31,12 @@ public class ClientMainPanel extends JPanel implements Runnable, ActionListener 
 	private OtherCar car;
 
 	private ImagePanel mapPanel;
-
+	private int mapMode = 1;  // 1 : Cur Position, 2 : Whole Route, 3 : Zoom Route 
+	private Point destPoint;
+	
 	private JButton btnSetDest;
 	private JToggleButton tglbtnONOFF;
 	private JLabel lblConnectedCar;
-
-	private Point destPoint;
 	
 	public ClientMainPanel(CarAttribute attr, String serv_ip, boolean isDebug) throws IOException {
 
@@ -51,26 +52,6 @@ public class ClientMainPanel extends JPanel implements Runnable, ActionListener 
 		btnSetDest.setFont(new Font("±¼¸²", Font.PLAIN, 20));
 		btnSetDest.setBounds(83, 616, 240, 57);
 		add(btnSetDest);
-
-		//set destination action listener
-		btnSetDest.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String destMsg = JOptionPane.showInputDialog("Input your destination");
-				//System.out.println(destMsg);
-				if(destMsg.equals("1")) //Kyungpook North gate
-					destPoint = new Point(35.892461, 128.609228);
-				else if(destMsg.equals("2")) // Kyungpook Main gate
-					destPoint = new Point(35.885136, 128.614203);
-				else if(destMsg.equals("3")) // Daegu city hall
-					destPoint = new Point(35.871379, 128.601800);
-				else if(destMsg.equals("4")) // Daegu airport
-					destPoint = new Point(35.899019, 128.639006);
-				else if(destMsg.equals("5")) // exercise park
-					destPoint = new Point(35.864444, 128.631835);
-				//System.out.println(destPoint.getLatitude() + ":" + destPoint.getLongitude());
-			}
-		});
 		
 		tglbtnONOFF = new JToggleButton("");
 		tglbtnONOFF.setActionCommand("2");
@@ -113,7 +94,19 @@ public class ClientMainPanel extends JPanel implements Runnable, ActionListener 
 		
 		switch(command) {
 		case 1:  // Set Destination
-			
+			String destMsg = JOptionPane.showInputDialog("Input your destination");
+
+			//System.out.println(destMsg);
+			if(destMsg.equals("1")) //Kyungpook North gate
+				destPoint = new Point(35.892461, 128.609228);
+			else if(destMsg.equals("2")) // Kyungpook Main gate
+				destPoint = new Point(35.885136, 128.614203);
+			else if(destMsg.equals("3")) // Daegu city hall
+				destPoint = new Point(35.871379, 128.601800);
+			else if(destMsg.equals("4")) // Daegu airport
+				destPoint = new Point(35.899019, 128.639006);
+			else if(destMsg.equals("5")) // Exercise park
+				destPoint = new Point(35.864444, 128.631835);
 			break;
 		case 2:  // Connected Car ON/OFF
 			if (btn.isSelected()) {  // ON
@@ -131,10 +124,21 @@ public class ClientMainPanel extends JPanel implements Runnable, ActionListener 
 	public void run() {
 		// TODO Auto-generated method stub
 		try {
+			BufferedImage img = null;
 			// Update Map Image
-			while (true) { 
-				mapPanel.updateImage(MapDataFetcher.getCurImage(car.getCurPos(), car.getAttr().getNum()));
-				Thread.sleep(Environment._IMAGE_UPDATE_TIME);
+			while (true) {
+				switch(mapMode) {
+				case 1:
+					img = MapDataFetcher.getCurImage(car.getCurPos(), car.getAttr().getNum());
+					break;
+				case 2:
+					img = MapDataFetcher.getRouteImage(car.getCurPos(), destPoint, car.getAttr().getNum());
+					break;
+				case 3:
+					
+					break;
+				}
+				mapPanel.updateImage(img);
 			}
 
 		} catch (Exception e) {

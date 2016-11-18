@@ -11,6 +11,8 @@ public class Car implements Runnable {
 
 	protected Point curPos;
 	
+	protected int curSpeed;
+	
 	protected ArrayList<Point> route;
 
 
@@ -22,7 +24,7 @@ public class Car implements Runnable {
 		route = MapDataFetcher.getGeocode(curPos, dst);
 	}
 	
-	private Point updateCurPosistion() {
+	private void getGPSInfo() {
 		Process p = null;
 
 		try{
@@ -41,13 +43,13 @@ public class Car implements Runnable {
 		double[] infoArray = getInfo.makeArray();
 		getInfo.getGps(infoArray);
 
-		return new Point(infoArray[0], infoArray[1]);
-
+		curPos = new Point(infoArray[0], infoArray[1]);
+		curSpeed = (int) infoArray[3];
 	}
 
 	@Override
 	public void run() {
-		curPos = updateCurPosistion();
+		getGPSInfo();
 		
 		try {
 			Thread.sleep(Environment._IMAGE_UPDATE_TIME / 3);
