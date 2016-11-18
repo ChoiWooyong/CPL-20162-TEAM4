@@ -28,19 +28,19 @@ public class ServerMainPanel extends JPanel implements Runnable, ActionListener 
 	private JButton btnFind;
 	private JLabel lblConnectedCar;
 	
-	public ServerMainPanel(CarAttribute attr, boolean isDebug) throws IOException{
+	public ServerMainPanel(CarAttribute attr, boolean isDebug) throws IOException {
 		
 		setLayout(null);
 		setSize(1020, 722);
 		setBackground(Color.WHITE);
 		
-		btnSetDest = new JButton("");//set destination
+		btnSetDest = new JButton("");  // Set destination
 		btnSetDest.setActionCommand("1");
 		btnSetDest.setIcon(new ImageIcon(ServerMainPanel.class.getResource("/common/gui/SetDst.png")));
 		btnSetDest.setBounds(83, 616, 240, 57);
 		add(btnSetDest);
 		
-		btnFind = new JButton("");//find car
+		btnFind = new JButton("");  // Find car
 		btnFind.setActionCommand("2");
 		btnFind.setIcon(new ImageIcon(ServerMainPanel.class.getResource("/common/gui/Find.png")));
 		btnFind.setBounds(360, 616, 240, 57);
@@ -91,9 +91,7 @@ public class ServerMainPanel extends JPanel implements Runnable, ActionListener 
 	public void run() {
 		// TODO Auto-generated method stub
 		try {
-			
-			while(true)
-			{
+			while(true)	{
 				mapPanel.updateImage(MapDataFetcher.getCurImage(car.getCurPos(),car.getAttr().getNum()));
 				Thread.sleep(Environment._IMAGE_UPDATE_TIME);
 			}
