@@ -3,6 +3,7 @@ import java.io.Serializable;
 
 public class CarAttribute implements Serializable, Runnable {
 
+	private Point curPos;
 
 	private String num;
 	
@@ -91,5 +92,13 @@ public class CarAttribute implements Serializable, Runnable {
 
 	public void setMaxSpeed(double maxSpeed) {
 		this.maxSpeed = maxSpeed;
+	}
+
+	public Point getCurPos() {
+		return curPos;
+	}
+
+	public void setCurPos(Point pos) {
+		curPos = pos;
 	}
 }

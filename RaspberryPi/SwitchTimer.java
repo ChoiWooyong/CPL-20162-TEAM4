@@ -1,4 +1,3 @@
-package common;
 
 public class SwitchTimer implements Runnable {
 	
@@ -13,5 +12,4 @@ public class SwitchTimer implements Runnable {
 			e.printStackTrace();
 		}
 	}
-	
 }

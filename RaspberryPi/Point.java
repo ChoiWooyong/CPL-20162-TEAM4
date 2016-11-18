@@ -1,4 +1,3 @@
-package common;
 
 import java.io.Serializable;
 
@@ -29,10 +28,14 @@ public class Point implements Serializable {
 	}
 	
 	public boolean isEqual(Point p) {
-		if (Math.abs(p.latitude - latitude) > Environment.ERRORRANGE || Math.abs(p.longitude - longitude) > Environment.ERRORRANGE)
+		if (Math.abs(p.latitude - latitude) > Environment._ERRORRANGE || Math.abs(p.longitude - longitude) > Environment._ERRORRANGE)
 			return false;
 		
 		return true;
+	}
+	
+	public double calDistance(Point p) {
+		return Math.sqrt(Math.pow(latitude - p.latitude, 2.0) + Math.pow(longitude - p.longitude, 2.0)) ;
 	}
 	
 	public String toString() {
