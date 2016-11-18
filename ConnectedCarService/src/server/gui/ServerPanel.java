@@ -1,6 +1,7 @@
 package server.gui;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.util.Scanner;
 
@@ -29,6 +30,8 @@ import java.awt.event.ActionListener;
 
 
 public class ServerPanel extends MyPanel implements ActionListener {
+
+	private boolean isDebug = false;
 	
 	// InnerPanel to switch ClientMainPanel
 	private JPanel innerPanel;
@@ -43,8 +46,14 @@ public class ServerPanel extends MyPanel implements ActionListener {
 	public ServerPanel(String[] args) throws Exception {
 
 		// Set variables
-		num = args[1];
-
+		isDebug = args[1] == "--DEBUG" ? true : false;
+		
+		if (isDebug) {
+			num = "TEST";
+			
+		} else {
+			num = args[1];
+		}
 		
 		// Set default UI of Client
 		JLabel lblClientMode = new JLabel("Server Mode");
@@ -60,7 +69,7 @@ public class ServerPanel extends MyPanel implements ActionListener {
 		
 		// InnerPanel for Client
 		innerPanel = new JPanel();
-		innerPanel.setBounds(0, 46, 1008, 684);
+		innerPanel.setBounds(0, 46, 1020, 684);
 		innerPanel.setBackground(Color.WHITE);
 		add(innerPanel);
 		innerPanel.setLayout(null);
@@ -225,7 +234,16 @@ public class ServerPanel extends MyPanel implements ActionListener {
 		short career = Short.parseShort(careerGroup.getSelection().getActionCommand());
 		short gender = Short.parseShort(genderGroup.getSelection().getActionCommand());
 		short type = Short.parseShort(typeGroup.getSelection().getActionCommand());
-		
-		innerPanel = new ServerMainPanel(new CarAttribute(num, career, gender, age, type));
+
+		remove(innerPanel);
+		revalidate();
+		repaint();
+		try {
+			innerPanel = new ServerMainPanel(new CarAttribute(num, career, gender, age, type), isDebug);
+			add(innerPanel);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

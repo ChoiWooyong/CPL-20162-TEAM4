@@ -10,10 +10,10 @@ import common.gui.MyPanel;
 import server.MyCar;
 
 public class ServerMainPanel extends JPanel implements Runnable {
-
+	
 	private MyCar car; 
 	
-	public ServerMainPanel(CarAttribute attr){
+	public ServerMainPanel(CarAttribute attr, boolean isDebug) throws IOException{
 		
 		setLayout(null);
 		
@@ -24,8 +24,14 @@ public class ServerMainPanel extends JPanel implements Runnable {
 		add(btnNewButton_1);
 		
 		setVisible(true);
-
-		//car = new MyCar(attr);
+		
+		car = new MyCar(attr);
+		if (isDebug) {
+			
+			
+		} else {
+			new Thread(car).start();
+		}
 		
 		//new Thread(this).run();
 	}

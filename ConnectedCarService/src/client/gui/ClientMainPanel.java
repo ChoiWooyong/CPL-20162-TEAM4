@@ -39,12 +39,12 @@ public class ClientMainPanel extends JPanel implements Runnable, ActionListener 
 		this.isDebug = isDebug;
 		
 		setLayout(null);
-		setSize(1008, 638);
+		setSize(1020, 722);
 
 		btnSetDest = new JButton("Set Destination");
 		btnSetDest.setActionCommand("1");
 		btnSetDest.setFont(new Font("±¼¸²", Font.PLAIN, 20));
-		btnSetDest.setBounds(81, 564, 220, 57);
+		btnSetDest.setBounds(83, 616, 220, 57);
 		add(btnSetDest);
 
 		tglbtnONOFF = new JToggleButton("");
@@ -52,31 +52,30 @@ public class ClientMainPanel extends JPanel implements Runnable, ActionListener 
 		tglbtnONOFF.setSelectedIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/ON.png")));
 		tglbtnONOFF.setIcon(new ImageIcon(ClientMainPanel.class.getResource("/common/gui/OFF.png")));
 		tglbtnONOFF.setFont(new Font("±¼¸²", Font.PLAIN, 20));
-		tglbtnONOFF.setBounds(358, 564, 240, 57);
+		tglbtnONOFF.setBounds(360, 616, 240, 57);
 		add(tglbtnONOFF);
 
 		lblConnectedCar = new JLabel("Connected Car : None");
 		lblConnectedCar.setFont(new Font("±¼¸²", Font.PLAIN, 20));
-		lblConnectedCar.setBounds(664, 578, 264, 24);
+		lblConnectedCar.setBounds(666, 630, 264, 24);
 		add(lblConnectedCar);
 		
-		// If GPS isn't connected well, It will wait
 		car = new OtherCar(attr);
 		
 		if (isDebug) {
 			car.setCurPos(new Point(35.892441, 128.609169));
 			
 		} else {
-			new Thread(car).run();
+			new Thread(car).start();
 		}
 		
 		mapPanel = new ImagePanel(MapDataFetcher.getCurImage(car.getCurPos(), car.getAttr().getNum()));
-		mapPanel.setBounds(0, 0, 1008, 550);
-		
+		mapPanel.setBounds(0, 0, 1020, 600);
 		add(mapPanel);
+		mapPanel.setVisible(true);
 		
 		// Thread for Update Map Image
-		new Thread(this).run();
+		new Thread(this).start();
 
 		setVisible(true);
 	}

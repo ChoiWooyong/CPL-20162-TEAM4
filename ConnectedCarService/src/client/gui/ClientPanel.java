@@ -68,7 +68,7 @@ public class ClientPanel extends MyPanel implements ActionListener {
 		
 		// InnerPanel for Client
 		innerPanel = new JPanel();
-		innerPanel.setBounds(0, 46, 1008, 684);
+		innerPanel.setBounds(0, 46, 1020, 722);
 		innerPanel.setBackground(Color.WHITE);
 		add(innerPanel);
 		innerPanel.setLayout(null);
@@ -76,7 +76,7 @@ public class ClientPanel extends MyPanel implements ActionListener {
 		
 		// ImagePanel
 		ImagePanel imagePanel = new ImagePanel(new File("src/common/gui/ConnectedCar.png"));
-		imagePanel.setBounds(getWidth()/2-691/2, 40, 691, 350);  // 691 463
+		imagePanel.setBounds(getWidth()/2 - 691/2, 40, 691, 350);  // 691 463
 		imagePanel.setBackground(Color.WHITE);
 		innerPanel.add(imagePanel);
 		
@@ -238,6 +238,7 @@ public class ClientPanel extends MyPanel implements ActionListener {
 		repaint();
 		try {
 			innerPanel = new ClientMainPanel(new CarAttribute(num, career, gender, age, type), serv_ip, isDebug);
+			innerPanel.setBounds(0, 46, 1020, 722);
 			add(innerPanel);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
